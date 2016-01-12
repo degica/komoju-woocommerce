@@ -12,8 +12,8 @@ Enable the payment gateway and configure the account as described in the
 
 The module should first be set to test mode (sandbox).
 
-Note - an account with Komoju is required before using this
-module. Please contact for more information: https://www.degica.com/contact/
+Note - an account with [Komoju](https://komoju.com) is required before using this
+module.
 
 ## Installation
 
