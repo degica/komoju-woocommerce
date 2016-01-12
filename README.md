@@ -1,6 +1,13 @@
 ## Komoju for WooCommerce.
 
 Japanese payments for WooCommerce.
+This plugin supports the following Japanese payment methods:
+
+* Credit Card (クレジットカード)
+* Convenience Store (コンビニ)
+* PayEasy (ペイジー)
+* WebMoney (ウェブマネー)
+* Bank Transfer (銀行振込)
 
 ### Overview
 
