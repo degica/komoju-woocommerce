@@ -24,11 +24,11 @@ module.
 
 ## Installation
 
-Upload this to your server when the wordpress and WooCommerce are installed
+Upload the contents of this repositoryto your server where wordpress and WooCommerce are installed
 via FTP or other file transfer method to the wordpress/wp-content/plugins
 directory
 
-The zip file needs to be unzipped as follows :
+The [zip file](https://github.com/komoju/komoju-woocommerce/archive/master.zip) needs to be unzipped as follows :
 
 ```
 cd wordpress/wp-content/plugins
