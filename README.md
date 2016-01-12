@@ -9,7 +9,7 @@ This plugin supports the following Japanese payment methods:
 * WebMoney (ウェブマネー)
 * Bank Transfer (銀行振込)
 
-### Overview
+## Overview
 
 Once this has been installed, the module can be configured through the
 WooCommerce payment section.
