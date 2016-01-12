@@ -1,6 +1,6 @@
 ## Komoju for WooCommerce.
 
-Komoju plugin for the WooCommerce shopping cart.
+Japanese payments for WooCommerce.
 
 ### Overview
 
