@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: WooCommerce Komoju Gateway
-Plugin URI: http://www.tobeset.com
+Plugin URI: https://komoju.com
 Description: Extends WooCommerce with Komoju gateway.
 Version: 0.1
-Author: Babeth
-Author URI: http://www.tobeset.com
+Author: Komoju
+Author URI: https://komoju.com
 */
 
 add_action('plugins_loaded', 'woocommerce_komoju_init', 0);
