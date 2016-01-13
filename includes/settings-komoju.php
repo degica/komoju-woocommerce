@@ -46,7 +46,7 @@ return array(
 		'default' => 'yes'
 	),
 	'konbini' => array(
-		'title'   => __( 'Convenient store', 'woocommerce' ),
+		'title'   => __( 'Convenient Store', 'woocommerce' ),
 		'type'    => 'checkbox',
 		'label'   => __( 'Allow delayed payment in convenient store', 'woocommerce' ),
 		'description' => __( 'Lawson, Family Mart, Sunkus, Circle-K, Ministop, Daily Yamazaki, 7-Eleven', 'woocommerce' ),
