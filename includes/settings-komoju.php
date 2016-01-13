@@ -46,9 +46,9 @@ return array(
 		'default' => 'yes'
 	),
 	'konbini' => array(
-		'title'   => __( 'Convenient Store', 'woocommerce' ),
+		'title'   => __( 'Konbini', 'woocommerce' ),
 		'type'    => 'checkbox',
-		'label'   => __( 'Allow delayed payment in convenient store', 'woocommerce' ),
+		'label'   => __( 'Allow delayed payment in convenience store', 'woocommerce' ),
 		'description' => __( 'Lawson, Family Mart, Sunkus, Circle-K, Ministop, Daily Yamazaki, 7-Eleven', 'woocommerce' ),
 		'desc_tip'    => true,
 		'default' => 'yes'
@@ -73,14 +73,14 @@ return array(
 	'accountID' => array(
 		'title'       => __( 'Komoju merchant ID', 'woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Please enter your live Komoju account ID.', 'woocommerce' ),
+		'description' => __( 'Please enter your Komoju account ID.', 'woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
 	'secretKey' => array(
 		'title'       => __( 'Secret Key from Komoju', 'woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Please enter your live Komoju secret key.', 'woocommerce' ),
+		'description' => __( 'Please enter your Komoju secret key.', 'woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
@@ -95,27 +95,7 @@ return array(
 		'type'        => 'checkbox',
 		'label'       => __( 'Enable Komoju sandbox', 'woocommerce' ),
 		'default'     => 'yes',
-		'description' => sprintf( __( 'When checked, your Komoju sandbox will be used in order to test payments. Sign up for a developer account <a href="%s">here</a>.', 'woocommerce' ), 'https://docs.komoju.com/' ),
-	),
-	'accountID_test' => array(
-		'title'       => __( '[Sandbox] Komoju merchant ID', 'woocommerce' ),
-		'type'        => 'text',
-		'description' => __( 'Please enter your test Komoju account ID.', 'woocommerce' ),
-		'default'     => '',
-		'desc_tip'    => true,
-	),
-	'secretKey_test' => array(
-		'title'       => __( '[Sandbox] Secret Key from Komoju sandbox', 'woocommerce' ),
-		'type'        => 'text',
-		'description' => __( 'Please enter your test Komoju secret key.', 'woocommerce' ),
-		'default'     => '',
-		'desc_tip'    => true,
-	),
-	'callbackURL_test' => array(
-		'title'       => __( '[Sandbox] Callback Url', 'woocommerce' ),
-		'type'        => 'text',
-		'description' => sprintf( __( 'Specify a special callback url (or leave this field empty if you don\'t know what it is). Default url is %s', 'woocommerce' ), $this->get_mydefault_api_url() ),
-		'default'     => '',
+		'description' => sprintf( __( 'When checked, your Komoju sandbox will be used in order to test payments. Sign up for a developer account <a href="%s">here</a>.', 'woocommerce' ), 'https://sandbox.komoju.com/sign_up' ),
 	),
 	'invoice_prefix' => array(
 		'title'       => __( 'Invoice Prefix', 'woocommerce' ),

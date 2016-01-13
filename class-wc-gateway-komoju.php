@@ -38,9 +38,9 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 		$this->testmode       		= 'yes' === $this->get_option( 'testmode', 'yes' );
 		$this->debug          		= 'yes' === $this->get_option( 'debug', 'yes' );
 		$this->invoice_prefixe		= $this->get_option( 'invoice_prefix' );
-        $this->accountID     		= $this->testmode == 'yes' ? $this->get_option( 'accountID_test' ) : $this->get_option( 'accountID' );
-        $this->secretKey     		= $this->testmode == 'yes' ? $this->get_option( 'secretKey_test' ) : $this->get_option( 'secretKey' );
-        $this->callbackURL     		= $this->testmode == 'yes' ? $this->get_option( 'callbackURL_test' ) : $this->get_option( 'callbackURL' );
+        $this->accountID     		= $this->get_option( 'accountID' );
+        $this->secretKey     		= $this->get_option( 'secretKey' );
+        $this->callbackURL     		= $this->get_option( 'callbackURL' );
 		// supported payment gateways chosen by the merchant (among the ones Komoju is providing)
 		$this->credit_card			= $this->get_option( 'credit_card' );
 		$this->web_money			= $this->get_option( 'web_money' );
@@ -156,7 +156,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 		if ( 'yes' == $this->credit_card )
             $str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="credit_card" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Credit Card', 'woocommerce' ).'<img src="'.plugins_url('assets/images/cards.png', __FILE__).'" /><br/>';
 		if ( 'yes' == $this->konbini )
-			$str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="konbini" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Convenient Store', 'woocommerce' ).'<img src="'.plugins_url('assets/images/konbini.png', __FILE__).'" /><br/>';
+			$str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="konbini" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Konbini', 'woocommerce' ).'<img src="'.plugins_url('assets/images/konbini.png', __FILE__).'" /><br/>';
 		if ( 'yes' == $this->web_money )
             $str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="web_money" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'WebMoney', 'woocommerce' ).'<img src="'.plugins_url('assets/images/webmoney.png', __FILE__).'" /><br/>';
 		if ( 'yes' == $this->bank_transfer )

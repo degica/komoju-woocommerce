@@ -46,9 +46,9 @@ class WC_Gateway_Komoju_Request {
 		$komoju_args = $this->get_komoju_args( $order, $method );
 	
 		if ( $sandbox ) {
-			return 'https://gateway-sandbox.degica.com' . $this->Komoju_endpoint.$method.'/new'.'?' .$komoju_args;
+			return 'https://sandbox.komoju.com' . $this->Komoju_endpoint.$method.'/new'.'?' .$komoju_args;
 		} else {
-			return 'https://gateway.degica.com' . $this->Komoju_endpoint.$method.'/new'.'?' .$komoju_args;
+			return 'https://komoju.com' . $this->Komoju_endpoint.$method.'/new'.'?' .$komoju_args;
 		}
 	}
 
@@ -69,9 +69,9 @@ class WC_Gateway_Komoju_Request {
 				"transaction[customer][given_name_kana]"	=> $order->billing_first_name,
 				"transaction[customer][family_name_kana]"	=> $order->billing_last_name,
 				"transaction[external_order_num]"			=> $this->gateway->get_option( 'invoice_prefix' ) . $order->get_order_number(),
-				"transaction[return_url]"					=> esc_url( $this->gateway->get_return_url( $order ) ),
+				"transaction[return_url]"					=> $this->gateway->get_return_url( $order ),
 				"transaction[cancel_url]"					=> $order->get_cancel_order_url_raw(),
-				"transaction[callback_url]"					=> esc_url( $this->notify_url ),
+				"transaction[callback_url]"					=> $this->notify_url,
 				"transaction[tax]"							=> strlen($order->get_total_tax())==0 ? 0 : $order->get_total_tax(),
 				"timestamp"									=> time(),
 		);
