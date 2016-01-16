@@ -70,3 +70,9 @@ At the moment, this plugin has been tested and is known to work up to version
 Please contact support@degica.com if you have any questions about
 the installation of the module. If you would like to setup an account to use
 with this module, please contact https://www.degica.com/contact/
+
+## License
+
+Komoju WooCommerce plugin copyright © 2016 by Degica Ltd.
+
+This is a free plugin for use by Komoju customers. This code is not be traded or sold for profit.
