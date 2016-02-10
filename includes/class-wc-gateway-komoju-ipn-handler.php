@@ -102,10 +102,10 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 */
 	protected function validate_amount( $order, $amount ) {
 		if ( number_format( $order->get_total(), 2, '.', '' ) != number_format( $amount, 2, '.', '' ) ) {
-			WC_Gateway_Komoju::log( 'Payment error: Amounts do not match (gross ' . $amount . ') for order #'.$order->id.'('.$order->get_total().')' );
+			WC_Gateway_Komoju::log( 'Payment error: Amounts do not match (total: ' . $amount . ') for order #'.$order->id.'('.$order->get_total().')' );
 
 			// Put this order on-hold for manual checking
-			$order->update_status( 'on-hold', sprintf( __( 'Validation error: Komoju amounts do not match (gross %s).', 'woocommerce' ), $amount ) );
+			$order->update_status( 'on-hold', sprintf( __( 'Validation error: Komoju amounts do not match (total %s).', 'woocommerce' ), $amount ) );
 			exit;
 		}
 	}

@@ -1,4 +1,7 @@
 *** Komoju gateway Changelog ***
 
+2016.01.13
+ * Add localization
+
 2016.01.11 - version 0.1
  * First Release

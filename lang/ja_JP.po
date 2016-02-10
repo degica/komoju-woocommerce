@@ -1,0 +1,224 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: woocommerce-komoju\n"
+"POT-Creation-Date: 2016-01-13 12:03+0100\n"
+"PO-Revision-Date: 2016-02-10 13:55+0100\n"
+"Last-Translator: \n"
+"Language-Team: Degica <support@degica.com>\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../class-wc-gateway-komoju.php:36 ../includes/settings-komoju.php:21
+msgid "Komoju"
+msgstr "Komoju"
+
+#: ../class-wc-gateway-komoju.php:37
+msgid ""
+"Allows payments by Komoju, dedicated to Japanese online and offline payment "
+"gateways."
+msgstr ""
+"Komoju は日本独自のオンラインと オフラインの決済を提供するゲートウェイです。"
+
+#: ../class-wc-gateway-komoju.php:103
+msgid "Gateway Disabled"
+msgstr "ゲートウェイ無効"
+
+#: ../class-wc-gateway-komoju.php:103
+msgid "Komoju does not support your store currency."
+msgstr "Komoju はあなたのストアの通貨をサポートしていません"
+
+#: ../class-wc-gateway-komoju.php:155
+msgid "Method of payment:"
+msgstr "決済方法:"
+
+#: ../class-wc-gateway-komoju.php:157 ../includes/settings-komoju.php:37
+msgid "Credit Card"
+msgstr "クレジットカード"
+
+#: ../class-wc-gateway-komoju.php:159 ../includes/settings-komoju.php:49
+msgid "Konbini"
+msgstr "コンビニ"
+
+#: ../class-wc-gateway-komoju.php:161
+msgid "WebMoney"
+msgstr "ウェブマネー"
+
+#: ../class-wc-gateway-komoju.php:163 ../includes/settings-komoju.php:57
+msgid "Bank Transfer"
+msgstr "銀行振込"
+
+#: ../class-wc-gateway-komoju.php:165 ../includes/settings-komoju.php:63
+msgid "Pay Easy"
+msgstr "Pay-easy"
+
+#: ../class-wc-gateway-komoju.php:192
+msgid "Please select a payment method (how you want to pay)"
+msgstr "クレジットカード"
+
+#: ../includes/class-wc-gateway-komoju-ipn-handler.php:94
+#, php-format
+msgid "Validation error: Komoju currencies do not match (code %s)."
+msgstr "エラー: 通貨が不正です (code %s)。"
+
+#: ../includes/class-wc-gateway-komoju-ipn-handler.php:108
+#, php-format
+msgid "Validation error: Komoju amounts do not match (total %s)."
+msgstr "エラー: 金額が不正です (total %s)。"
+
+#: ../includes/class-wc-gateway-komoju-ipn-handler.php:128
+msgid "IPN payment captured"
+msgstr "IPN 決済が完了"
+
+#: ../includes/class-wc-gateway-komoju-ipn-handler.php:136
+#, php-format
+msgid "Payment pending: %s"
+msgstr "決済保留中: %s"
+
+#: ../includes/class-wc-gateway-komoju-ipn-handler.php:153
+#: ../includes/class-wc-gateway-komoju-ipn-handler.php:177
+#: ../includes/class-wc-gateway-komoju-ipn-handler.php:190
+#, php-format
+msgid "Payment %s via IPN."
+msgstr "IPN 決済を経由: %s。"
+
+#: ../includes/settings-komoju.php:12
+msgid "Enable/Disable"
+msgstr "有効 / 無効"
+
+#: ../includes/settings-komoju.php:14
+msgid "Enable Komoju"
+msgstr "有効 Komoju"
+
+#: ../includes/settings-komoju.php:18
+msgid "Title"
+msgstr "タイトル"
+
+#: ../includes/settings-komoju.php:20
+msgid "This controls the title which the user sees during checkout."
+msgstr "ユーザーから見るコントロールのタイトルです。"
+
+#: ../includes/settings-komoju.php:25
+msgid "Description"
+msgstr "説明"
+
+#: ../includes/settings-komoju.php:27
+msgid "Payment method description that the customer will see on your checkout."
+msgstr "ユーザーから見る決済方法の説明です"
+
+#: ../includes/settings-komoju.php:28
+msgid ""
+"Make your payment through Komoju: offline and online Japanese payments like "
+"Konbini, credit cards, WebMoney, ..."
+msgstr ""
+"Komoju を経由して決済を作成: 日本のオンラインとオフラインの決済 (クレジット"
+"カード, コンビニ, ウェブマネー, 銀行決済, Pay-easy)"
+
+#: ../includes/settings-komoju.php:39
+msgid "Allow credit card"
+msgstr "クレジットカードを許可"
+
+#: ../includes/settings-komoju.php:43
+msgid "Web Money"
+msgstr "ウェブマネー"
+
+#: ../includes/settings-komoju.php:45
+msgid "Allow Web Money"
+msgstr "ウェブマネーを許可"
+
+#: ../includes/settings-komoju.php:51
+msgid "Allow delayed payment in convenience store"
+msgstr "コンビニ決済を許可"
+
+#: ../includes/settings-komoju.php:52
+msgid ""
+"Lawson, Family Mart, Sunkus, Circle-K, Ministop, Daily Yamazaki, 7-Eleven"
+msgstr ""
+"ローソン,ファミリーマート,サンクス,サークルK,ミニストップ,デイリーヤマザキ,セ"
+"ブンイレブン"
+
+#: ../includes/settings-komoju.php:59
+msgid "Allow bank transfer"
+msgstr "銀行決済を許可"
+
+#: ../includes/settings-komoju.php:65
+msgid "Allow delayed payment through Pay Easy"
+msgstr "Pay-easy を許可"
+
+#: ../includes/settings-komoju.php:74
+msgid "Komoju merchant ID"
+msgstr "Komoju マーチャントID"
+
+#: ../includes/settings-komoju.php:76
+msgid "Please enter your Komoju account ID."
+msgstr "Komoju のアカウントID を入力してください"
+
+#: ../includes/settings-komoju.php:81
+msgid "Secret Key from Komoju"
+msgstr "Komoju シークレットキー"
+
+#: ../includes/settings-komoju.php:83
+msgid "Please enter your Komoju secret key."
+msgstr "Komoju のシークレットキーを入力してください"
+
+#: ../includes/settings-komoju.php:88
+msgid "Callback Url"
+msgstr "コールバック URL"
+
+#: ../includes/settings-komoju.php:90
+#, php-format
+msgid ""
+"Specify a special callback url (or leave this field empty if you don't know "
+"what it is). Default url is %s"
+msgstr ""
+"コールバック URL を特定 (もし分からない場合は空欄でも可能) 。デフォルト URL "
+"is %s"
+
+#: ../includes/settings-komoju.php:94
+msgid "Komoju Sandbox"
+msgstr "Komoju サンドボックス"
+
+#: ../includes/settings-komoju.php:96
+msgid "Enable Komoju sandbox"
+msgstr "Komoju サンドボックスを有効"
+
+#: ../includes/settings-komoju.php:98
+#, php-format
+msgid ""
+"When checked, your Komoju sandbox will be used in order to test payments. "
+"Sign up for a developer account <a href=\"%s\">here</a>."
+msgstr ""
+"支払った際、Komoju サンドボックス上でテストの決済が実行されます。 開発用アカ"
+"ウントを登録 <a href=\"%s\">here</a> 。"
+
+#: ../includes/settings-komoju.php:101
+msgid "Invoice Prefix"
+msgstr "請求書の先頭文字"
+
+#: ../includes/settings-komoju.php:103
+msgid ""
+"Please enter a prefix for your invoice numbers. If you use your Komoju "
+"account for multiple stores ensure this prefix is unique."
+msgstr "請求書の先頭文字を入力してください。"
+
+#: ../includes/settings-komoju.php:108
+msgid "Debug Log"
+msgstr "デバッグログ"
+
+#: ../includes/settings-komoju.php:110
+msgid "Enable logging"
+msgstr "ロギングを有効"
+
+#: ../includes/settings-komoju.php:112
+#, php-format
+msgid "Log Komoju events inside <code>%s</code>"
+msgstr "Komoju のイベントログ <code>%s</code>"
+
+#~ msgid "Convenient store"
+#~ msgstr "コンビニ"
