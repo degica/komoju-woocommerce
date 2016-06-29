@@ -23,7 +23,7 @@ abstract class WC_Gateway_Komoju_Response {
 			return false;
 		}
 
-		if ( ! $order = wc_get_order( substr( $order_id, strlen( $invoice_prefix ) ) ) ) {
+		if ( ! $order = wc_get_order( substr( $order_id, strlen( $invoice_prefix ), -7) ) ) {
 			WC_Gateway_Komoju::log( 'Error: Cannot locate order in WC with order_id: .'.$order_id.' minus prefix: '.$invoice_prefix );
 			return false;
 		}
