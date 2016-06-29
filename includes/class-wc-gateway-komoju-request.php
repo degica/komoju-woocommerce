@@ -33,6 +33,7 @@ class WC_Gateway_Komoju_Request {
 	public function __construct( $gateway ) {
 		$this->gateway    = $gateway;
 		$this->notify_url = $this->gateway->notify_url;
+ 		$this->request_id = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
 		$this->Komoju_endpoint = '/ja/api/'.$this->gateway->accountID. '/transactions/';
 	}
 
@@ -44,7 +45,7 @@ class WC_Gateway_Komoju_Request {
 	 */
 	public function get_request_url( $order, $sandbox = false, $method = 'credit_card' ) {
 		$komoju_args = $this->get_komoju_args( $order, $method );
-	
+
 		if ( $sandbox ) {
 			return 'https://sandbox.komoju.com' . $this->Komoju_endpoint.$method.'/new'.'?' .$komoju_args;
 		} else {
@@ -68,7 +69,7 @@ class WC_Gateway_Komoju_Request {
 				"transaction[customer][family_name]"		=> $order->billing_last_name,
 				"transaction[customer][given_name_kana]"	=> $order->billing_first_name,
 				"transaction[customer][family_name_kana]"	=> $order->billing_last_name,
-				"transaction[external_order_num]"			=> $this->gateway->get_option( 'invoice_prefix' ) . $order->get_order_number(),
+				"transaction[external_order_num]"			=> $this->gateway->get_option( 'invoice_prefix' ) . $order->get_order_number() . '-' . $this->request_id,
 				"transaction[return_url]"					=> $this->gateway->get_return_url( $order ),
 				"transaction[cancel_url]"					=> $order->get_cancel_order_url_raw(),
 				"transaction[callback_url]"					=> $this->notify_url,
@@ -83,11 +84,11 @@ class WC_Gateway_Komoju_Request {
 		}
 		sort($qs_params);
 		$query_string = implode('&', $qs_params);
-		
+
 		$url = $this->Komoju_endpoint.$method.'/new'. '?' .$query_string;
 		$hmac = hash_hmac('sha256', $url, $this->gateway->secretKey);
 		$query_string .= '&hmac='.$hmac;
-		
+
 		return $query_string;
 	}
 
