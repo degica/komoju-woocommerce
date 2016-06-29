@@ -37,7 +37,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 		$this->method_description 	= __( 'Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'woocommerce' );
 		$this->testmode       		= 'yes' === $this->get_option( 'testmode', 'yes' );
 		$this->debug          		= 'yes' === $this->get_option( 'debug', 'yes' );
-		$this->invoice_prefixe		= $this->get_option( 'invoice_prefix' );
+		$this->invoice_prefix		= $this->get_option( 'invoice_prefix' );
         $this->accountID     		= $this->get_option( 'accountID' );
         $this->secretKey     		= $this->get_option( 'secretKey' );
         $this->callbackURL     		= $this->get_option( 'callbackURL' );
@@ -55,7 +55,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 		$this->title        = $this->get_option( 'title' );
 		$this->description  = $this->get_option( 'description' );
 		$this->instructions = $this->get_option( 'instructions', $this->description );
-		
 		$this->notify_url = $this->callbackURL == '' ? WC()->api_request_url( 'WC_Gateway_Komoju' ) : $this->callbackURL;
 		// Filters
 		// Actions
@@ -65,7 +64,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 			WC_Gateway_Komoju::log( 'is not valid for use. No IPN set.' );
 		} else {
 			include_once( 'includes/class-wc-gateway-komoju-ipn-handler.php' );
-			new WC_Gateway_Komoju_IPN_Handler( $this->testmode, $this->notify_url, $this->secretKey, $this->invoice_prefixe );
+			new WC_Gateway_Komoju_IPN_Handler( $this->testmode, $this->notify_url, $this->secretKey, $this->invoice_prefix );
 		}
 
 	}
