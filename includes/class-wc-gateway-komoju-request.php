@@ -65,10 +65,10 @@ class WC_Gateway_Komoju_Request {
 		$params = array(
 				"transaction[amount]"						=> $order->get_subtotal()+$order->get_total_shipping(),
 				"transaction[currency]"						=> get_woocommerce_currency(),
+				"transaction[customer][email]"			    => $order->billing_email,
+				"transaction[customer][phone]"			    => $order->billing_phone,
 				"transaction[customer][given_name]"			=> $order->billing_first_name,
 				"transaction[customer][family_name]"		=> $order->billing_last_name,
-				"transaction[customer][given_name_kana]"	=> $order->billing_first_name,
-				"transaction[customer][family_name_kana]"	=> $order->billing_last_name,
 				"transaction[external_order_num]"			=> $this->gateway->get_option( 'invoice_prefix' ) . $order->get_order_number() . '-' . $this->request_id,
 				"transaction[return_url]"					=> $this->gateway->get_return_url( $order ),
 				"transaction[cancel_url]"					=> $order->get_cancel_order_url_raw(),
