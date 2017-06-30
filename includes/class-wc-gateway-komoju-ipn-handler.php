@@ -91,7 +91,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 			WC_Gateway_Komoju::log( 'Payment error: Currencies do not match (sent "' . $order->get_order_currency() . '" | returned "' . $currency . '")' );
 
 			// Put this order on-hold for manual checking
-			$order->update_status( 'on-hold', sprintf( __( 'Validation error: Komoju currencies do not match (code %s).', 'woocommerce' ), $currency ) );
+			$order->update_status( 'on-hold', sprintf( __( 'Validation error: Komoju currencies do not match (code %s).', 'komoju-woocommerce' ), $currency ) );
 			exit;
 		}
 	}
@@ -105,7 +105,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 			WC_Gateway_Komoju::log( 'Payment error: Amounts do not match (total: ' . $amount . ') for order #'.$order->id.'('.$order->get_total().')' );
 
 			// Put this order on-hold for manual checking
-			$order->update_status( 'on-hold', sprintf( __( 'Validation error: Komoju amounts do not match (total %s).', 'woocommerce' ), $amount ) );
+			$order->update_status( 'on-hold', sprintf( __( 'Validation error: Komoju amounts do not match (total %s).', 'komoju-woocommerce' ), $amount ) );
 			exit;
 		}
 	}
@@ -125,7 +125,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 		$this->save_komoju_meta_data( $order, $posted );
 
 		if ( 'captured' === $posted['status'] ) {
-			$this->payment_complete( $order, ( ! empty( $posted['external_order_num'] ) ? wc_clean( $posted['external_order_num'] ) : '' ), __( 'IPN payment captured', 'woocommerce' ) );
+			$this->payment_complete( $order, ( ! empty( $posted['external_order_num'] ) ? wc_clean( $posted['external_order_num'] ) : '' ), __( 'IPN payment captured', 'komoju-woocommerce' ) );
 
 			if ( ! empty( $posted['payment_method_fee'] ) ) {
 				// log komoju transaction fee
@@ -133,7 +133,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 			}
 
 		} else {
-			$this->payment_on_hold( $order, sprintf( __( 'Payment pending: %s', 'woocommerce' ), $posted['additional_information'] ) );
+			$this->payment_on_hold( $order, sprintf( __( 'Payment pending: %s', 'woocommerce-konomu' ), $posted['additional_information'] ) );
 		}
 	}
 
@@ -150,7 +150,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 * @param  WC_Order $order
 	 */
 	protected function payment_status_cancelled( $order, $posted ) {
-		$order->update_status( 'cancelled', sprintf( __( 'Payment %s via IPN.', 'woocommerce' ), wc_clean( $posted['status'] ) ) );
+		$order->update_status( 'cancelled', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( $posted['status'] ) ) );
 	}
 
 	/**
@@ -174,7 +174,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 * @param  WC_Order $order
 	 */
 	protected function payment_status_authorized( $order, $posted ) {
-		update_post_meta( $order->id, sprintf( __( 'Payment %s via IPN.', 'woocommerce' ), wc_clean( $posted['status'] ) ) );
+		update_post_meta( $order->id, sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( $posted['status'] ) ) );
 	}
 
 	/**
@@ -187,7 +187,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 		if ( $order->get_total() == ( $posted['grand_total'] ) ) {
 
 			// Mark order as refunded
-			$order->update_status( 'refunded', sprintf( __( 'Payment %s via IPN.', 'woocommerce' ), strtolower( $posted['status'] ) ) );
+			$order->update_status( 'refunded', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), strtolower( $posted['status'] ) ) );
 
 			/*$this->send_ipn_email_notification(
 				sprintf( __( 'Payment for order #%s refunded/reversed', 'woocommerce' ), $order->get_order_number() ),

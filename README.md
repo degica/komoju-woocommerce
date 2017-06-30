@@ -76,3 +76,25 @@ with this module, please contact https://www.degica.com/contact/
 Komoju WooCommerce plugin copyright © 2016 by Degica Ltd.
 
 This is a free plugin for use by Komoju customers. This code is not be traded or sold for profit.
+
+## Development
+
+### Translations
+
+To create a pot file from source code, execute the following command:
+
+```
+docker-compose exec web /bin/bash # login to running container
+cd wp-content/plugins/komoju-woocommerce # go to plugin directory
+./bin/create_pot_file # ./languages/komoju-commerce.pot will be generated
+```
+
+Copy the generated pot file and name it `komoju-commerce-ja.po` to create po file and translate all messages in it.
+
+To create mo file from a po file, execute the following command:
+
+```
+./bin/create_mo_file
+```
+
+You need to execute it every time after updating po files.

@@ -33,8 +33,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 		$this->id                	= 'komoju';
 		$this->icon              	= apply_filters('woocommerce_komoju_icon', plugins_url('assets/images/komoju-logo.png', __FILE__));
 		$this->has_fields         	= true;
-		$this->method_title       	= __( 'Komoju', 'woocommerce' );
-		$this->method_description 	= __( 'Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'woocommerce' );
+		$this->method_title       	= __( 'Komoju', 'komoju-woocommerce' );
+		$this->method_description 	= __( 'Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce' );
 		$this->testmode       		= 'yes' === $this->get_option( 'testmode', 'yes' );
 		$this->debug          		= 'yes' === $this->get_option( 'debug', 'yes' );
 		$this->invoice_prefix		= $this->get_option( 'invoice_prefix' );
@@ -99,7 +99,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 			parent::admin_options();
 		} else {
 			?>
-			<div class="inline error"><p><strong><?php _e( 'Gateway Disabled', 'woocommerce' ); ?></strong>: <?php _e( 'Komoju does not support your store currency.', 'woocommerce' ); ?></p></div>
+			<div class="inline error"><p><strong><?php _e( 'Gateway Disabled', 'komoju-woocommerce' ); ?></strong>: <?php _e( 'Komoju does not support your store currency.', 'komoju-woocommerce' ); ?></p></div>
 			<?php
 		}
 	}
@@ -151,17 +151,17 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 
         $args = wp_parse_args( $args, apply_filters( 'woocommerce_komoju_method_form_args', $default_args, $this->id ) );
 
-		$str = '<p class="form-row form-row-wide validate-required woocommerce-validated"><label for="' . esc_attr( $this->id ) . '-method">' . __( 'Method of payment:', 'woocommerce' ) . ' <abbr class="required" title="required">*</abbr></label>';
+		$str = '<p class="form-row form-row-wide validate-required woocommerce-validated"><label for="' . esc_attr( $this->id ) . '-method">' . __( 'Method of payment:', 'komoju-woocommerce' ) . ' <abbr class="required" title="required">*</abbr></label>';
 		if ( 'yes' == $this->credit_card )
-            $str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="credit_card" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Credit Card', 'woocommerce' ).'<img src="'.plugins_url('assets/images/cards.png', __FILE__).'" /><br/>';
+            $str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="credit_card" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Credit Card', 'komoju-woocommerce' ).'<img src="'.plugins_url('assets/images/cards.png', __FILE__).'" /><br/>';
 		if ( 'yes' == $this->konbini )
-			$str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="konbini" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Konbini', 'woocommerce' ).'<img src="'.plugins_url('assets/images/konbini.png', __FILE__).'" /><br/>';
+			$str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="konbini" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Konbini', 'komoju-woocommerce' ).'<img src="'.plugins_url('assets/images/konbini.png', __FILE__).'" /><br/>';
 		if ( 'yes' == $this->web_money )
-            $str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="web_money" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'WebMoney', 'woocommerce' ).'<img src="'.plugins_url('assets/images/webmoney.png', __FILE__).'" /><br/>';
+            $str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="web_money" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'WebMoney', 'komoju-woocommerce' ).'<img src="'.plugins_url('assets/images/webmoney.png', __FILE__).'" /><br/>';
 		if ( 'yes' == $this->bank_transfer )
-            $str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="bank_transfer" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Bank Transfer', 'woocommerce' ).'<br/>';
+            $str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="bank_transfer" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Bank Transfer', 'komoju-woocommerce' ).'<br/>';
 		if ( 'yes' == $this->pay_easy )
-            $str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="pay_easy" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Pay Easy', 'woocommerce' ).'<img src="'.plugins_url('assets/images/payeasy.png', __FILE__).'" /><br/>';
+            $str .= '<input id="' . esc_attr( $this->id ) . '-method" class="input-radio" type="radio" value="pay_easy" name="' . ( $args['fields_have_names'] ? $this->id . '-method' : '' ) . '" /> '. __( 'Pay Easy', 'komoju-woocommerce' ).'<img src="'.plugins_url('assets/images/payeasy.png', __FILE__).'" /><br/>';
 		$str .= '</p>';
         $default_fields = array( 'method-field' => $str );
         $fields = wp_parse_args( $fields, apply_filters( 'woocommerce_komoju_method_form_fields', $default_fields, $this->id ) );
@@ -188,7 +188,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
      */
 	function validate_fields() {
 		if ( !isset( $_POST['komoju-method'] ) ){
-			wc_add_notice( __( 'Please select a payment method (how you want to pay)' ), 'error' );
+			wc_add_notice( __( 'Please select a payment method (how you want to pay)', 'komoju-woocommerce' ), 'error' );
 			return false;
 		}
 		return true;

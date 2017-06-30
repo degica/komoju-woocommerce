@@ -17,8 +17,8 @@ function woocommerce_komoju_init() {
 	/**
  	 * Localisation
 	 */
-	load_textdomain( 'woocommerce', WP_PLUGIN_DIR.'/'.dirname( plugin_basename( __FILE__ ) ).'/lang/ja_JP.mo' );
-    
+    load_plugin_textdomain( 'komoju-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
 	require_once 'class-wc-gateway-komoju.php';
 
 	/**
