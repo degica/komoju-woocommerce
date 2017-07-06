@@ -1,0 +1,2 @@
+#!/bin/bash
+msgfmt -o languages/komoju-woocommerce-ja.mo languages/komoju-woocommerce-ja.po

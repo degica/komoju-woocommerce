@@ -1,5 +1,8 @@
 *** Komoju gateway Changelog ***
 
+2017.07.06
+ * Fix translation bug with WooCommerce 3.0
+
 2016.01.13
  * Add localization
 

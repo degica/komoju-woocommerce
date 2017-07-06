@@ -1,0 +1,212 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: komoju-woocommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-06 05:07+0000\n"
+"PO-Revision-Date: 2017-07-06 +ZONE\n"
+"Last-Translator: \n"
+"Language-Team: Degica <support@degica.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: class-wc-gateway-komoju.php:36 includes/settings-komoju.php:21
+msgid "Komoju"
+msgstr ""
+
+#: class-wc-gateway-komoju.php:37
+msgid ""
+"Allows payments by Komoju, dedicated to Japanese online and offline payment "
+"gateways."
+msgstr ""
+
+#: class-wc-gateway-komoju.php:102
+msgid "Gateway Disabled"
+msgstr ""
+
+#: class-wc-gateway-komoju.php:102
+msgid "Komoju does not support your store currency."
+msgstr ""
+
+#: class-wc-gateway-komoju.php:154
+msgid "Method of payment:"
+msgstr ""
+
+#: class-wc-gateway-komoju.php:156 includes/settings-komoju.php:37
+msgid "Credit Card"
+msgstr ""
+
+#: class-wc-gateway-komoju.php:158 includes/settings-komoju.php:49
+msgid "Konbini"
+msgstr ""
+
+#: class-wc-gateway-komoju.php:160
+msgid "WebMoney"
+msgstr ""
+
+#: class-wc-gateway-komoju.php:162 includes/settings-komoju.php:57
+msgid "Bank Transfer"
+msgstr ""
+
+#: class-wc-gateway-komoju.php:164 includes/settings-komoju.php:63
+msgid "Pay Easy"
+msgstr ""
+
+#: class-wc-gateway-komoju.php:191
+msgid "Please select a payment method (how you want to pay)"
+msgstr ""
+
+#: includes/class-wc-gateway-komoju-ipn-handler.php:94
+#, php-format
+msgid "Validation error: Komoju currencies do not match (code %s)."
+msgstr ""
+
+#: includes/class-wc-gateway-komoju-ipn-handler.php:108
+#, php-format
+msgid "Validation error: Komoju amounts do not match (total %s)."
+msgstr ""
+
+#: includes/class-wc-gateway-komoju-ipn-handler.php:128
+msgid "IPN payment captured"
+msgstr ""
+
+#: includes/class-wc-gateway-komoju-ipn-handler.php:136
+#, php-format
+msgid "Payment pending: %s"
+msgstr ""
+
+#: includes/class-wc-gateway-komoju-ipn-handler.php:153
+#: includes/class-wc-gateway-komoju-ipn-handler.php:177
+#: includes/class-wc-gateway-komoju-ipn-handler.php:190
+#, php-format
+msgid "Payment %s via IPN."
+msgstr ""
+
+#: includes/settings-komoju.php:12
+msgid "Enable/Disable"
+msgstr ""
+
+#: includes/settings-komoju.php:14
+msgid "Enable Komoju"
+msgstr ""
+
+#: includes/settings-komoju.php:18
+msgid "Title"
+msgstr ""
+
+#: includes/settings-komoju.php:20
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: includes/settings-komoju.php:25
+msgid "Description"
+msgstr ""
+
+#: includes/settings-komoju.php:27
+msgid "Payment method description that the customer will see on your checkout."
+msgstr ""
+
+#: includes/settings-komoju.php:28
+msgid ""
+"Make your payment through Komoju: offline and online Japanese payments like "
+"Konbini, credit cards, WebMoney, ..."
+msgstr ""
+
+#: includes/settings-komoju.php:32
+msgid "Supported methods set in Komoju"
+msgstr ""
+
+#: includes/settings-komoju.php:39
+msgid "Allow credit card"
+msgstr ""
+
+#: includes/settings-komoju.php:43
+msgid "Web Money"
+msgstr ""
+
+#: includes/settings-komoju.php:45
+msgid "Allow Web Money"
+msgstr ""
+
+#: includes/settings-komoju.php:51
+msgid "Allow delayed payment in convenience store"
+msgstr ""
+
+#: includes/settings-komoju.php:52
+msgid ""
+"Lawson, Family Mart, Sunkus, Circle-K, Ministop, Daily Yamazaki, 7-Eleven"
+msgstr ""
+
+#: includes/settings-komoju.php:59
+msgid "Allow bank transfer"
+msgstr ""
+
+#: includes/settings-komoju.php:65
+msgid "Allow delayed payment through Pay Easy"
+msgstr ""
+
+#: includes/settings-komoju.php:74
+msgid "Komoju merchant ID"
+msgstr ""
+
+#: includes/settings-komoju.php:76
+msgid "Please enter your Komoju account ID."
+msgstr ""
+
+#: includes/settings-komoju.php:81
+msgid "Secret Key from Komoju"
+msgstr ""
+
+#: includes/settings-komoju.php:83
+msgid "Please enter your Komoju secret key."
+msgstr ""
+
+#: includes/settings-komoju.php:88
+msgid "Callback Url"
+msgstr ""
+
+#: includes/settings-komoju.php:90
+#, php-format
+msgid ""
+"Specify a special callback url (or leave this field empty if you don't know "
+"what it is). Default url is %s"
+msgstr ""
+
+#: includes/settings-komoju.php:94
+msgid "Komoju Sandbox"
+msgstr ""
+
+#: includes/settings-komoju.php:96
+msgid "Enable Komoju sandbox"
+msgstr ""
+
+#: includes/settings-komoju.php:98
+#, php-format
+msgid ""
+"When checked, your Komoju sandbox will be used in order to test payments. "
+"Sign up for a developer account <a href=\"%s\">here</a>."
+msgstr ""
+
+#: includes/settings-komoju.php:101
+msgid "Invoice Prefix"
+msgstr ""
+
+#: includes/settings-komoju.php:103
+msgid ""
+"Please enter a prefix for your invoice numbers. If you use your Komoju "
+"account for multiple stores ensure this prefix is unique."
+msgstr ""
+
+#: includes/settings-komoju.php:108
+msgid "Debug Log"
+msgstr ""
+
+#: includes/settings-komoju.php:110
+msgid "Enable logging"
+msgstr ""
+
+#: includes/settings-komoju.php:112
+#, php-format
+msgid "Log Komoju events inside <code>%s</code>"
+msgstr ""

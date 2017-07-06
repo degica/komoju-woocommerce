@@ -9,60 +9,60 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 return array(
 	'enabled' => array(
-		'title'   => __( 'Enable/Disable', 'woocommerce' ),
+		'title'   => __( 'Enable/Disable', 'komoju-woocommerce' ),
 		'type'    => 'checkbox',
-		'label'   => __( 'Enable Komoju', 'woocommerce' ),
+		'label'   => __( 'Enable Komoju', 'komoju-woocommerce' ),
 		'default' => 'no'
 	),
 	'title' => array(
-		'title'       => __( 'Title', 'woocommerce' ),
+		'title'       => __( 'Title', 'komoju-woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce' ),
-		'default'     => __( 'Komoju', 'woocommerce' ),
+		'description' => __( 'This controls the title which the user sees during checkout.', 'komoju-woocommerce' ),
+		'default'     => __( 'Komoju', 'komoju-woocommerce' ),
 		'desc_tip'    => true,
 	),
 	'description' => array(
-		'title'       => __( 'Description', 'woocommerce' ),
+		'title'       => __( 'Description', 'komoju-woocommerce' ),
 		'type'        => 'textarea',
-		'description' => __( 'Payment method description that the customer will see on your checkout.', 'woocommerce' ),
-		'default'     => __( 'Make your payment through Komoju: offline and online Japanese payments like Konbini, credit cards, WebMoney, ...', 'woocommerce' ),
+		'description' => __( 'Payment method description that the customer will see on your checkout.', 'komoju-woocommerce' ),
+		'default'     => __( 'Make your payment through Komoju: offline and online Japanese payments like Konbini, credit cards, WebMoney, ...', 'komoju-woocommerce' ),
 		'desc_tip'    => true,
 	),
 	'supported_methods' => array(
-		'title'	=> 'Supported methods set in Komoju',
+		'title'	=> __('Supported methods set in Komoju', 'komoju-woocommerce'),
 		'type'	=> 'title',
 		'id'	=> 'supported-methods-in-komoju'
 	),
 	'credit_card' => array(
-		'title'   => __( 'Credit Card', 'woocommerce' ),
+		'title'   => __( 'Credit Card', 'komoju-woocommerce' ),
 		'type'    => 'checkbox',
-		'label'   => __( 'Allow credit card', 'woocommerce' ),
+		'label'   => __( 'Allow credit card', 'komoju-woocommerce' ),
 		'default' => 'yes'
 	),
 	'web_money' => array(
-		'title'   => __( 'Web Money', 'woocommerce' ),
+		'title'   => __( 'Web Money', 'komoju-woocommerce' ),
 		'type'    => 'checkbox',
-		'label'   => __( 'Allow Web Money', 'woocommerce' ),
+		'label'   => __( 'Allow Web Money', 'komoju-woocommerce' ),
 		'default' => 'yes'
 	),
 	'konbini' => array(
-		'title'   => __( 'Konbini', 'woocommerce' ),
+		'title'   => __( 'Konbini', 'komoju-woocommerce' ),
 		'type'    => 'checkbox',
-		'label'   => __( 'Allow delayed payment in convenience store', 'woocommerce' ),
-		'description' => __( 'Lawson, Family Mart, Sunkus, Circle-K, Ministop, Daily Yamazaki, 7-Eleven', 'woocommerce' ),
+		'label'   => __( 'Allow delayed payment in convenience store', 'komoju-woocommerce' ),
+		'description' => __( 'Lawson, Family Mart, Sunkus, Circle-K, Ministop, Daily Yamazaki, 7-Eleven', 'komoju-woocommerce' ),
 		'desc_tip'    => true,
 		'default' => 'yes'
 	),
 	'bank_transfer' => array(
-		'title'   => __( 'Bank Transfer', 'woocommerce' ),
+		'title'   => __( 'Bank Transfer', 'komoju-woocommerce' ),
 		'type'    => 'checkbox',
-		'label'   => __( 'Allow bank transfer', 'woocommerce' ),
+		'label'   => __( 'Allow bank transfer', 'komoju-woocommerce' ),
 		'default' => 'yes'
 	),
 	'pay_easy' => array(
-		'title'   => __( 'Pay Easy', 'woocommerce' ),
+		'title'   => __( 'Pay Easy', 'komoju-woocommerce' ),
 		'type'    => 'checkbox',
-		'label'   => __( 'Allow delayed payment through Pay Easy', 'woocommerce' ),
+		'label'   => __( 'Allow delayed payment through Pay Easy', 'komoju-woocommerce' ),
 		'default' => 'yes'
 	),
 	'API_settings' => array(
@@ -71,45 +71,45 @@ return array(
 		'id'	=> 'api-seetings-in-komoju'
 	),
 	'accountID' => array(
-		'title'       => __( 'Komoju merchant ID', 'woocommerce' ),
+		'title'       => __( 'Komoju merchant ID', 'komoju-woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Please enter your Komoju account ID.', 'woocommerce' ),
+		'description' => __( 'Please enter your Komoju account ID.', 'komoju-woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
 	'secretKey' => array(
-		'title'       => __( 'Secret Key from Komoju', 'woocommerce' ),
+		'title'       => __( 'Secret Key from Komoju', 'komoju-woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Please enter your Komoju secret key.', 'woocommerce' ),
+		'description' => __( 'Please enter your Komoju secret key.', 'komoju-woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
 	'callbackURL' => array(
-		'title'       => __( 'Callback Url', 'woocommerce' ),
+		'title'       => __( 'Callback Url', 'komoju-woocommerce' ),
 		'type'        => 'text',
-		'description' => sprintf( __( 'Specify a special callback url (or leave this field empty if you don\'t know what it is). Default url is %s', 'woocommerce' ), $this->get_mydefault_api_url() ),
+		'description' => sprintf( __( 'Specify a special callback url (or leave this field empty if you don\'t know what it is). Default url is %s', 'komoju-woocommerce' ), $this->get_mydefault_api_url() ),
 		'default'     => '',
 	),
 	'testmode' => array(
-		'title'       => __( 'Komoju Sandbox', 'woocommerce' ),
+		'title'       => __( 'Komoju Sandbox', 'komoju-woocommerce' ),
 		'type'        => 'checkbox',
-		'label'       => __( 'Enable Komoju sandbox', 'woocommerce' ),
+		'label'       => __( 'Enable Komoju sandbox', 'komoju-woocommerce' ),
 		'default'     => 'yes',
-		'description' => sprintf( __( 'When checked, your Komoju sandbox will be used in order to test payments. Sign up for a developer account <a href="%s">here</a>.', 'woocommerce' ), 'https://sandbox.komoju.com/sign_up' ),
+		'description' => sprintf( __( 'When checked, your Komoju sandbox will be used in order to test payments. Sign up for a developer account <a href="%s">here</a>.', 'komoju-woocommerce' ), 'https://sandbox.komoju.com/sign_up' ),
 	),
 	'invoice_prefix' => array(
-		'title'       => __( 'Invoice Prefix', 'woocommerce' ),
+		'title'       => __( 'Invoice Prefix', 'komoju-woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Please enter a prefix for your invoice numbers. If you use your Komoju account for multiple stores ensure this prefix is unique.', 'woocommerce' ),
+		'description' => __( 'Please enter a prefix for your invoice numbers. If you use your Komoju account for multiple stores ensure this prefix is unique.', 'komoju-woocommerce' ),
 		'default'     => 'WC-',
 		'desc_tip'    => true,
 	),
 	'debug' => array(
-		'title'       => __( 'Debug Log', 'woocommerce' ),
+		'title'       => __( 'Debug Log', 'komoju-woocommerce' ),
 		'type'        => 'checkbox',
-		'label'       => __( 'Enable logging', 'woocommerce' ),
+		'label'       => __( 'Enable logging', 'komoju-woocommerce' ),
 		'default'     => 'no',
-		'description' => sprintf( __( 'Log Komoju events inside <code>%s</code>', 'woocommerce' ), wc_get_log_file_path( 'komoju' ) )
+		'description' => sprintf( __( 'Log Komoju events inside <code>%s</code>', 'komoju-woocommerce' ), wc_get_log_file_path( 'komoju' ) )
 	),
 );
 ?>

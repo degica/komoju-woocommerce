@@ -1,0 +1,7 @@
+#!/bin/bash
+xgettext -j -L php  -k"__" -k"_e" --from-code=UTF-8 \
+  --copyright-holder="Degica Ltd." \
+  --package-name="komoju-woocommerce" \
+  --sort-by-file \
+  -o languages/komoju-woocommerce.pot  \
+  *.php **/*.php
