@@ -1,6 +1,8 @@
 **THIS PLUGIN IS CURRENTLY UNMAINTAINED AND PROVIDED AS-IS, WITHOUT ANY
 GUARANTEE OF SUPPORT.**
 
+---
+
 ## Komoju for WooCommerce.
 
 Japanese payments for WooCommerce.
