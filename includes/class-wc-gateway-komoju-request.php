@@ -40,17 +40,11 @@ class WC_Gateway_Komoju_Request {
 	/**
 	 * Get the Komoju request URL for an order
 	 * @param  WC_Order  $order
-	 * @param  boolean $sandbox
 	 * @return string
 	 */
-	public function get_request_url( $order, $sandbox = false, $method = 'credit_card' ) {
+	public function get_request_url( $order, $method = 'credit_card' ) {
 		$komoju_args = $this->get_komoju_args( $order, $method );
-
-		if ( $sandbox ) {
-			return 'https://sandbox.komoju.com' . $this->Komoju_endpoint.$method.'/new'.'?' .$komoju_args;
-		} else {
-			return 'https://komoju.com' . $this->Komoju_endpoint.$method.'/new'.'?' .$komoju_args;
-		}
+        return 'https://komoju.com' . $this->Komoju_endpoint.$method.'/new'.'?' .$komoju_args;
 	}
 
 	/**

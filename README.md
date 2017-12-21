@@ -22,8 +22,6 @@ WooCommerce payment section.
 Enable the payment gateway and configure the account as described in the
 'Installation' section.
 
-The module should first be set to test mode (sandbox).
-
 Note - an account with [Komoju](https://komoju.com) is required before using this
 module.
 
@@ -57,7 +55,7 @@ Click the Enable/Disable Box to enable this gateway.
 
 Enter your Komoju API credentials in this configuration page. Those data to set here are the ones defined in your Komoju dashboard.
 Make sure they match.
-Always start the configuration by enabling the sandbox mode and do a few tests before going live.
+Always start the configuration by using the test mode credentials and do a few tests before going live.
 
 To enable Debug click the 'Enable logging' box.
 

@@ -16,11 +16,10 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	/**
 	 * Constructor
 	 */
-	public function __construct( $sandbox = false, $notify_url = '', $secret_key = '', $invoice_prefix = ''  ) {
+	public function __construct( $notify_url = '', $secret_key = '', $invoice_prefix = ''  ) {
 		add_action( 'woocommerce_api_wc_gateway_komoju', array( $this, 'check_response' ) );
 		add_action( 'valid-komoju-standard-ipn-request', array( $this, 'valid_response' ) );
 
-		$this->sandbox        	= $sandbox;
 		$this->notify_url	  	= $notify_url;
 		$this->secret_key	  	= $secret_key;
 		$this->invoice_prefix	= $invoice_prefix;
