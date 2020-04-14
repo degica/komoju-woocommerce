@@ -90,13 +90,6 @@ return array(
 		'description' => sprintf( __( 'Specify a special callback url (or leave this field empty if you don\'t know what it is). Default url is %s', 'komoju-woocommerce' ), $this->get_mydefault_api_url() ),
 		'default'     => '',
 	),
-	'testmode' => array(
-		'title'       => __( 'Komoju Sandbox', 'komoju-woocommerce' ),
-		'type'        => 'checkbox',
-		'label'       => __( 'Enable Komoju sandbox', 'komoju-woocommerce' ),
-		'default'     => 'yes',
-		'description' => sprintf( __( 'When checked, your Komoju sandbox will be used in order to test payments. Sign up for a developer account <a href="%s">here</a>.', 'komoju-woocommerce' ), 'https://sandbox.komoju.com/sign_up' ),
-	),
 	'invoice_prefix' => array(
 		'title'       => __( 'Invoice Prefix', 'komoju-woocommerce' ),
 		'type'        => 'text',
