@@ -13,4 +13,7 @@ RUN apt-get update \
     && rm /tmp/relative-url.zip \
     && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /var/www/html/wp-content/uploads/wc-logs/ \
+    && chown -R www-data /var/www/html/wp-content/uploads/wc-logs/
+
 COPY . /var/www/html/wp-content/plugins/komoju-woocommerce
