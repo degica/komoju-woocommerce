@@ -84,6 +84,13 @@ return array(
 		'default'     => '',
 		'desc_tip'    => true,
 	),
+	'webhookSecretToken' => array(
+		'title' 	  => __('Webhook Secret Token', 'komoju-woocommerce'),
+		'type' 		  => 'text',
+		'description' => __( 'Please enter your Komoju Webhook Secret Token'),
+		'default' 	  => '',
+		'desc_tip'    => true,
+	),
 	'callbackURL' => array(
 		'title'       => __( 'Callback Url', 'komoju-woocommerce' ),
 		'type'        => 'text',

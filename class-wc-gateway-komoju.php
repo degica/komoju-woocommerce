@@ -39,7 +39,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 		$this->invoice_prefix		= $this->get_option( 'invoice_prefix' );
         $this->accountID     		= $this->get_option( 'accountID' );
         $this->secretKey     		= $this->get_option( 'secretKey' );
-        $this->callbackURL     		= $this->get_option( 'callbackURL' );
+		$this->callbackURL     		= $this->get_option( 'callbackURL' );
+		$this->webhookSecretToken   = $this->get_option( 'webhookSecretToken' );
 		// supported payment gateways chosen by the merchant (among the ones Komoju is providing)
 		$this->credit_card			= $this->get_option( 'credit_card' );
 		$this->web_money			= $this->get_option( 'web_money' );
