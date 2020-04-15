@@ -71,7 +71,7 @@ class WC_Gateway_Komoju_Request {
 				"transaction[tax]"							=> strlen($order->get_total_tax())==0 ? 0 : $order->get_total_tax(),
 				"timestamp"									=> time(),
 		);
-		WC_Gateway_Komoju::log( 'Raw parametres: ' .print_r( $params, true) );
+		WC_Gateway_Komoju::log( 'Raw parameters: ' .print_r( $params, true) );
 
 		$qs_params = array();
 		foreach ($params as $key => $val) {
