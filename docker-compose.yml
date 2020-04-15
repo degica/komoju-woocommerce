@@ -28,6 +28,9 @@ services:
      environment:
        WORDPRESS_DB_HOST: db:3306
        WORDPRESS_DB_PASSWORD: wordpress
+       WORDPRESS_CONFIG_EXTRA: |
+        define('WP_SITEURL', 'http://' . $$_SERVER['HTTP_HOST']);
+        define('WP_HOME', 'http://' . $$_SERVER['HTTP_HOST']);
      volumes:
         - .:/var/www/html/wp-content/plugins/komoju-woocommerce
 volumes:

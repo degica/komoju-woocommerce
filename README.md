@@ -84,6 +84,23 @@ This is a free plugin for use by Komoju customers. This code is not be traded or
 
 ## Development
 
+### Testing Locally
+
+To test locally you can start wordpress in Docker:
+```bash
+$ docker-compose up
+```
+
+This will start the Wordpress instance on http://127.0.0.1 (Note: It **has** to be 127.0.0.1, `localhost` will not work). Once the WordPress site is configured, activate the WooCommerce plugin, the Relative URLs plugin and the Komoju WooCommerce plugin, then configure them as directed in the Installation section above.
+
+Because the Komoju plugin uses webhooks to receive notifications once the payment is complete the wordpress instance will need to be accessible to the internet. This can be done with [ngrok](https://ngrok.com/):
+
+```
+ngrok http -host-header=rewrite http://127.0.0.1:8000
+```
+
+This will create a tunnel from the address ngrok gives you to the WordPress site. In the Komoju dashboard make sure to configure the webhook to point the the ngrok address. **Note:** This only seems to work with FireFox, Chrome seems to time out trying to access the WordPress site through the ngrok tunnel.
+
 ### Translations
 
 To create a pot file from source code, execute the following command:
