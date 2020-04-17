@@ -98,4 +98,12 @@ class WC_Gateway_Komoju_Webhook_Event {
     public function amount() {
         return $this->data()['amount'];
     }
+
+    /**
+     * A get to retrieve the amount refunded from the webhook event. This will
+     * only be sent on payment.refunded events
+     */
+    public function amount_refunded() {
+        return $this->data()['amount_refunded'];
+    }
 }

@@ -191,7 +191,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	protected function payment_status_refunded( $order, $webhookEvent ) {
 		// Only handle full refunds, not partial
 		WC_Gateway_Komoju::log( 'Only handling full refund. Controlling that order total equals amount refunded. Does '.$order->get_total().' equals '.$webhookEvent->grand_total().' ?' );
-		if ( $order->get_total() == ( $webhookEvent->grand_total() ) ) {
+		if ( $order->get_total() == ( $webhookEvent->amount_refunded() ) ) {
 
 			// Mark order as refunded
 			$order->update_status( 'refunded', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), strtolower( $webhookEvent->status() ) ) );
