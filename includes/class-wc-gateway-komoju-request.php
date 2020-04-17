@@ -67,7 +67,7 @@ class WC_Gateway_Komoju_Request {
 				"transaction[external_order_num]"			=> $this->gateway->get_option( 'invoice_prefix' ) . $order->get_order_number() . '-' . $this->request_id,
 				"transaction[return_url]"					=> $this->gateway->get_return_url( $order ),
 				"transaction[cancel_url]"					=> $order->get_cancel_order_url_raw(),
-				"transaction[callback_url]"					=> $this->notify_url,
+				// "transaction[callback_url]"					=> $this->notify_url,
 				"transaction[tax]"							=> strlen($order->get_total_tax())==0 ? 0 : $order->get_total_tax(),
 				"timestamp"									=> time(),
 		);

@@ -64,7 +64,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 			WC_Gateway_Komoju::log( 'is not valid for use. No IPN set.' );
 		} else {
 			include_once( 'includes/class-wc-gateway-komoju-ipn-handler.php' );
-			new WC_Gateway_Komoju_IPN_Handler( $this->notify_url, $this->secretKey, $this->invoice_prefix );
+			new WC_Gateway_Komoju_IPN_Handler( $this->webhookSecretToken, $this->secretKey, $this->invoice_prefix );
 		}
 
 	}

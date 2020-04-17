@@ -8,18 +8,18 @@ abstract class WC_Gateway_Komoju_Response {
 	/**
 	 * Get the order from the Komoju 'transaction' variable
 	 *
-	 * @param  array $transaction Data passed back by Komoju
+	 * @param  array $webhookEvent Data passed back by Komoju
 	 * @param  string $invoice_prefix set as an option in Komoju plugin dashboard
 	 * @return bool|WC_Order object
 	 */
-	protected function get_komoju_order( $transaction, $invoice_prefix ) {
+	protected function get_komoju_order( $webhookEvent, $invoice_prefix ) {
 		// We have the data in the correct format, so get the order
-		if ( is_string( $transaction['external_order_num'] ) ){
-			$order_id = $transaction['external_order_num'];
+		if ( is_string( $webhookEvent->external_order_num() ) ){
+			$order_id = $webhookEvent->external_order_num();
 
 			// Nothing was found
 		} else {
-			WC_Gateway_Komoju::log( 'Error: Order ID (external_order_num) was not found in "transaction".' );
+			WC_Gateway_Komoju::log( 'Error: Order ID (external_order_num) was not found in "webhookEvent".' );
 			return false;
 		}
 
