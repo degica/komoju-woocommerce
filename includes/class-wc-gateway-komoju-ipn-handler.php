@@ -52,8 +52,27 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 
 		$order = $this->get_komoju_order( $webhookEvent, $this->invoice_prefix );
 		if ( $order ) {
-			if ( method_exists( $this, 'payment_status_' . $webhookEvent->status() ) ) {
-				call_user_func( array( $this, 'payment_status_' . $webhookEvent->status() ), $order, $webhookEvent );
+			switch($webhookEvent->status()) {
+				case "captured":
+					$this->payment_status_captured( $order, $webhookEvent );
+					break;
+				case "authorized":
+					$this->payment_status_authorized( $order, $webhookEvent );
+					break;
+				case "expired":
+					$this->payment_status_expired( $order, $webhookEvent );
+					break;
+				case "cancelled":
+					$this->payment_status_cancelled( $order, $webhookEvent );
+					break;
+				case "failed":
+					$this->payment_status_failed( $order, $webhookEvent );
+					break;
+				case "refunded":
+					$this->payment_status_refunded( $order, $webhookEvent );
+					break;
+				default:
+					WC_Gateway_Komoju::log( "Unknown webhook sent. Webhook type: " . $webhookEvent->event_type() );
 			}
 		}
 	}
@@ -160,6 +179,10 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	/*protected function payment_status_denied( $order, $posted ) {
 		$this->payment_status_failed( $order, $posted );
 	}*/
+
+	protected function payment_status_failed( $order, $webhookEvent ) {
+		$this->payment_status_cancelled( $order, $webhookEvent );
+	}
 
 	/**
 	 * Handle an expired payment
