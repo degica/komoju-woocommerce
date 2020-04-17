@@ -121,7 +121,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 */
 	protected function validate_amount( $order, $amount ) {
 		if ( number_format( $order->get_total(), 2, '.', '' ) != number_format( $amount, 2, '.', '' ) ) {
-			WC_Gateway_Komoju::log( 'Payment error: Amounts do not match (total: ' . $amount . ') for order #'.$order->id.'('.$order->get_total().')' );
+			WC_Gateway_Komoju::log( 'Payment error: Amounts do not match (total: ' . $amount . ') for order #'.$order->get_id().'('.$order->get_total().')' );
 
 			// Put this order on-hold for manual checking
 			$order->update_status( 'on-hold', sprintf( __( 'Validation error: Komoju amounts do not match (total %s).', 'komoju-woocommerce' ), $amount ) );
@@ -135,7 +135,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 */
 	protected function payment_status_captured( $order, $webhookEvent ) {
 		if ( $order->has_status( 'captured' ) ) {
-			WC_Gateway_Komoju::log( 'Aborting, Order #' . $order->id . ' is already complete.' );
+			WC_Gateway_Komoju::log( 'Aborting, Order #' . $order->get_id() . ' is already complete.' );
 			exit;
 		}
 		
@@ -148,7 +148,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 
 			if ( ! empty( $webhookEvent->payment_method_fee() ) ) {
 				// log komoju transaction fee
-				update_post_meta( $order->id, 'Payment Gateway Transaction Fee', wc_clean( $webhookEvent->payment_method_fee() ) );
+				update_post_meta( $order->get_id(), 'Payment Gateway Transaction Fee', wc_clean( $webhookEvent->payment_method_fee() ) );
 			}
 
 		} else {
@@ -181,7 +181,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 * @param  WC_Order $order
 	 */
 	protected function payment_status_authorized( $order, $webhookEvent ) {
-		update_post_meta( $order->id, sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( webhookResponse.status() ) ) );
+		update_post_meta( $order->get_id(), sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( webhookResponse.status() ) ) );
 	}
 
 	/**
@@ -209,13 +209,13 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 */
 	protected function save_komoju_meta_data( $order, $webhookEvent ) {
 		if ( ! empty( $webhookEvent->tax() ) ) {
-			update_post_meta( $order->id, 'Tax', wc_clean( $webhookEvent->tax() ) );
+			update_post_meta( $order->get_id(), 'Tax', wc_clean( $webhookEvent->tax() ) );
 		}
 		if ( ! empty( $webhookEvent->amount() ) ) {
-			update_post_meta( $order->id, 'Amount', wc_clean( $webhookEvent->amount() ) );
+			update_post_meta( $order->get_id(), 'Amount', wc_clean( $webhookEvent->amount() ) );
 		}
 		if ( ! empty( $webhookEvent->additional_information() ) ) {
-			update_post_meta( $order->id, 'Additional info', wc_clean( print_r( $webhookEvent->additional_information(), true) ) );
+			update_post_meta( $order->get_id(), 'Additional info', wc_clean( print_r( $webhookEvent->additional_information(), true) ) );
 		}
 	}
 
