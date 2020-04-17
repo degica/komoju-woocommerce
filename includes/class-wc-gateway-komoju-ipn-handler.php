@@ -157,28 +157,12 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	}
 
 	/**
-	 * Handle a pending payment
-	 * @param  WC_Order $order
-	 */
-	protected function payment_status_pending( $order, $webhookEvent ) {
-		$this->payment_status_captured( $order, $webhookEvent );
-	}
-
-	/**
 	 * Handle a cancelled payment
 	 * @param  WC_Order $order
 	 */
 	protected function payment_status_cancelled( $order, $webhookEvent ) {
 		$order->update_status( 'cancelled', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( $webhookEvent->status() ) ) );
 	}
-
-	/**
-	 * Handle a denied payment
-	 * @param  WC_Order $order
-	 */
-	/*protected function payment_status_denied( $order, $posted ) {
-		$this->payment_status_failed( $order, $posted );
-	}*/
 
 	protected function payment_status_failed( $order, $webhookEvent ) {
 		$this->payment_status_cancelled( $order, $webhookEvent );
