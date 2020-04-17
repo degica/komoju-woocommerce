@@ -78,7 +78,7 @@ with this module, please contact https://www.degica.com/contact/
 
 ## License
 
-Komoju WooCommerce plugin copyright © 2016 by Degica Ltd.
+Komoju WooCommerce plugin copyright © 2020 by Degica Ltd.
 
 This is a free plugin for use by Komoju customers. This code is not be traded or sold for profit.
 
