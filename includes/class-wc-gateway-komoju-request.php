@@ -21,18 +21,11 @@ class WC_Gateway_Komoju_Request {
 	protected $gateway;
 
 	/**
-	 * Endpoint for requests from Komoju
-	 * @var string
-	 */
-	protected $notify_url;
-
-	/**
 	 * Constructor
 	 * @param WC_Gateway_Komoju $gateway
 	 */
 	public function __construct( $gateway ) {
 		$this->gateway    = $gateway;
-		$this->notify_url = $this->gateway->notify_url;
  		$this->request_id = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
 		$this->Komoju_endpoint = '/ja/api/'.$this->gateway->accountID. '/transactions/';
 	}
@@ -55,7 +48,7 @@ class WC_Gateway_Komoju_Request {
 	 * @return array
 	 */
 	protected function get_komoju_args( $order, $method ) {
-		WC_Gateway_Komoju::log( 'Generating payment form for order ' . $order->get_order_number() . '. Notify URL: ' . $this->notify_url );
+		WC_Gateway_Komoju::log( 'Generating payment form for order ' . $order->get_order_number() );
 
 		$params = array(
 				"transaction[amount]"						=> $order->get_subtotal()+$order->get_total_shipping(),
@@ -67,7 +60,6 @@ class WC_Gateway_Komoju_Request {
 				"transaction[external_order_num]"			=> $this->gateway->get_option( 'invoice_prefix' ) . $order->get_order_number() . '-' . $this->request_id,
 				"transaction[return_url]"					=> $this->gateway->get_return_url( $order ),
 				"transaction[cancel_url]"					=> $order->get_cancel_order_url_raw(),
-				// "transaction[callback_url]"					=> $this->notify_url,
 				"transaction[tax]"							=> strlen($order->get_total_tax())==0 ? 0 : $order->get_total_tax(),
 				"timestamp"									=> time(),
 		);

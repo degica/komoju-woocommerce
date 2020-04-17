@@ -80,7 +80,7 @@ class WC_Gateway_Komoju_Webhook_Event {
      */
     public function additional_information() {
         // TODO: this field doesn't seem to exist directly on the response
-        // in the example callback data I've got it looks like it has a 'brand'
+        // in the example webhook data I've got it looks like it has a 'brand'
         // param set to 'master', which is the same as the payment_details object
         return $this->data()['payment_details'];
     }

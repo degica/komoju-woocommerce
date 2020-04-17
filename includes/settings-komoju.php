@@ -91,12 +91,6 @@ return array(
 		'default' 	  => '',
 		'desc_tip'    => true,
 	),
-	'callbackURL' => array(
-		'title'       => __( 'Callback Url', 'komoju-woocommerce' ),
-		'type'        => 'text',
-		'description' => sprintf( __( 'Specify a special callback url (or leave this field empty if you don\'t know what it is). Default url is %s', 'komoju-woocommerce' ), $this->get_mydefault_api_url() ),
-		'default'     => '',
-	),
 	'invoice_prefix' => array(
 		'title'       => __( 'Invoice Prefix', 'komoju-woocommerce' ),
 		'type'        => 'text',
