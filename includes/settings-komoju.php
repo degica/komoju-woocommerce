@@ -68,7 +68,8 @@ return array(
 	'API_settings' => array(
 		'title'	=> 'API Settings',
 		'type'	=> 'title',
-		'id'	=> 'api-seetings-in-komoju'
+		'id'	=> 'api-settings-in-komoju',
+		'description' => sprintf( __( 'Default url for the webhook is %s. Use this if you\'re not sure what it should be.', 'komoju-woocommerce' ), $this->get_mydefault_api_url() )
 	),
 	'accountID' => array(
 		'title'       => __( 'Komoju merchant ID', 'komoju-woocommerce' ),
