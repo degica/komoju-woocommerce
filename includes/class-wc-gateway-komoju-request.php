@@ -62,6 +62,7 @@ class WC_Gateway_Komoju_Request {
 				"transaction[cancel_url]"					=> $order->get_cancel_order_url_raw(),
 				"transaction[tax]"							=> strlen($order->get_total_tax())==0 ? 0 : $order->get_total_tax(),
 				"timestamp"									=> time(),
+				"via"										=> "woocommerce"
 		);
 		WC_Gateway_Komoju::log( 'Raw parameters: ' .print_r( $params, true) );
 
