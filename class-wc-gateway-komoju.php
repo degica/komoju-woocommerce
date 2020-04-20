@@ -178,6 +178,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
     }	
 
 	private function get_mydefault_api_url(){
+		// In dev the relative plugin URL will remove the host name, but it
+		// will appear in production instances
 		return WC()->api_request_url( 'WC_Gateway_Komoju' );
 	}
 
