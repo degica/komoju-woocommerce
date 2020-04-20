@@ -45,6 +45,7 @@ class WC_Gateway_Komoju_Request {
 	 * Get Komoju Args for passing to Komoju hosted page
 	 *
 	 * @param WC_Order $order
+	 * @param string $method the method of payment the user has selected, ie credit-card
 	 * @return array
 	 */
 	protected function get_komoju_args( $order, $method ) {

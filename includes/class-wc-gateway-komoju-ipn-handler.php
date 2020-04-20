@@ -132,6 +132,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	/**
 	 * Handle a captured payment
 	 * @param  WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
 	protected function payment_status_captured( $order, $webhookEvent ) {
 		if ( $order->has_status( 'captured' ) ) {
@@ -159,6 +160,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	/**
 	 * Handle a cancelled payment
 	 * @param  WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
 	protected function payment_status_cancelled( $order, $webhookEvent ) {
 		$order->update_status( 'cancelled', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( $webhookEvent->status() ) ) );
@@ -171,6 +173,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	/**
 	 * Handle an expired payment
 	 * @param  WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
 	protected function payment_status_expired( $order, $webhookEvent ) {
 		$this->payment_status_cancelled( $order, $webhookEvent );
@@ -179,6 +182,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	/**
 	 * Handle an authorized payment
 	 * @param  WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
 	protected function payment_status_authorized( $order, $webhookEvent ) {
 		update_post_meta( $order->get_id(), sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( webhookResponse.status() ) ) );
@@ -187,6 +191,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	/**
 	 * Handle a refunded order
 	 * @param  WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
 	protected function payment_status_refunded( $order, $webhookEvent ) {
 		// Only handle full refunds, not partial
@@ -206,6 +211,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	/**
 	 * Save important data from the IPN to the order
 	 * @param WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
 	protected function save_komoju_meta_data( $order, $webhookEvent ) {
 		if ( ! empty( $webhookEvent->tax() ) ) {

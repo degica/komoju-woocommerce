@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @extends     WC_Payment_Gateway
  * @version     0.1
  * @package     WooCommerce/Classes/Payment
- * @author      WooThemes
+ * @author      Komoju
  */
 class WC_Gateway_Komoju extends WC_Payment_Gateway {
 

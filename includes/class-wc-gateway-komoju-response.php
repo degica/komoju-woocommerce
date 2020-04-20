@@ -8,7 +8,7 @@ abstract class WC_Gateway_Komoju_Response {
 	/**
 	 * Get the order from the Komoju 'transaction' variable
 	 *
-	 * @param  array $webhookEvent Data passed back by Komoju
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 * @param  string $invoice_prefix set as an option in Komoju plugin dashboard
 	 * @return bool|WC_Order object
 	 */
