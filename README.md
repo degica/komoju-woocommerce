@@ -107,6 +107,24 @@ ngrok http -host-header=rewrite http://127.0.0.1:8000
 
 This will create a tunnel from the address ngrok gives you to the WordPress site. In the Komoju dashboard make sure to configure the webhook to point the the ngrok address. **Note:** This only seems to work with FireFox, Chrome seems to time out trying to access the WordPress site through the ngrok tunnel.
 
+### Switching languages
+
+To switch the WordPress instance to Japanese you can specify the language when starting the containers:
+
+```bash
+$ WPLANG=ja docker-compose up
+```
+
+**Note:** This won't switch the language for the rest of the WordPress instance, but it will set the language for the plugin config page.
+
+**Note:** Due to how the Wordpress config is created the language switch will only take effect the first time you build the containers. Afterwards you will need to manually edit the wp-config.php:
+
+```bash
+$ docker-compose exec web bin/bash
+root@42a884a66e73:/var/www/html# vi wp-config.php
+# replace the: define( 'WPLANG' , 'en_US' ); with the desired language, ja for Japanese or en_US for English.
+```
+
 ### Translations
 
 To create a pot file from source code, execute the following command:
