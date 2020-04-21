@@ -152,7 +152,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 			}
 
 		} else {
-			$this->payment_on_hold( $order, sprintf( __( 'Payment pending: %s', 'woocommerce-konomu' ), $webhookEvent->additional_information() ) );
+			$this->payment_on_hold( $order, sprintf( __( 'Payment pending: %s', 'komoju-woocommerce' ), $webhookEvent->additional_information() ) );
 		}
 	}
 
