@@ -144,3 +144,7 @@ To create mo file from a po file, execute the following command:
 ```
 
 You need to execute it every time after updating po files.
+
+#### Updating the existing po files
+
+Rather than having to copy and paste the existing translations across to the new pot file, you can use [poedit](https://poedit.net/download). After generating the POT file as above, open the `komoju-woocommerce-ja.po` file in Poedit, then go to Catalogue->Update from POT File, to automatically update the existing Japanese translations with the new schema. 
