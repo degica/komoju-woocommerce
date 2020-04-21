@@ -3,7 +3,7 @@
 Plugin Name: WooCommerce Komoju Gateway
 Plugin URI: https://komoju.com
 Description: Extends WooCommerce with Komoju gateway.
-Version: 0.1
+Version: 1.0
 Author: Komoju
 Author URI: https://komoju.com
 */
