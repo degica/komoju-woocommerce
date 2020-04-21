@@ -52,18 +52,18 @@ class WC_Gateway_Komoju_Request {
 		WC_Gateway_Komoju::log( 'Generating payment form for order ' . $order->get_order_number() );
 
 		$params = array(
-				"transaction[amount]"						=> $order->get_subtotal()+$order->get_total_shipping(),
-				"transaction[currency]"						=> get_woocommerce_currency(),
-				"transaction[customer][email]"			    => $order->get_billing_email(),
-				"transaction[customer][phone]"			    => $order->get_billing_phone(),
-				"transaction[customer][given_name]"			=> $order->get_billing_first_name(),
-				"transaction[customer][family_name]"		=> $order->get_billing_last_name(),
-				"transaction[external_order_num]"			=> $this->gateway->get_option( 'invoice_prefix' ) . $order->get_order_number() . '-' . $this->request_id,
-				"transaction[return_url]"					=> $this->gateway->get_return_url( $order ),
-				"transaction[cancel_url]"					=> $order->get_cancel_order_url_raw(),
-				"transaction[tax]"							=> strlen($order->get_total_tax())==0 ? 0 : $order->get_total_tax(),
-				"timestamp"									=> time(),
-				"via"										=> "woocommerce"
+				"transaction[amount]"                       => $order->get_subtotal()+$order->get_total_shipping(),
+				"transaction[currency]"                     => get_woocommerce_currency(),
+				"transaction[customer][email]"              => $order->get_billing_email(),
+				"transaction[customer][phone]"              => $order->get_billing_phone(),
+				"transaction[customer][given_name]"         => $order->get_billing_first_name(),
+				"transaction[customer][family_name]"        => $order->get_billing_last_name(),
+				"transaction[external_order_num]"           => $this->gateway->get_option( 'invoice_prefix' ) . $order->get_order_number() . '-' . $this->request_id,
+				"transaction[return_url]"                   => $this->gateway->get_return_url( $order ),
+				"transaction[cancel_url]"                   => $order->get_cancel_order_url_raw(),
+				"transaction[tax]"                          => strlen($order->get_total_tax())==0 ? 0 : $order->get_total_tax(),
+				"timestamp"                                 => time(),
+				"via"                                       => "woocommerce"
 		);
 		WC_Gateway_Komoju::log( 'Raw parameters: ' .print_r( $params, true) );
 
