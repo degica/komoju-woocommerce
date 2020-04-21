@@ -86,7 +86,6 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	public function validate_hmac( $requestBody ) {
 		WC_Gateway_Komoju::log( 'Checking if IPN response is valid' );
 
-		// TODO: check if there's a safer way to access the header
 		$hmacHeader = $_SERVER['HTTP_X_KOMOJU_SIGNATURE'];
 		
 		$calcHmac = hash_hmac('sha256', $requestBody, $this->webhookSecretToken);
