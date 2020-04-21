@@ -19,6 +19,11 @@ class WC_Gateway_Komoju_Webhook_Event {
     public function __construct($requestBody) {
         // TODO: Handle and log json decoding errors
         $this->requestJson = json_decode($requestBody, true);
+
+        if (! empty( last_json_error() )) {
+            $errorMsg = "Komoju IPN Request JSON Decoding Failure. Error: " . last_json_error_message();
+            wp_die( $errorMsg, "Komoju IPN", array( 'response' => 500 ) );
+        }
     }
 
     /**
