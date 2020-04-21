@@ -17,7 +17,6 @@ class WC_Gateway_Komoju_Webhook_Event {
 	 * @param string $requestBody the body of the webhook request
 	 */
     public function __construct($requestBody) {
-        // TODO: Handle and log json decoding errors
         $this->requestJson = json_decode($requestBody, true);
 
         if (! empty( last_json_error() )) {
@@ -92,9 +91,6 @@ class WC_Gateway_Komoju_Webhook_Event {
      * @return array
      */
     public function additional_information() {
-        // TODO: this field doesn't seem to exist directly on the response
-        // in the example webhook data I've got it looks like it has a 'brand'
-        // param set to 'master', which is the same as the payment_details object
         return $this->data()['payment_details'];
     }
 
