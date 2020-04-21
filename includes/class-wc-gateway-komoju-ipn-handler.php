@@ -199,11 +199,6 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 
 			// Mark order as refunded
 			$order->update_status( 'refunded', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), strtolower( $webhookEvent->status() ) ) );
-
-			/*$this->send_ipn_email_notification(
-				sprintf( __( 'Payment for order #%s refunded/reversed', 'woocommerce' ), $order->get_order_number() ),
-				sprintf( __( 'Order #%s has been marked as refunded - Komoju reason code: %s', 'woocommerce' ), $order->get_order_number(), $posted['reason_code'] )
-			);*/
 		}
 	}
 
@@ -223,17 +218,4 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 			update_post_meta( $order->get_id(), 'Additional info', wc_clean( print_r( $webhookEvent->additional_information(), true) ) );
 		}
 	}
-
-	/**
-	 * Send a notification to the user handling orders.
-	 * @param  string $subject
-	 * @param  string $message
-	 */
-	/*protected function send_ipn_email_notification( $subject, $message ) {
-		$new_order_settings = get_option( 'woocommerce_new_order_settings', array() );
-		$mailer             = WC()->mailer();
-		$message            = $mailer->wrap_message( $subject, $message );
-
-		$mailer->send( ! empty( $new_order_settings['recipient'] ) ? $new_order_settings['recipient'] : get_option( 'admin_email' ), $subject, $message );
-	}*/
 }
