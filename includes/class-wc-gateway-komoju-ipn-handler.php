@@ -184,7 +184,8 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
 	protected function payment_status_authorized( $order, $webhookEvent ) {
-		update_post_meta( $order->get_id(), sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean(  $webhookEvent->status() ) ) );
+		$order->update_status( 'pending-payment');
+		$order->add_order_note(sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( $webhookEvent->status() ) ) );
 	}
 
 	/**
