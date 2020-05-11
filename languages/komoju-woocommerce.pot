@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: komoju-woocommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-21 07:34+0000\n"
+"POT-Creation-Date: 2020-05-11 07:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,8 +94,10 @@ msgstr ""
 #: includes/class-wc-gateway-komoju-ipn-handler.php:165
 #: includes/class-wc-gateway-komoju-ipn-handler.php:177
 #: includes/class-wc-gateway-komoju-ipn-handler.php:187
+#: includes/class-wc-gateway-komoju-ipn-handler.php:188
 #: includes/class-wc-gateway-komoju-ipn-handler.php:190
 #: includes/class-wc-gateway-komoju-ipn-handler.php:201
+#: includes/class-wc-gateway-komoju-ipn-handler.php:202
 #, php-format
 msgid "Payment %s via IPN."
 msgstr ""

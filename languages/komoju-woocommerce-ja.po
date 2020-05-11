@@ -90,8 +90,10 @@ msgstr "決済保留中: %s"
 #: includes/class-wc-gateway-komoju-ipn-handler.php:165
 #: includes/class-wc-gateway-komoju-ipn-handler.php:177
 #: includes/class-wc-gateway-komoju-ipn-handler.php:187
+#: includes/class-wc-gateway-komoju-ipn-handler.php:188
 #: includes/class-wc-gateway-komoju-ipn-handler.php:190
 #: includes/class-wc-gateway-komoju-ipn-handler.php:201
+#: includes/class-wc-gateway-komoju-ipn-handler.php:202
 #, php-format
 msgid "Payment %s via IPN."
 msgstr "IPN 決済を経由: %s。"
