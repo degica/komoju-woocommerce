@@ -65,9 +65,6 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 				case "cancelled":
 					$this->payment_status_cancelled( $order, $webhookEvent );
 					break;
-				case "failed":
-					$this->payment_status_failed( $order, $webhookEvent );
-					break;
 				case "refunded":
 					$this->payment_status_refunded( $order, $webhookEvent );
 					break;
@@ -163,10 +160,6 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 */
 	protected function payment_status_cancelled( $order, $webhookEvent ) {
 		$order->update_status( 'cancelled', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( $webhookEvent->status() ) ) );
-	}
-
-	protected function payment_status_failed( $order, $webhookEvent ) {
-		$this->payment_status_cancelled( $order, $webhookEvent );
 	}
 
 	/**

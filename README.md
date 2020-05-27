@@ -63,7 +63,6 @@ To ensure that the WooCommerce plugin works correctly you will need to set up a 
 - payment.expired
 - payment.cancelled
 - payment.refunded
-- payment.failed
 
 Ensure that the "Active" checkbox is also ticked and then click "Create Webhook". 
 
