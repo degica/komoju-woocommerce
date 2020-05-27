@@ -4,36 +4,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 include_once( 'class-wc-gateway-komoju-response.php' );
+include_once( 'class-wc-gateway-komoju-webhook-event.php');
 
 /**
  * Handles responses from Komoju IPN
  */
 class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 
-	protected $notify_url;
+	protected $webhookSecretToken;
 	protected $secret_key;
 	protected $invoice_prefix;
 	/**
 	 * Constructor
 	 */
-	public function __construct( $sandbox = false, $notify_url = '', $secret_key = '', $invoice_prefix = ''  ) {
+	public function __construct( $webhookSecretToken = '', $secret_key = '', $invoice_prefix = ''  ) {
 		add_action( 'woocommerce_api_wc_gateway_komoju', array( $this, 'check_response' ) );
 		add_action( 'valid-komoju-standard-ipn-request', array( $this, 'valid_response' ) );
 
-		$this->sandbox        	= $sandbox;
-		$this->notify_url	  	= $notify_url;
-		$this->secret_key	  	= $secret_key;
-		$this->invoice_prefix	= $invoice_prefix;
+		$this->webhookSecretToken	  	= $webhookSecretToken;
+		$this->secret_key	   	        = $secret_key;
+		$this->invoice_prefix			= $invoice_prefix;
 	}
 
 	/**
 	 * Check for Komoju IPN Response
 	 */
 	public function check_response() {
-		if ( ! empty( $_GET ) && $this->validate_hmac() ) {
-			$posted = wp_unslash( $_GET );
+		$entityBody = file_get_contents('php://input');
 
-			do_action( "valid-komoju-standard-ipn-request", $posted['transaction'] );
+		if ( ! empty( $entityBody ) && $this->validate_hmac($entityBody) ) {
+			$webhookEvent = new WC_Gateway_Komoju_Webhook_Event($entityBody);
+
+			do_action( "valid-komoju-standard-ipn-request", $webhookEvent );
 			exit;
 		}
 		wp_die( "Komoju IPN Request Failure", "Komoju IPN", array( 'response' => 500 ) );
@@ -41,39 +43,51 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 
 	/**
 	 * There was a valid response
-	 * @param  array $posted Post data after wp_unslash
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
-	public function valid_response( $posted ) {
-		WC_Gateway_Komoju::log( 'External order num: ' . $posted['external_order_num'] );
-		WC_Gateway_Komoju::log( 'Uuid: ' . $posted['uuid'] );
-		WC_Gateway_Komoju::log( 'Payment status: ' . $posted['status'] );
+	public function valid_response( $webhookEvent ) {
+		WC_Gateway_Komoju::log( 'External order num: ' . $webhookEvent->external_order_num() );
+		WC_Gateway_Komoju::log( 'Uuid: ' . $webhookEvent->uuid() );
+		WC_Gateway_Komoju::log( 'Payment status: ' . $webhookEvent->status() );
 
-		$order = $this->get_komoju_order( $posted, $this->invoice_prefix );
+		$order = $this->get_komoju_order( $webhookEvent, $this->invoice_prefix );
 		if ( $order ) {
-			if ( method_exists( $this, 'payment_status_' . $posted['status'] ) ) {
-				call_user_func( array( $this, 'payment_status_' . $posted['status'] ), $order, $posted );
+			switch($webhookEvent->status()) {
+				case "captured":
+					$this->payment_status_captured( $order, $webhookEvent );
+					break;
+				case "authorized":
+					$this->payment_status_authorized( $order, $webhookEvent );
+					break;
+				case "expired":
+					$this->payment_status_expired( $order, $webhookEvent );
+					break;
+				case "cancelled":
+					$this->payment_status_cancelled( $order, $webhookEvent );
+					break;
+				case "refunded":
+					$this->payment_status_refunded( $order, $webhookEvent );
+					break;
+				default:
+					WC_Gateway_Komoju::log( "Unknown webhook sent. Webhook type: " . $webhookEvent->event_type() );
 			}
 		}
 	}
 
 	/**
 	 * Check Komoju IPN validity (hmac control)
+	 * @param string $requestBody the body of the request. Needed to correctly
+	 * calculate the HMAC for comparison.
+	 * @return boolean true/false to indicate whether the hmac is valid
 	 */
-	public function validate_hmac() {
+	public function validate_hmac( $requestBody ) {
 		WC_Gateway_Komoju::log( 'Checking if IPN response is valid' );
 
-		// Get post data
-		$posted = wp_unslash( $_SERVER['QUERY_STRING'] ); 
-		$get = wp_unslash( $_GET );
-		$komojuHmac = $get['hmac'];
-		$str = substr($posted, strpos($posted, 'timestamp') );
+		$hmacHeader = $_SERVER['HTTP_X_KOMOJU_SIGNATURE'];
 		
-		// Recalculate the hmac code here in order to compare values
-		$_url = parse_url($this->notify_url);
-		$url = $_url['path']. '?' .$str;
-		$calcHmac = hash_hmac('sha256', $url, $this->secret_key);
+		$calcHmac = hash_hmac('sha256', $requestBody, $this->webhookSecretToken);
 
-		if ($komojuHmac != $calcHmac){
+		if ($hmacHeader != $calcHmac){
 			WC_Gateway_Komoju::log( 'hmac codes (sent by Komoju / recalculated) don\'t match. Exiting the process...' );
 			return false;
 		}
@@ -87,8 +101,8 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 */
 	protected function validate_currency( $order, $currency ) {
 		// Validate currency
-		if ( $order->get_order_currency() != $currency ) {
-			WC_Gateway_Komoju::log( 'Payment error: Currencies do not match (sent "' . $order->get_order_currency() . '" | returned "' . $currency . '")' );
+		if ( $order->get_currency() != $currency ) {
+			WC_Gateway_Komoju::log( 'Payment error: Currencies do not match (sent "' . $order->get_currency() . '" | returned "' . $currency . '")' );
 
 			// Put this order on-hold for manual checking
 			$order->update_status( 'on-hold', sprintf( __( 'Validation error: Komoju currencies do not match (code %s).', 'komoju-woocommerce' ), $currency ) );
@@ -99,10 +113,11 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	/**
 	 * Check payment amount from IPN matches the order
 	 * @param  WC_Order $order
+	 * @param int $amount the order amount
 	 */
 	protected function validate_amount( $order, $amount ) {
 		if ( number_format( $order->get_total(), 2, '.', '' ) != number_format( $amount, 2, '.', '' ) ) {
-			WC_Gateway_Komoju::log( 'Payment error: Amounts do not match (total: ' . $amount . ') for order #'.$order->id.'('.$order->get_total().')' );
+			WC_Gateway_Komoju::log( 'Payment error: Amounts do not match (total: ' . $amount . ') for order #'.$order->get_id().'('.$order->get_total().')' );
 
 			// Put this order on-hold for manual checking
 			$order->update_status( 'on-hold', sprintf( __( 'Validation error: Komoju amounts do not match (total %s).', 'komoju-woocommerce' ), $amount ) );
@@ -113,115 +128,88 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	/**
 	 * Handle a captured payment
 	 * @param  WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
-	protected function payment_status_captured( $order, $posted ) {
+	protected function payment_status_captured( $order, $webhookEvent ) {
 		if ( $order->has_status( 'captured' ) ) {
-			WC_Gateway_Komoju::log( 'Aborting, Order #' . $order->id . ' is already complete.' );
+			WC_Gateway_Komoju::log( 'Aborting, Order #' . $order->get_id() . ' is already complete.' );
 			exit;
 		}
 		
-		$this->validate_currency( $order, $posted['currency'] );
-		$this->validate_amount( $order, $posted['grand_total']-$posted['payment_method_fee'] ); 
-		$this->save_komoju_meta_data( $order, $posted );
+		$this->validate_currency( $order, $webhookEvent->currency() );
+		$this->validate_amount( $order, $webhookEvent->grand_total() - $webhookEvent->payment_method_fee() ); 
+		$this->save_komoju_meta_data( $order, $webhookEvent );
 
-		if ( 'captured' === $posted['status'] ) {
-			$this->payment_complete( $order, ( ! empty( $posted['external_order_num'] ) ? wc_clean( $posted['external_order_num'] ) : '' ), __( 'IPN payment captured', 'komoju-woocommerce' ) );
+		if ( 'captured' === $webhookEvent->status() ) {
+			$this->payment_complete( $order, ( ! empty( $webhookEvent->external_order_num() ) ? wc_clean( $webhookEvent->external_order_num() ) : '' ), __( 'IPN payment captured', 'komoju-woocommerce' ) );
 
-			if ( ! empty( $posted['payment_method_fee'] ) ) {
+			if ( ! empty( $webhookEvent->payment_method_fee() ) ) {
 				// log komoju transaction fee
-				update_post_meta( $order->id, 'Payment Gateway Transaction Fee', wc_clean( $posted['payment_method_fee'] ) );
+				update_post_meta( $order->get_id(), 'Payment Gateway Transaction Fee', wc_clean( $webhookEvent->payment_method_fee() ) );
 			}
 
 		} else {
-			$this->payment_on_hold( $order, sprintf( __( 'Payment pending: %s', 'woocommerce-konomu' ), $posted['additional_information'] ) );
+			$this->payment_on_hold( $order, sprintf( __( 'Payment pending: %s', 'komoju-woocommerce' ), $webhookEvent->additional_information() ) );
 		}
-	}
-
-	/**
-	 * Handle a pending payment
-	 * @param  WC_Order $order
-	 */
-	protected function payment_status_pending( $order, $posted ) {
-		$this->payment_status_captured( $order, $posted );
 	}
 
 	/**
 	 * Handle a cancelled payment
 	 * @param  WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
-	protected function payment_status_cancelled( $order, $posted ) {
-		$order->update_status( 'cancelled', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( $posted['status'] ) ) );
+	protected function payment_status_cancelled( $order, $webhookEvent ) {
+		$order->update_status( 'cancelled', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( $webhookEvent->status() ) ) );
 	}
-
-	/**
-	 * Handle a denied payment
-	 * @param  WC_Order $order
-	 */
-	/*protected function payment_status_denied( $order, $posted ) {
-		$this->payment_status_failed( $order, $posted );
-	}*/
 
 	/**
 	 * Handle an expired payment
 	 * @param  WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
-	protected function payment_status_expired( $order, $posted ) {
-		$this->payment_status_cancelled( $order, $posted );
+	protected function payment_status_expired( $order, $webhookEvent ) {
+		$this->payment_status_cancelled( $order, $webhookEvent );
 	}
 
 	/**
 	 * Handle an authorized payment
 	 * @param  WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
-	protected function payment_status_authorized( $order, $posted ) {
-		update_post_meta( $order->id, sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( $posted['status'] ) ) );
+	protected function payment_status_authorized( $order, $webhookEvent ) {
+		$order->update_status( 'pending-payment');
+		$order->add_order_note(sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), wc_clean( $webhookEvent->status() ) ) );
 	}
 
 	/**
 	 * Handle a refunded order
 	 * @param  WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
-	protected function payment_status_refunded( $order, $posted ) {
+	protected function payment_status_refunded( $order, $webhookEvent ) {
 		// Only handle full refunds, not partial
-		WC_Gateway_Komoju::log( 'Only handling full refund. Controlling that order total equals amount refunded. Does '.$order->get_total().' equals '.$posted['grand_total'].' ?' );
-		if ( $order->get_total() == ( $posted['grand_total'] ) ) {
+		WC_Gateway_Komoju::log( 'Only handling full refund. Controlling that order total equals amount refunded. Does '.$order->get_total().' equals '.$webhookEvent->grand_total().' ?' );
+		if ( $order->get_total() == ( $webhookEvent->amount_refunded() ) ) {
 
 			// Mark order as refunded
-			$order->update_status( 'refunded', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), strtolower( $posted['status'] ) ) );
-
-			/*$this->send_ipn_email_notification(
-				sprintf( __( 'Payment for order #%s refunded/reversed', 'woocommerce' ), $order->get_order_number() ),
-				sprintf( __( 'Order #%s has been marked as refunded - Komoju reason code: %s', 'woocommerce' ), $order->get_order_number(), $posted['reason_code'] )
-			);*/
+			$order->update_status( 'refunded', sprintf( __( 'Payment %s via IPN.', 'komoju-woocommerce' ), strtolower( $webhookEvent->status() ) ) );
 		}
 	}
 
 	/**
 	 * Save important data from the IPN to the order
 	 * @param WC_Order $order
+	 * @param  WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
 	 */
-	protected function save_komoju_meta_data( $order, $posted ) {
-		if ( ! empty( $posted['tax'] ) ) {
-			update_post_meta( $order->id, 'Tax', wc_clean( $posted['tax'] ) );
+	protected function save_komoju_meta_data( $order, $webhookEvent ) {
+		if ( ! empty( $webhookEvent->tax() ) ) {
+			update_post_meta( $order->get_id(), 'Tax', wc_clean( $webhookEvent->tax() ) );
 		}
-		if ( ! empty( $posted['amount'] ) ) {
-			update_post_meta( $order->id, 'Amount', wc_clean( $posted['amount'] ) );
+		if ( ! empty( $webhookEvent->amount() ) ) {
+			update_post_meta( $order->get_id(), 'Amount', wc_clean( $webhookEvent->amount() ) );
 		}
-		if ( ! empty( $posted['additional_information'] ) ) {
-			update_post_meta( $order->id, 'Additional info', wc_clean( print_r( $posted['additional_information'], true) ) );
+		if ( ! empty( $webhookEvent->additional_information() ) ) {
+			update_post_meta( $order->get_id(), 'Additional info', wc_clean( print_r( $webhookEvent->additional_information(), true) ) );
 		}
 	}
-
-	/**
-	 * Send a notification to the user handling orders.
-	 * @param  string $subject
-	 * @param  string $message
-	 */
-	/*protected function send_ipn_email_notification( $subject, $message ) {
-		$new_order_settings = get_option( 'woocommerce_new_order_settings', array() );
-		$mailer             = WC()->mailer();
-		$message            = $mailer->wrap_message( $subject, $message );
-
-		$mailer->send( ! empty( $new_order_settings['recipient'] ) ? $new_order_settings['recipient'] : get_option( 'admin_email' ), $subject, $message );
-	}*/
 }

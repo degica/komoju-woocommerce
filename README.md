@@ -1,8 +1,3 @@
-**THIS PLUGIN IS CURRENTLY UNMAINTAINED AND PROVIDED AS-IS, WITHOUT ANY
-GUARANTEE OF SUPPORT.**
-
----
-
 ## Komoju for WooCommerce.
 
 Japanese payments for WooCommerce.
@@ -24,14 +19,11 @@ Enable the payment gateway and configure the account as described in the
 
 The module should first be set to test mode (sandbox).
 
-Note - an account with [Komoju](https://komoju.com) is required before using this
-module.
+Note - an account with [Komoju](https://komoju.com) is required before using this module.
 
 ## Installation
 
-Upload the contents of this repositoryto your server where wordpress and WooCommerce are installed
-via FTP or other file transfer method to the wordpress/wp-content/plugins
-directory
+Upload the contents of this repository to your server where wordpress and WooCommerce are installed via FTP or other file transfer method to the wordpress/wp-content/plugins directory
 
 The [zip file](https://github.com/komoju/komoju-woocommerce/archive/master.zip) needs to be unzipped as follows :
 
@@ -55,20 +47,33 @@ Click on the 'Komoju' Link just below the top tabbed menu.
 
 Click the Enable/Disable Box to enable this gateway.
 
-Enter your Komoju API credentials in this configuration page. Those data to set here are the ones defined in your Komoju dashboard.
+Enter your Komoju API credentials in this configuration page. Those data to set here are the ones defined in your Komoju dashboard. Ignore the "Webhook Secret Token" for now, as it will be filled out after your Komoju account has been configured.
 Make sure they match.
-Always start the configuration by enabling the sandbox mode and do a few tests before going live.
+Always start the configuration by using the test mode secret key and do a few tests before going live.
 
 To enable Debug click the 'Enable logging' box.
 
-Click Save Changes and the plugin is now ready to be tested.
+
+### Configuring your Komoju account
+
+To ensure that the WooCommerce plugin works correctly you will need to set up a webhook from your Komoju dashboard to the wordpress instance. To do this you will need to go to your [Webhook page on the Komoju dashboard](https://komoju.com/admin/webhooks) and click "New Webhook". If you don't know what the webhook URL should be you can check the admin page for this plugin on your wordpress instance to see the default address. The secret can be anything you want (as long as you remember it), but you must make sure the following events are ticked:
+
+- payment.authorized
+- payment.captured
+- payment.expired
+- payment.cancelled
+- payment.refunded
+
+Ensure that the "Active" checkbox is also ticked and then click "Create Webhook". 
+
+Go back to your Wordpress instance and set the "Webhook Secret Token" value on the Komoju Woocommerce plugin to be the same as the secret set for the webhook.
 
 ## Frequently asked questions
 
-### What versions of WooCommerce is this compatable with?
+### What versions of WooCommerce is this compatible with?
 
 At the moment, this plugin has been tested and is known to work up to version
-2.4.12. If you are using a later version, please contact us regarding this.
+4.0.1. If you are using a later version, please contact us regarding this.
 
 ### Where can I get more information?
 
@@ -78,11 +83,33 @@ with this module, please contact https://www.degica.com/contact/
 
 ## License
 
-Komoju WooCommerce plugin copyright © 2016 by Degica Ltd.
+Komoju WooCommerce plugin copyright © 2020 by Degica Ltd.
 
 This is a free plugin for use by Komoju customers. This code is not be traded or sold for profit.
 
 ## Development
+
+### Testing Locally
+
+Refer to the [Dev setup guide](./docs/dev_setup.md) for a step by step process for configuring WordPress, WooCommerce and the Komoju plugin.
+
+### Switching languages
+
+To switch the WordPress instance to Japanese you can specify the language when starting the containers:
+
+```bash
+$ WPLANG=ja docker-compose up
+```
+
+**Note:** This won't switch the language for the rest of the WordPress instance, but it will set the language for the plugin config page.
+
+**Note:** Due to how the Wordpress config is created the language switch will only take effect the first time you build the containers. Afterwards you will need to manually edit the wp-config.php:
+
+```bash
+$ docker-compose exec web bin/bash
+root@42a884a66e73:/var/www/html# vi wp-config.php
+# replace the: define( 'WPLANG' , 'en_US' ); with the desired language, ja for Japanese or en_US for English.
+```
 
 ### Translations
 
@@ -103,3 +130,7 @@ To create mo file from a po file, execute the following command:
 ```
 
 You need to execute it every time after updating po files.
+
+#### Updating the existing po files
+
+Rather than having to copy and paste the existing translations across to the new pot file, you can use [poedit](https://poedit.net/download). After generating the POT file as above, open the `komoju-woocommerce-ja.po` file in Poedit, then go to Catalogue->Update from POT File, to automatically update the existing Japanese translations with the new schema. 

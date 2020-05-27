@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @extends     WC_Payment_Gateway
  * @version     0.1
  * @package     WooCommerce/Classes/Payment
- * @author      WooThemes
+ * @author      Komoju
  */
 class WC_Gateway_Komoju extends WC_Payment_Gateway {
 
@@ -35,12 +35,11 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 		$this->has_fields         	= true;
 		$this->method_title       	= __( 'Komoju', 'komoju-woocommerce' );
 		$this->method_description 	= __( 'Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce' );
-		$this->testmode       		= 'yes' === $this->get_option( 'testmode', 'yes' );
 		$this->debug          		= 'yes' === $this->get_option( 'debug', 'yes' );
 		$this->invoice_prefix		= $this->get_option( 'invoice_prefix' );
         $this->accountID     		= $this->get_option( 'accountID' );
         $this->secretKey     		= $this->get_option( 'secretKey' );
-        $this->callbackURL     		= $this->get_option( 'callbackURL' );
+		$this->webhookSecretToken   = $this->get_option( 'webhookSecretToken' );
 		// supported payment gateways chosen by the merchant (among the ones Komoju is providing)
 		$this->credit_card			= $this->get_option( 'credit_card' );
 		$this->web_money			= $this->get_option( 'web_money' );
@@ -55,7 +54,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 		$this->title        = $this->get_option( 'title' );
 		$this->description  = $this->get_option( 'description' );
 		$this->instructions = $this->get_option( 'instructions', $this->description );
-		$this->notify_url = $this->callbackURL == '' ? WC()->api_request_url( 'WC_Gateway_Komoju' ) : $this->callbackURL;
 		// Filters
 		// Actions
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -64,7 +62,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 			WC_Gateway_Komoju::log( 'is not valid for use. No IPN set.' );
 		} else {
 			include_once( 'includes/class-wc-gateway-komoju-ipn-handler.php' );
-			new WC_Gateway_Komoju_IPN_Handler( $this->testmode, $this->notify_url, $this->secretKey, $this->invoice_prefix );
+			new WC_Gateway_Komoju_IPN_Handler( $this->webhookSecretToken, $this->secretKey, $this->invoice_prefix );
 		}
 
 	}
@@ -123,7 +121,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 		$komoju_request = new WC_Gateway_Komoju_Request( $this );
 		return array(
 			'result'   => 'success',
-			'redirect' => $komoju_request->get_request_url( $order, $this->testmode, $_POST['komoju-method'] ) 
+			'redirect' => $komoju_request->get_request_url( $order, $_POST['komoju-method'] ) 
 		);
 	}
 
@@ -180,6 +178,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
     }	
 
 	private function get_mydefault_api_url(){
+		// In dev the relative plugin URL will remove the host name, but it
+		// will appear in production instances
 		return WC()->api_request_url( 'WC_Gateway_Komoju' );
 	}
 

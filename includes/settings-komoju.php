@@ -68,7 +68,8 @@ return array(
 	'API_settings' => array(
 		'title'	=> 'API Settings',
 		'type'	=> 'title',
-		'id'	=> 'api-seetings-in-komoju'
+		'id'	=> 'api-settings-in-komoju',
+		'description' => sprintf( __( 'Default url for the webhook is %s. Use this if you\'re not sure what it should be.', 'komoju-woocommerce' ), $this->get_mydefault_api_url() )
 	),
 	'accountID' => array(
 		'title'       => __( 'Komoju merchant ID', 'komoju-woocommerce' ),
@@ -84,18 +85,12 @@ return array(
 		'default'     => '',
 		'desc_tip'    => true,
 	),
-	'callbackURL' => array(
-		'title'       => __( 'Callback Url', 'komoju-woocommerce' ),
-		'type'        => 'text',
-		'description' => sprintf( __( 'Specify a special callback url (or leave this field empty if you don\'t know what it is). Default url is %s', 'komoju-woocommerce' ), $this->get_mydefault_api_url() ),
-		'default'     => '',
-	),
-	'testmode' => array(
-		'title'       => __( 'Komoju Sandbox', 'komoju-woocommerce' ),
-		'type'        => 'checkbox',
-		'label'       => __( 'Enable Komoju sandbox', 'komoju-woocommerce' ),
-		'default'     => 'yes',
-		'description' => sprintf( __( 'When checked, your Komoju sandbox will be used in order to test payments. Sign up for a developer account <a href="%s">here</a>.', 'komoju-woocommerce' ), 'https://sandbox.komoju.com/sign_up' ),
+	'webhookSecretToken' => array(
+		'title' 	  => __('Webhook Secret Token', 'komoju-woocommerce'),
+		'type' 		  => 'text',
+		'description' => __( 'Please enter your Komoju Webhook Secret Token', 'komoju-woocommerce'),
+		'default' 	  => '',
+		'desc_tip'    => true,
 	),
 	'invoice_prefix' => array(
 		'title'       => __( 'Invoice Prefix', 'komoju-woocommerce' ),
