@@ -1,4 +1,5 @@
 === Komoju Payments ===
+Contributors: degica
 Tags: WooCommerce,Payment Gateway,Komoju
 Requires at least: 5.3
 Tested up to: 5.4
@@ -48,7 +49,17 @@ Ensure that the "Active" checkbox is also ticked and then click "Create Webhook"
 
 Go back to your Wordpress instance and set the "Webhook Secret Token" value on the Komoju Woocommerce plugin to be the same as the secret set for the webhook.
 
-If you have any concerns please contact us at support@degica.com.
+== Frequently Asked Questions ==
+
+= What versions of WooCommerce is this compatible with? =
+
+At the moment, this plugin has been tested and is known to work up to version
+4.0.1. If you are using a later version, please contact us regarding this.
+
+= Where can I get more information? =
+
+Please contact support@degica.com if you have any questions about
+the installation of the module.
 
 == Changelog ==
 
