@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WooCommerce Komoju Gateway
+Plugin Name: Komoju Payments
 Plugin URI: https://komoju.com
 Description: Extends WooCommerce with Komoju gateway.
 Version: 1.0
