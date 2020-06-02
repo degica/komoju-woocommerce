@@ -1,4 +1,4 @@
-=== Komoju Payments ===
+=== Komoju ===
 Contributors: degica
 Tags: WooCommerce,Payment Gateway,Komoju
 Requires at least: 5.3
@@ -8,11 +8,11 @@ Requires PHP: 7.2
 License: MIT
 License URI: https://directory.fsf.org/wiki/License:X11
 
-A WooCommerce plugin to receive payments with Komoju, Japan's leading provider for online and offline payments.
+Built for developers, KOMOJU is the easiest way to integrate Japanese payments into your WooCommerce store.
 
 == Description ==
 
-The Komoju Payments WooCommerce plugin allows customers to checkout with a variety of Japanese payment options, include Credit Card, Konbini, Webmoney and more.
+The Komoju Payments WooCommerce plugin allows customers to checkout with a variety of Japanese payment options, including Credit Card, Konbini, Webmoney and more.
 
 To use this plugin you must have a [Komoju account](https://komoju.com/).
 
@@ -21,7 +21,7 @@ Login to Wordpress as Administrator
 
 Click on the 'Plugins' menu on the left hand side.
 
-You should see the WooCommerce Komoju Gateway listed among the plugins list. Click the Activate Link for this gateway.
+You should see the WooCommerce Komoju Gateway listed among the plugins. Click the Activate Link for this gateway.
 Next you need to configure the Plugin in WooCommerce. To do so, from the left hand menu, select 'WooCommerce' and then 'Settings'.
 
 Then click 'Checkout' from the Top Menu.
@@ -30,7 +30,9 @@ Click on the 'Komoju' Link just below the top tabbed menu.
 
 Click the Enable/Disable Box to enable this gateway.
 
-Enter your Komoju API credentials in this configuration page. Those data to set here are the ones defined in your Komoju dashboard. Ignore the "Webhook Secret Token" for now, as it will be filled out after your Komoju account has been configured.
+Enter your Komoju API credentials in this configuration page. The information to set here is defined in your Komoju Merchant Settings page. Ignore the "Webhook Secret Token" for now, as it will be filled out after your Komoju account has been configured.
+The value for "Komoju merchant ID" field is the Merchant UUID value on the Merchant Settings page.
+The value for the "Secret Key from Komoju" field is the Secret Key value on the Merchant Settings page. 
 Make sure they match.
 Always start the configuration by using the test mode secret key and do a few tests before going live.
 
@@ -58,7 +60,7 @@ At the moment, this plugin has been tested and is known to work up to version
 
 = Where can I get more information? =
 
-Please contact support@degica.com if you have any questions about
+Please contact contact@degica.com if you have any questions about
 the installation of the module.
 
 == Changelog ==
