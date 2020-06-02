@@ -1,4 +1,4 @@
-=== Komoju ===
+=== KOMOJU ===
 Contributors: degica
 Tags: WooCommerce,Payment Gateway,Komoju
 Requires at least: 5.3
@@ -12,9 +12,9 @@ Built for developers, KOMOJU is the easiest way to integrate Japanese payments i
 
 == Description ==
 
-The Komoju Payments WooCommerce plugin allows customers to checkout with a variety of Japanese payment options, including Credit Card, Konbini, Webmoney and more.
+The KOMOJU plugin allows customers to checkout with a variety of Japanese payment options, including Credit Card, Konbini, Webmoney and more.
 
-To use this plugin you must have a [Komoju account](https://komoju.com/).
+To use this plugin you must have a [KOMOJU account](https://komoju.com/).
 
 = Configuration Instructions =
 Login to Wordpress as Administrator 
@@ -30,7 +30,7 @@ Click on the 'Komoju' Link just below the top tabbed menu.
 
 Click the Enable/Disable Box to enable this gateway.
 
-Enter your Komoju API credentials in this configuration page. The information to set here is defined in your Komoju Merchant Settings page. Ignore the "Webhook Secret Token" for now, as it will be filled out after your Komoju account has been configured.
+Enter your KOMOJU API credentials in this configuration page. The information to set here is defined in your KOMOJU Merchant Settings page. Ignore the "Webhook Secret Token" for now, as it will be filled out after your Komoju account has been configured.
 The value for "Komoju merchant ID" field is the Merchant UUID value on the Merchant Settings page.
 The value for the "Secret Key from Komoju" field is the Secret Key value on the Merchant Settings page. 
 Make sure they match.
@@ -39,7 +39,7 @@ Always start the configuration by using the test mode secret key and do a few te
 To enable Debug click the 'Enable logging' box.
 
 = Configuring your Komoju account =
-To ensure that the WooCommerce plugin works correctly you will need to set up a webhook from your Komoju dashboard to the wordpress instance. To do this you will need to go to your [Webhook page on the Komoju dashboard](https://komoju.com/admin/webhooks) and click "New Webhook". If you don't know what the webhook URL should be you can check the admin page for this plugin on your wordpress instance to see the default address. The secret can be anything you want (as long as you remember it), but you must make sure the following events are ticked:
+To ensure that the WooCommerce plugin works correctly you will need to set up a webhook from your KOMOJU dashboard to the wordpress instance. To do this you will need to go to your [Webhook page on the Komoju dashboard](https://komoju.com/admin/webhooks) and click "New Webhook". If you don't know what the webhook URL should be you can check the admin page for this plugin on your wordpress instance to see the default address. The secret can be anything you want (as long as you remember it), but you must make sure the following events are ticked:
 
 - payment.authorized
 - payment.captured
