@@ -77,9 +77,9 @@ At the moment, this plugin has been tested and is known to work up to version
 
 ### Where can I get more information?
 
-Please contact support@degica.com if you have any questions about
-the installation of the module. If you would like to setup an account to use
-with this module, please contact https://www.degica.com/contact/
+Please contact contact@komoju.com if you have any questions about
+the installation of the module. If you would like to set up an account to use with this plugin, please sign up at https://www.komoju.com.
+
 
 ## License
 

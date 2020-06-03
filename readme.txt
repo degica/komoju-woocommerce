@@ -60,7 +60,7 @@ At the moment, this plugin has been tested and is known to work up to version
 
 = Where can I get more information? =
 
-Please contact contact@degica.com if you have any questions about
+Please contact contact@komoju.com if you have any questions about
 the installation of the module.
 
 == Changelog ==
