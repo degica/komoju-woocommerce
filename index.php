@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: KOMOJU
-Plugin URI: https://komoju.com
+Plugin URI: https://github.com/komoju/komoju-woocommerce
 Description: Extends WooCommerce with KOMOJU gateway.
 Version: 1.0
 Author: KOMOJU
