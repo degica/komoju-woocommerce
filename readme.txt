@@ -16,7 +16,12 @@ The KOMOJU plugin allows customers to checkout with a variety of Japanese paymen
 
 To use this plugin you must have a [KOMOJU account](https://komoju.com/).
 
-= Configuration Instructions =
+== Installation ==
+
+1. Upload the plugin to your server where wordpress and WooCommerce are installed via FTP or other file transfer method to the wordpress/wp-content/plugins directory
+1. Change to the plugin directory
+1. Run: `unzip woocommerce-komoju.zip`
+
 Login to Wordpress as Administrator 
 
 Click on the 'Plugins' menu on the left hand side.
