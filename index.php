@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: WooCommerce Komoju Gateway
+Plugin Name: KOMOJU
 Plugin URI: https://komoju.com
-Description: Extends WooCommerce with Komoju gateway.
+Description: Extends WooCommerce with KOMOJU gateway.
 Version: 1.0
-Author: Komoju
+Author: KOMOJU
 Author URI: https://komoju.com
 */
 
