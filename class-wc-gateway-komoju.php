@@ -120,7 +120,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 		$order          = wc_get_order( $order_id );
 		$komoju_request = new WC_Gateway_Komoju_Request( $this );
 		$payment_method = sanitize_text_field($_POST['komoju-method']);
-		
+
 		return array(
 			'result'   => 'success',
 			'redirect' => $komoju_request->get_request_url( $order, $payment_method ) 
