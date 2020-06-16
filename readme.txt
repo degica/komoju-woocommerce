@@ -1,4 +1,4 @@
-=== KOMOJU ===
+=== KOMOJU Japanese Payments ===
 Contributors: degica
 Tags: WooCommerce,Payment Gateway,Komoju
 Requires at least: 5.3
