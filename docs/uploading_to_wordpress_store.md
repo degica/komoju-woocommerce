@@ -6,7 +6,7 @@ This document details how to release a new version of the plugin on the WordPres
 
 Before you start, make sure to have the SVN cli tools installed. If you are on a Mac, then you can install them with Homebrew: `brew install svn`
 
-Also make sure have checked out the version of the code you wish to release, and have increased the version in the [`index.php` file](../index.php#6) and have added a note in the [`changelog` section of the readme.txt](../readme.txt).
+Also make sure you have checked out the version of the code you wish to release, and have increased the version in the [`index.php` file](../index.php#6) and have added a note in the [`changelog` section of the readme.txt](../readme.txt).
 
 ## Uploading
 
