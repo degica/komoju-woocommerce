@@ -52,7 +52,7 @@ class WC_Gateway_Komoju_Request {
 		WC_Gateway_Komoju::log( 'Generating payment form for order ' . $order->get_order_number() );
 
 		$params = array(
-				"transaction[amount]"                       => $order->get_subtotal()+$order->get_total_shipping(),
+				"transaction[amount]"                       => $this->get_order_total($order),
 				"transaction[currency]"                     => get_woocommerce_currency(),
 				"transaction[customer][email]"              => $order->get_billing_email(),
 				"transaction[customer][phone]"              => $order->get_billing_phone(),
@@ -61,7 +61,7 @@ class WC_Gateway_Komoju_Request {
 				"transaction[external_order_num]"           => $this->gateway->get_option( 'invoice_prefix' ) . $order->get_order_number() . '-' . $this->request_id,
 				"transaction[return_url]"                   => $this->gateway->get_return_url( $order ),
 				"transaction[cancel_url]"                   => $order->get_cancel_order_url_raw(),
-				"transaction[tax]"                          => strlen($order->get_total_tax())==0 ? 0 : $order->get_total_tax(),
+				"transaction[tax]"                          => $this->get_tax_total($order),
 				"timestamp"                                 => time(),
 				"via"                                       => "woocommerce"
 		);
@@ -130,5 +130,35 @@ class WC_Gateway_Komoju_Request {
 		}
 
 		return number_format( $price, $decimals, '.', '' );
+	}
+
+	/**
+	 * gets the order total. Because we send the tax as a separate value to
+	 * Komoju we need to remove it from the order total, otherwise it would
+	 * be added twice.
+	 * 
+	 * @param WC_Order $order
+	 * 
+	 * @return int
+	 */
+	protected function get_order_total ( $order ) {
+		$orderTotal = $order->get_total();
+		$taxTotal = $this->get_tax_total($order);
+
+		return $orderTotal - $taxTotal;
+	}
+
+	/**
+	 * gets the total tax applied to the order. If there is no tax then it
+	 * returns a 0 to ensure the result is always a number.
+	 * 
+	 * @param WC_Order $order
+	 * 
+	 * @return int
+	 */
+	protected function get_tax_total ( $order ) {
+		$hasTax = strlen($order->get_total_tax()) == 0;
+
+		return $hasTax ? 0 : $order->get_total_tax();
 	}
 }
