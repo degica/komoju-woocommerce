@@ -37,7 +37,7 @@ class WC_Gateway_Komoju_Request {
 	 */
 	public function get_request_url( $order, $method = 'credit_card' ) {
 		$komoju_args = $this->get_komoju_args( $order, $method );
-			
+
 		return 'https://komoju.com' . $this->Komoju_endpoint.$method.'/new'.'?' .$komoju_args;
 	}
 
@@ -52,7 +52,7 @@ class WC_Gateway_Komoju_Request {
 		WC_Gateway_Komoju::log( 'Generating payment form for order ' . $order->get_order_number() );
 
 		$params = array(
-				"transaction[amount]"                       => $order->get_subtotal()+$order->get_total_shipping(),
+				"transaction[amount]"                       => $order->get_total(),
 				"transaction[currency]"                     => get_woocommerce_currency(),
 				"transaction[customer][email]"              => $order->get_billing_email(),
 				"transaction[customer][phone]"              => $order->get_billing_phone(),
@@ -61,7 +61,7 @@ class WC_Gateway_Komoju_Request {
 				"transaction[external_order_num]"           => $this->gateway->get_option( 'invoice_prefix' ) . $order->get_order_number() . '-' . $this->request_id,
 				"transaction[return_url]"                   => $this->gateway->get_return_url( $order ),
 				"transaction[cancel_url]"                   => $order->get_cancel_order_url_raw(),
-				"transaction[tax]"                          => strlen($order->get_total_tax())==0 ? 0 : $order->get_total_tax(),
+				"transaction[tax]"                          => 0,
 				"timestamp"                                 => time(),
 				"via"                                       => "woocommerce"
 		);
