@@ -22,7 +22,7 @@ To use this plugin you must have a [KOMOJU account](https://komoju.com/).
 1. Change to the plugin directory
 1. Run: `unzip woocommerce-komoju.zip`
 
-Login to Wordpress as Administrator 
+Login to Wordpress as Administrator
 
 Click on the 'Plugins' menu on the left hand side.
 
@@ -37,7 +37,7 @@ Click the Enable/Disable Box to enable this gateway.
 
 Enter your KOMOJU API credentials in this configuration page. The information to set here is defined in your KOMOJU Merchant Settings page. Ignore the "Webhook Secret Token" for now, as it will be filled out after your Komoju account has been configured.
 The value for "Komoju merchant ID" field is the Merchant UUID value on the Merchant Settings page.
-The value for the "Secret Key from Komoju" field is the Secret Key value on the Merchant Settings page. 
+The value for the "Secret Key from Komoju" field is the Secret Key value on the Merchant Settings page.
 Make sure they match.
 Always start the configuration by using the test mode secret key and do a few tests before going live.
 
@@ -52,7 +52,7 @@ To ensure that the WooCommerce plugin works correctly you will need to set up a 
 - payment.cancelled
 - payment.refunded
 
-Ensure that the "Active" checkbox is also ticked and then click "Create Webhook". 
+Ensure that the "Active" checkbox is also ticked and then click "Create Webhook".
 
 Go back to your Wordpress instance and set the "Webhook Secret Token" value on the Komoju Woocommerce plugin to be the same as the secret set for the webhook.
 
@@ -72,3 +72,6 @@ the installation of the module.
 
 = 1.0 =
 Initial release for the Wordpress store.
+
+= 1.0.1 =
+Fix issue preventing coupon discounts from being applied at checkout.
