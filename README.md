@@ -1,13 +1,6 @@
 ## Komoju for WooCommerce.
 
-Japanese payments for WooCommerce.
-This plugin supports the following Japanese payment methods:
-
-* Credit Card (クレジットカード)
-* Convenience Store (コンビニ)
-* PayEasy (ペイジー)
-* WebMoney (ウェブマネー)
-* Bank Transfer (銀行振込)
+Provides access to Komoju payment methods through the WooCommerce checkout.
 
 ## Overview
 
@@ -32,13 +25,13 @@ cd wordpress/wp-content/plugins
 unzip woocommerce-komoju.zip
 ```
 
-Login to Wordpress as Administrator 
+Login to Wordpress as Administrator
 
 Click on the 'Plugins' menu on the left hand side.
 
 You should see the WooCommerce Komoju Gateway listed among the plugins list. Click the Activate Link
 for this gateway.
-Next you need to configure the Plugin in WooCommerce. To do so, from the left hand menu, 
+Next you need to configure the Plugin in WooCommerce. To do so, from the left hand menu,
 select 'WooCommerce' and then 'Settings'.
 
 Then click 'Checkout' from the Top Menu.
@@ -64,7 +57,7 @@ To ensure that the WooCommerce plugin works correctly you will need to set up a 
 - payment.cancelled
 - payment.refunded
 
-Ensure that the "Active" checkbox is also ticked and then click "Create Webhook". 
+Ensure that the "Active" checkbox is also ticked and then click "Create Webhook".
 
 Go back to your Wordpress instance and set the "Webhook Secret Token" value on the Komoju Woocommerce plugin to be the same as the secret set for the webhook.
 
@@ -79,7 +72,6 @@ At the moment, this plugin has been tested and is known to work up to version
 
 Please contact contact@komoju.com if you have any questions about
 the installation of the module. If you would like to set up an account to use with this plugin, please sign up at https://www.komoju.com.
-
 
 ## License
 
@@ -133,4 +125,4 @@ You need to execute it every time after updating po files.
 
 #### Updating the existing po files
 
-Rather than having to copy and paste the existing translations across to the new pot file, you can use [poedit](https://poedit.net/download). After generating the POT file as above, open the `komoju-woocommerce-ja.po` file in Poedit, then go to Catalogue->Update from POT File, to automatically update the existing Japanese translations with the new schema. 
+Rather than having to copy and paste the existing translations across to the new pot file, you can use [poedit](https://poedit.net/download). After generating the POT file as above, open the `komoju-woocommerce-ja.po` file in Poedit, then go to Catalogue->Update from POT File, to automatically update the existing Japanese translations with the new schema.
