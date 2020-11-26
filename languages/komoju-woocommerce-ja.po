@@ -35,30 +35,6 @@ msgstr "Komoju はあなたのストアの通貨をサポートしていませ�
 msgid "Method of payment:"
 msgstr "決済方法:"
 
-#: class-wc-gateway-komoju.php:154 class-wc-gateway-komoju.php:156
-#: includes/settings-komoju.php:37
-msgid "Credit Card"
-msgstr "クレジットカード"
-
-#: class-wc-gateway-komoju.php:156 class-wc-gateway-komoju.php:158
-#: includes/settings-komoju.php:49
-msgid "Konbini"
-msgstr "コンビニ"
-
-#: class-wc-gateway-komoju.php:158 class-wc-gateway-komoju.php:160
-msgid "WebMoney"
-msgstr "ウェブマネー"
-
-#: class-wc-gateway-komoju.php:160 class-wc-gateway-komoju.php:162
-#: includes/settings-komoju.php:57
-msgid "Bank Transfer"
-msgstr "銀行振込"
-
-#: class-wc-gateway-komoju.php:162 class-wc-gateway-komoju.php:164
-#: includes/settings-komoju.php:63
-msgid "Pay Easy"
-msgstr "Pay-easy"
-
 #: class-wc-gateway-komoju.php:191
 msgid "Please select a payment method (how you want to pay)"
 msgstr "決済方法をお選びください。"
@@ -120,57 +96,6 @@ msgstr "タイトル"
 #: includes/settings-komoju.php:20
 msgid "This controls the title which the user sees during checkout."
 msgstr "ユーザーから見るコントロールのタイトルです。"
-
-#: includes/settings-komoju.php:25
-msgid "Description"
-msgstr "説明"
-
-#: includes/settings-komoju.php:27
-msgid "Payment method description that the customer will see on your checkout."
-msgstr "ユーザーから見る決済方法の説明です"
-
-#: includes/settings-komoju.php:28
-msgid ""
-"Make your payment through Komoju: offline and online Japanese payments like "
-"Konbini, credit cards, WebMoney, ..."
-msgstr ""
-"Komoju を経由して決済を作成: 日本のオンラインとオフラインの決済 (クレジット"
-"カード, コンビニ, ウェブマネー, 銀行決済, Pay-easy)"
-
-#: includes/settings-komoju.php:32
-msgid "Supported methods set in Komoju"
-msgstr "Komojuでサポートされている決済方法"
-
-#: includes/settings-komoju.php:39
-msgid "Allow credit card"
-msgstr "クレジットカードを許可"
-
-#: includes/settings-komoju.php:43
-msgid "Web Money"
-msgstr "ウェブマネー"
-
-#: includes/settings-komoju.php:45
-msgid "Allow Web Money"
-msgstr "ウェブマネーを許可"
-
-#: includes/settings-komoju.php:51
-msgid "Allow delayed payment in convenience store"
-msgstr "コンビニ決済を許可"
-
-#: includes/settings-komoju.php:52
-msgid ""
-"Lawson, Family Mart, Sunkus, Circle-K, Ministop, Daily Yamazaki, 7-Eleven"
-msgstr ""
-"ローソン,ファミリーマート,サンクス,サークルK,ミニストップ,デイリーヤマザキ,セ"
-"ブンイレブン"
-
-#: includes/settings-komoju.php:59
-msgid "Allow bank transfer"
-msgstr "銀行決済を許可"
-
-#: includes/settings-komoju.php:65
-msgid "Allow delayed payment through Pay Easy"
-msgstr "Pay-easy を許可"
 
 #: includes/settings-komoju.php:72
 #, php-format

@@ -21,50 +21,6 @@ return array(
 		'default'     => __( 'Komoju', 'komoju-woocommerce' ),
 		'desc_tip'    => true,
 	),
-	'description' => array(
-		'title'       => __( 'Description', 'komoju-woocommerce' ),
-		'type'        => 'textarea',
-		'description' => __( 'Payment method description that the customer will see on your checkout.', 'komoju-woocommerce' ),
-		'default'     => __( 'Make your payment through Komoju: offline and online Japanese payments like Konbini, credit cards, WebMoney, ...', 'komoju-woocommerce' ),
-		'desc_tip'    => true,
-	),
-	'supported_methods' => array(
-		'title'	=> __('Supported methods set in Komoju', 'komoju-woocommerce'),
-		'type'	=> 'title',
-		'id'	=> 'supported-methods-in-komoju'
-	),
-	'credit_card' => array(
-		'title'   => __( 'Credit Card', 'komoju-woocommerce' ),
-		'type'    => 'checkbox',
-		'label'   => __( 'Allow credit card', 'komoju-woocommerce' ),
-		'default' => 'yes'
-	),
-	'web_money' => array(
-		'title'   => __( 'Web Money', 'komoju-woocommerce' ),
-		'type'    => 'checkbox',
-		'label'   => __( 'Allow Web Money', 'komoju-woocommerce' ),
-		'default' => 'yes'
-	),
-	'konbini' => array(
-		'title'   => __( 'Konbini', 'komoju-woocommerce' ),
-		'type'    => 'checkbox',
-		'label'   => __( 'Allow delayed payment in convenience store', 'komoju-woocommerce' ),
-		'description' => __( 'Lawson, Family Mart, Sunkus, Circle-K, Ministop, Daily Yamazaki, 7-Eleven', 'komoju-woocommerce' ),
-		'desc_tip'    => true,
-		'default' => 'yes'
-	),
-	'bank_transfer' => array(
-		'title'   => __( 'Bank Transfer', 'komoju-woocommerce' ),
-		'type'    => 'checkbox',
-		'label'   => __( 'Allow bank transfer', 'komoju-woocommerce' ),
-		'default' => 'yes'
-	),
-	'pay_easy' => array(
-		'title'   => __( 'Pay Easy', 'komoju-woocommerce' ),
-		'type'    => 'checkbox',
-		'label'   => __( 'Allow delayed payment through Pay Easy', 'komoju-woocommerce' ),
-		'default' => 'yes'
-	),
 	'API_settings' => array(
 		'title'	=> 'API Settings',
 		'type'	=> 'title',
