@@ -1,10 +1,11 @@
 ## Komoju for WooCommerce.
 
 Provides access to Komoju payment methods through the WooCommerce checkout.
+For a list of available payment methods please refer to this page: https://en.komoju.com/payment-methods
 
 ## Overview
 
-Once this has been installed, the module can be configured through the
+Once this plugin has been installed, the module can be configured through the
 WooCommerce payment section.
 
 Enable the payment gateway and configure the account as described in the

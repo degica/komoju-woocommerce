@@ -140,28 +140,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 
         $args = wp_parse_args( $args, apply_filters( 'woocommerce_komoju_method_form_args', $default_args, $this->id ) );
 
-        $komoju_client = new KomojuApi( $this->secretKey );
-        $methods = $komoju_client->paymentMethods();
-
-        $locale = $this->get_locale_or_fallback();
-        $name_property =  "name_{$locale}";
-
-        $str = '<p class="form-row form-row-wide validate-required woocommerce-validated"><label for="' . esc_attr( $this->id ) . '-method">' . __( 'Method of payment:', 'komoju-woocommerce' ) . ' <abbr class="required" title="required">*</abbr></label>';
-        foreach ($methods as $method) {
-            $str .= '
-                <input
-                  id="' . esc_attr( $this->id) . '-method"
-                  class="input-radio"
-                  type="radio"
-                  value="'. esc_attr( $method->type_slug ) .'"
-                  name="' . esc_attr( $this->id). '-method"
-                />
-                '. ( $method->{$name_property} ) .'
-                <br/>';
-        }
-        $str .= '</p>';
-
-        $method_fields = array( 'method-field' => $str );
+        $data = $this->get_input_field_data();
+        $method_fields = array( 'method-field' => $data );
         $fields = wp_parse_args( $fields, apply_filters( 'woocommerce_komoju_method_form_fields', $method_fields, $this->id ) );
         ?>
         <fieldset id="<?php echo $this->id; ?>-cc-form">
@@ -183,6 +163,35 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
         return WC()->api_request_url( 'WC_Gateway_Komoju' );
     }
 
+    private function get_input_field_data() {
+        $komoju_client = new KomojuApi( $this->secretKey );
+
+        try {
+          $methods = $komoju_client->paymentMethods();
+          $page_locale = $this->get_locale_or_fallback();
+          $name_property =  "name_{$page_locale}";
+
+          $field_data = '<p class="form-row form-row-wide validate-required woocommerce-validated"><label for="' . esc_attr( $this->id ) . '-method">' . __( 'Method of payment:', 'komoju-woocommerce' ) . ' <abbr class="required" title="required">*</abbr></label>';
+          foreach ($methods as $method) {
+            $field_data.= '
+                <input
+                  id="' . esc_attr( $this->id) . '-method"
+                  class="input-radio"
+                  type="radio"
+                  value="'. esc_attr( $method->type_slug ) .'"
+                  name="' . esc_attr( $this->id). '-method"
+                />
+                '. ( $method->{$name_property} ) .'
+                <br/>';
+          }
+          $field_data .= '</p>';
+        } catch (KomojuExceptionBadServer $e) {
+          $field_data = '<p>' . __('Encountered an issue communicating with KOMOJU. Please wait a moment and try again.', 'komoju-woocommerce') .'</p>';
+        }
+
+        return $field_data;
+    }
+
     private function get_locale_or_fallback() {
         $fallback_locale = 'en';
         $supported_locales = array('ja', 'en', 'ko');
@@ -190,6 +199,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
 
         if (in_array($page_locale, $supported_locales)) {
             return $page_locale;
+
         } else {
             return $fallback_locale;
         }

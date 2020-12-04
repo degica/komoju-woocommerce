@@ -39,6 +39,10 @@ msgstr "決済方法:"
 msgid "Please select a payment method (how you want to pay)"
 msgstr "決済方法をお選びください。"
 
+#: class-wc-gateway-komoju.php:190
+msgid "Encountered an issue communicating with KOMOJU. Please wait a moment and try again."
+msgstr "KOMOJUを読み込みませんでした。しばらく待ってから再実行してください。"
+
 #: includes/class-wc-gateway-komoju-ipn-handler.php:94
 #: includes/class-wc-gateway-komoju-ipn-handler.php:108
 #: includes/class-wc-gateway-komoju-ipn-handler.php:111
