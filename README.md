@@ -1,7 +1,7 @@
 ## Komoju for WooCommerce.
 
 Provides access to Komoju payment methods through the WooCommerce checkout.
-For a list of available payment methods please refer to this page: https://en.komoju.com/payment-methods
+For a list of available payment methods please refer to this page: [KOMOJU Payment Methods](https://en.komoju.com/payment-methods)
 
 ## Overview
 
