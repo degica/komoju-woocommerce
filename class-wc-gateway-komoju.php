@@ -167,26 +167,45 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
         $komoju_client = new KomojuApi( $this->secretKey );
 
         try {
-          $methods = $komoju_client->paymentMethods();
-          $page_locale = $this->get_locale_or_fallback();
-          $name_property =  "name_{$page_locale}";
+            $methods = $komoju_client->paymentMethods();
+            $page_locale = $this->get_locale_or_fallback();
+            $name_property =  "name_{$page_locale}";
 
-          $field_data = '<p class="form-row form-row-wide validate-required woocommerce-validated"><label for="' . esc_attr( $this->id ) . '-method">' . __( 'Method of payment:', 'komoju-woocommerce' ) . ' <abbr class="required" title="required">*</abbr></label>';
-          foreach ($methods as $method) {
-            $field_data.= '
-                <input
-                  id="' . esc_attr( $this->id) . '-method"
-                  class="input-radio"
-                  type="radio"
-                  value="'. esc_attr( $method->type_slug ) .'"
-                  name="' . esc_attr( $this->id). '-method"
-                />
-                '. ( $method->{$name_property} ) .'
-                <br/>';
-          }
-          $field_data .= '</p>';
+            $field_data = '
+                <p
+                  class="
+                    form-row
+                    form-row-wide
+                    validate-required
+                    woocommerce-validated"
+                >
+                <label
+                  for="' . esc_attr( $this->id ) . '-method"
+                >' . __( 'Method of payment:', 'komoju-woocommerce' ) . '
+                  <abbr
+                    class="required"
+                    title="required"
+                  >*
+                  </abbr>
+               </label>';
+            foreach ($methods as $method) {
+              $field_data.= '
+                  <input
+                    id="' . esc_attr( $this->id) . '-method"
+                    class="input-radio"
+                    type="radio"
+                    value="'. esc_attr( $method->type_slug ) .'"
+                    name="' . esc_attr( $this->id). '-method"
+                  />
+                  '. ( $method->{$name_property} ) .'
+                  <br/>';
+            }
+            $field_data .= '</p>';
         } catch (KomojuExceptionBadServer $e) {
-          $field_data = '<p>' . __('Encountered an issue communicating with KOMOJU. Please wait a moment and try again.', 'komoju-woocommerce') .'</p>';
+            $message = $e->getMessage();
+            $this->log($message);
+
+            $field_data = '<p>' . __('Encountered an issue communicating with KOMOJU. Please wait a moment and try again.', 'komoju-woocommerce') .'</p>';
         }
 
         return $field_data;
