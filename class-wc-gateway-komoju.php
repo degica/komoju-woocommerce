@@ -201,7 +201,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway {
                   <br/>';
             }
             $field_data .= '</p>';
-        } catch (KomojuExceptionBadServer $e) {
+        } catch (KomojuExceptionBadServer | KomojuExceptionBadJson $e) {
             $message = $e->getMessage();
             $this->log($message);
 
