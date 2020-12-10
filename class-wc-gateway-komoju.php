@@ -123,28 +123,25 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     public function process_payment( $order_id ) {
         include_once( 'includes/class-wc-gateway-komoju-request.php' );
         $order          = wc_get_order( $order_id );
-        $default_locale = $this->get_locale_or_fallback();
         $payment_method = array(sanitize_text_field($_POST['komoju-method']));
         $return_url = $this->get_mydefault_api_url();
 
         // new session
         $komoju_api = $this->komoju_api;
         $komoju_request = $komoju_api->createSession([
-          'return_url'  => $return_url,
-          'default_locale' => $this->get_locale_or_fallback(),
-          'payment_types' => $payment_method,
-          'payment_data' => [
-            'amount' => $order->get_total(),
-            'currency' => get_woocommerce_currency(),
-            'external_order_num' => $this->external_order_num( $order )
-          ],
+            'return_url'  => $return_url,
+            'default_locale' => $this->get_locale_or_fallback(),
+            'payment_types' => $payment_method,
+            'payment_data' => [
+                'amount' => $order->get_total(),
+                'currency' => get_woocommerce_currency(),
+                'external_order_num' => $this->external_order_num( $order )
+            ],
         ]);
 
-        // $komoju_request = new WC_Gateway_Komoju_Request( $this );
-
         return array(
-          'result'   => 'success',
-          'redirect' => $komoju_request->session_url
+            'result'   => 'success',
+            'redirect' => $komoju_request->session_url
         );
     }
 

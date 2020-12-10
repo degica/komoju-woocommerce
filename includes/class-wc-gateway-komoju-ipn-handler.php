@@ -11,7 +11,7 @@ include_once( 'class-wc-gateway-komoju-webhook-event.php');
  */
 class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 
-  protected $gateway;
+    protected $gateway;
 	protected $webhookSecretToken;
 	protected $secret_key;
 	protected $invoice_prefix;
@@ -33,24 +33,24 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 	 */
 	public function check_response() {
 
-    // callback from session page
-    if ( isset( $_GET['session_id'] ) ) {
-      $session = $this->get_session( $_GET['session_id'] );
-      $order = $this->get_order_from_komoju_session( $session, $this->invoice_prefix );
+      // callback from session page
+      if ( isset( $_GET['session_id'] ) ) {
+          $session = $this->get_session( $_GET['session_id'] );
+          $order = $this->get_order_from_komoju_session( $session, $this->invoice_prefix );
 
-      // null payment on a session indicates incomplete payment flow
-      if ( $session->status === 'completed' && !is_null( $order ) ) {
-        $success_url = $this->gateway->get_return_url( $order );
-        header("Location: { $success_url }");
-        exit;
-      } else {
-        $checkout_url = wc_get_checkout_url();
-        header("Location: { $checkout_url } }");
-        exit;
+          // null payment on a session indicates incomplete payment flow
+          if ( $session->status === 'completed' && !is_null( $order ) ) {
+              $success_url = $this->gateway->get_return_url( $order );
+              header("Location: { $success_url }");
+              exit;
+          } else {
+              $checkout_url = wc_get_checkout_url();
+              header("Location: { $checkout_url } }");
+              exit;
+          }
       }
-    }
 
-    // Webhook (IPN)
+      // Webhook (IPN)
 		if ( ! empty( $entityBody ) && $this->validate_hmac($entityBody) ) {
 			$webhookEvent = new WC_Gateway_Komoju_Webhook_Event($entityBody);
 
@@ -215,19 +215,19 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response {
 		}
 	}
 
-  /**
-   * Retrieve session from KOMOJU
-   * @param string $session_id
-   */
-  private function get_session( $session_id ) {
-    $client = new KomojuApi( $this->secret_key );
+    /**
+     * Retrieve session from KOMOJU
+     * @param string $session_id
+     */
+    private function get_session( $session_id ) {
+        $client = new KomojuApi( $this->secret_key );
 
-    try {
-      $session = $client->session( $session_id );
-      return $session;
-    } catch (KomojuExceptionBadServer | KomojuExceptionBadJson $e) {
-      return null;
-    }
+        try {
+            $session = $client->session( $session_id );
+            return $session;
+        } catch (KomojuExceptionBadServer | KomojuExceptionBadJson $e) {
+            return null;
+        }
   }
 
 	/**
