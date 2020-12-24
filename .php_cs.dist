@@ -3,8 +3,8 @@
 ini_set('memory_limit','256M');
 
 $finder = PhpCsFixer\Finder::create()
-    ->notPath('class-wc-gateway-komoju.php')
-    ->in(__DIR__.'/includes')
+    ->in(__DIR__)
+    ->in(__DIR__.'/includes');
 
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
