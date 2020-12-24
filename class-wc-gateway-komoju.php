@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author      Komoju
  */
 
-require_once dirname(__FILE__) . '/vendor/komoju-php/lib/komoju.php';
+require_once dirname(__FILE__) . '/komoju-php/komoju-php/lib/komoju.php';
 
 class WC_Gateway_Komoju extends WC_Payment_Gateway {
 
