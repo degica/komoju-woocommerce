@@ -10,24 +10,28 @@ Author URI: https://komoju.com
 
 add_action('plugins_loaded', 'woocommerce_komoju_init', 0);
 
-function woocommerce_komoju_init() {
+function woocommerce_komoju_init()
+{
+    if (!class_exists('WC_Payment_Gateway')) {
+        return;
+    }
 
-	if ( !class_exists( 'WC_Payment_Gateway' ) ) return;
+    /*
+     * Localisation
+     */
+    load_plugin_textdomain('komoju-woocommerce', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
-	/**
- 	 * Localisation
-	 */
-    load_plugin_textdomain( 'komoju-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    require_once 'class-wc-gateway-komoju.php';
 
-	require_once 'class-wc-gateway-komoju.php';
+    /**
+     * Add the Gateway to WooCommerce
+     **/
+    function woocommerce_add_komoju_gateway($methods)
+    {
+        $methods[] = 'WC_Gateway_Komoju';
 
-	/**
- 	* Add the Gateway to WooCommerce
- 	**/
-	function woocommerce_add_komoju_gateway($methods) {
-		$methods[] = 'WC_Gateway_Komoju';
-		return $methods;
-	}
+        return $methods;
+    }
 
-	add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway' );
+    add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
 }
