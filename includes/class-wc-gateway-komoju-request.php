@@ -30,8 +30,8 @@ class WC_Gateway_Komoju_Request
      */
     public function __construct($gateway)
     {
-        $this->gateway = $gateway;
-        $this->request_id = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 6);
+        $this->gateway         = $gateway;
+        $this->request_id      = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 6);
         $this->Komoju_endpoint = '/ja/api/' . $this->gateway->accountID . '/transactions/';
     }
 
@@ -62,18 +62,18 @@ class WC_Gateway_Komoju_Request
         WC_Gateway_Komoju::log('Generating payment form for order ' . $order->get_order_number());
 
         $params = [
-            'transaction[amount]' => $order->get_total(),
-            'transaction[currency]' => get_woocommerce_currency(),
-            'transaction[customer][email]' => $order->get_billing_email(),
-            'transaction[customer][phone]' => $order->get_billing_phone(),
-            'transaction[customer][given_name]' => $order->get_billing_first_name(),
+            'transaction[amount]'                => $order->get_total(),
+            'transaction[currency]'              => get_woocommerce_currency(),
+            'transaction[customer][email]'       => $order->get_billing_email(),
+            'transaction[customer][phone]'       => $order->get_billing_phone(),
+            'transaction[customer][given_name]'  => $order->get_billing_first_name(),
             'transaction[customer][family_name]' => $order->get_billing_last_name(),
-            'transaction[external_order_num]' => $this->gateway->get_option('invoice_prefix') . $order->get_order_number() . '-' . $this->request_id,
-            'transaction[return_url]' => $this->gateway->get_return_url($order),
-            'transaction[cancel_url]' => $order->get_cancel_order_url_raw(),
-            'transaction[tax]' => 0,
-            'timestamp' => time(),
-            'via' => 'woocommerce',
+            'transaction[external_order_num]'    => $this->gateway->get_option('invoice_prefix') . $order->get_order_number() . '-' . $this->request_id,
+            'transaction[return_url]'            => $this->gateway->get_return_url($order),
+            'transaction[cancel_url]'            => $order->get_cancel_order_url_raw(),
+            'transaction[tax]'                   => 0,
+            'timestamp'                          => time(),
+            'via'                                => 'woocommerce',
         ];
         WC_Gateway_Komoju::log('Raw parameters: ' . print_r($params, true));
 
@@ -84,7 +84,7 @@ class WC_Gateway_Komoju_Request
         sort($qs_params);
         $query_string = implode('&', $qs_params);
 
-        $url = $this->Komoju_endpoint . $method . '/new' . '?' . $query_string;
+        $url  = $this->Komoju_endpoint . $method . '/new' . '?' . $query_string;
         $hmac = hash_hmac('sha256', $url, $this->gateway->secretKey);
         $query_string .= '&hmac=' . $hmac;
 

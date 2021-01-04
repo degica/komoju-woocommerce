@@ -4,7 +4,7 @@ class KomojuApi
 {
     public function __construct($secretKey)
     {
-        $this->endpoint = 'https://komoju.com';
+        $this->endpoint  = 'https://komoju.com';
         $this->secretKey = $secretKey;
     }
 
@@ -42,7 +42,7 @@ class KomojuApi
 
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($http_code !== 200) {
-            $komojuException = new KomojuExceptionBadServer($result);
+            $komojuException           = new KomojuExceptionBadServer($result);
             $komojuException->httpCode = $http_code;
             throw $komojuException;
         }
@@ -62,7 +62,7 @@ class KomojuApi
     // );
     private function post($uri, $payload)
     {
-        $ch = curl_init($this->endpoint . $uri);
+        $ch        = curl_init($this->endpoint . $uri);
         $data_json = json_encode($payload);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
@@ -78,7 +78,7 @@ class KomojuApi
 
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($http_code !== 200) {
-            $komojuException = new KomojuExceptionBadServer($result);
+            $komojuException           = new KomojuExceptionBadServer($result);
             $komojuException->httpCode = $http_code;
             throw $komojuException;
         }

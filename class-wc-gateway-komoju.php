@@ -33,23 +33,23 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
      */
     public function __construct()
     {
-        $this->id = 'komoju';
-        $this->icon = apply_filters('woocommerce_komoju_icon', plugins_url('assets/images/komoju-logo.png', __FILE__));
-        $this->has_fields = true;
-        $this->method_title = __('Komoju', 'komoju-woocommerce');
+        $this->id                 = 'komoju';
+        $this->icon               = apply_filters('woocommerce_komoju_icon', plugins_url('assets/images/komoju-logo.png', __FILE__));
+        $this->has_fields         = true;
+        $this->method_title       = __('Komoju', 'komoju-woocommerce');
         $this->method_description = __('Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce');
-        $this->debug = 'yes' === $this->get_option('debug', 'yes');
-        $this->invoice_prefix = $this->get_option('invoice_prefix');
-        $this->accountID = $this->get_option('accountID');
-        $this->secretKey = $this->get_option('secretKey');
+        $this->debug              = 'yes' === $this->get_option('debug', 'yes');
+        $this->invoice_prefix     = $this->get_option('invoice_prefix');
+        $this->accountID          = $this->get_option('accountID');
+        $this->secretKey          = $this->get_option('secretKey');
         $this->webhookSecretToken = $this->get_option('webhookSecretToken');
-        self::$log_enabled = $this->debug;
+        self::$log_enabled        = $this->debug;
         // Load the settings.
         $this->init_form_fields();
         $this->init_settings();
         // Define user set variables
-        $this->title = $this->get_option('title');
-        $this->description = $this->get_option('description');
+        $this->title        = $this->get_option('title');
+        $this->description  = $this->get_option('description');
         $this->instructions = $this->get_option('instructions', $this->description);
         // Filters
         // Actions
@@ -120,12 +120,12 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     public function process_payment($order_id)
     {
         include_once 'includes/class-wc-gateway-komoju-request.php';
-        $order = wc_get_order($order_id);
+        $order          = wc_get_order($order_id);
         $komoju_request = new WC_Gateway_Komoju_Request($this);
         $payment_method = sanitize_text_field($_POST['komoju-method']);
 
         return [
-            'result' => 'success',
+            'result'   => 'success',
             'redirect' => $komoju_request->get_request_url($order, $payment_method),
         ];
     }
@@ -149,9 +149,9 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
         $args = wp_parse_args($args, apply_filters('woocommerce_komoju_method_form_args', $default_args, $this->id));
 
-        $data = $this->get_input_field_data();
+        $data          = $this->get_input_field_data();
         $method_fields = ['method-field' => $data];
-        $fields = wp_parse_args($fields, apply_filters('woocommerce_komoju_method_form_fields', $method_fields, $this->id)); ?>
+        $fields        = wp_parse_args($fields, apply_filters('woocommerce_komoju_method_form_fields', $method_fields, $this->id)); ?>
         <fieldset id="<?php echo $this->id; ?>-cc-form">
           <?php do_action('woocommerce_komoju_method_form_start', $this->id); ?>
           <?php
@@ -176,8 +176,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $komoju_client = new KomojuApi($this->secretKey);
 
         try {
-            $methods = $komoju_client->paymentMethods();
-            $page_locale = $this->get_locale_or_fallback();
+            $methods       = $komoju_client->paymentMethods();
+            $page_locale   = $this->get_locale_or_fallback();
             $name_property = "name_{$page_locale}";
 
             $field_data = '
@@ -222,9 +222,9 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
     private function get_locale_or_fallback()
     {
-        $fallback_locale = 'en';
+        $fallback_locale   = 'en';
         $supported_locales = ['ja', 'en', 'ko'];
-        $page_locale = get_locale();
+        $page_locale       = get_locale();
 
         if (in_array($page_locale, $supported_locales)) {
             return $page_locale;

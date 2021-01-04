@@ -25,8 +25,8 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         add_action('valid-komoju-standard-ipn-request', [$this, 'valid_response']);
 
         $this->webhookSecretToken = $webhookSecretToken;
-        $this->secret_key = $secret_key;
-        $this->invoice_prefix = $invoice_prefix;
+        $this->secret_key         = $secret_key;
+        $this->invoice_prefix     = $invoice_prefix;
     }
 
     /**
