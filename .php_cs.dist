@@ -14,6 +14,12 @@ return PhpCsFixer\Config::create()
         'cast_spaces' => [
             'space' => 'single',
         ],
+        'binary_operator_spaces' => [
+          'default' => 'align_single_space'
+        ],
+        'operators' => [
+          '='
+        ],
         'combine_consecutive_issets' => true,
         'concat_space' => [
             'spacing' => 'one',
