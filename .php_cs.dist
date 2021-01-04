@@ -17,9 +17,6 @@ return PhpCsFixer\Config::create()
         'binary_operator_spaces' => [
           'default' => 'align_single_space'
         ],
-        'operators' => [
-          '='
-        ],
         'combine_consecutive_issets' => true,
         'concat_space' => [
             'spacing' => 'one',
