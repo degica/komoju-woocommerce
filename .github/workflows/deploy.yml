@@ -9,7 +9,7 @@ jobs:
     name: Deploy Wordpress Plugin
     runs-on: ubuntu-latest
     steps:
-      - name: deploy plugin
+    - name: deploy plugin
       uses: 10up/action-wordpress-plugin-deploy@stable
       env:
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
