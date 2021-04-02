@@ -22,7 +22,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     /** @var array Array of locales */
     public $locale;
 
-    /** @var boolean Whether or not logging is enabled */
+    /** @var bool Whether or not logging is enabled */
     public static $log_enabled;
 
     /** @var WC_Logger Logger instance */
@@ -31,19 +31,20 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     /**
      * Constructor for the gateway.
      */
-    public function __construct() {
-        $this->id                	= 'komoju';
-        $this->icon              	= apply_filters('woocommerce_komoju_icon', plugins_url('assets/images/komoju-logo.png', __FILE__));
-        $this->has_fields         	= true;
-        $this->method_title       	= __( 'Komoju', 'komoju-woocommerce' );
-        $this->method_description 	= __( 'Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce' );
-        $this->debug          		= 'yes' === $this->get_option( 'debug', 'yes' );
-        $this->invoice_prefix		= $this->get_option( 'invoice_prefix' );
-        $this->accountID     		= $this->get_option( 'accountID' );
-        $this->secretKey     		= $this->get_option( 'secretKey' );
-        $this->webhookSecretToken   = $this->get_option( 'webhookSecretToken' );
-        $this->komoju_api = new KomojuApi( $this->secretKey );
-        self::$log_enabled    		= $this->debug;
+    public function __construct()
+    {
+        $this->id                	  = 'komoju';
+        $this->icon              	  = apply_filters('woocommerce_komoju_icon', plugins_url('assets/images/komoju-logo.png', __FILE__));
+        $this->has_fields         	 = true;
+        $this->method_title       	 = __('Komoju', 'komoju-woocommerce');
+        $this->method_description 	 = __('Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce');
+        $this->debug          		    = 'yes' === $this->get_option('debug', 'yes');
+        $this->invoice_prefix		     = $this->get_option('invoice_prefix');
+        $this->accountID     		     = $this->get_option('accountID');
+        $this->secretKey     		     = $this->get_option('secretKey');
+        $this->webhookSecretToken   = $this->get_option('webhookSecretToken');
+        $this->komoju_api           = new KomojuApi($this->secretKey);
+        self::$log_enabled    		    = $this->debug;
 
         // Load the settings.
         $this->init_form_fields();
@@ -61,8 +62,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             $this->enabled = 'no';
             WC_Gateway_Komoju::log('is not valid for use. No IPN set.');
         } else {
-            include_once( 'includes/class-wc-gateway-komoju-ipn-handler.php' );
-            new WC_Gateway_Komoju_IPN_Handler( $this, $this->webhookSecretToken, $this->secretKey, $this->invoice_prefix );
+            include_once 'includes/class-wc-gateway-komoju-ipn-handler.php';
+            new WC_Gateway_Komoju_IPN_Handler($this, $this->webhookSecretToken, $this->secretKey, $this->invoice_prefix);
         }
     }
 
@@ -120,29 +121,30 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
      *
      * @return array
      */
-    public function process_payment( $order_id ) {
-        include_once( 'includes/class-wc-gateway-komoju-request.php' );
-        $order          = wc_get_order( $order_id );
-        $payment_method = array(sanitize_text_field($_POST['komoju-method']));
-        $return_url = $this->get_mydefault_api_url();
+    public function process_payment($order_id)
+    {
+        include_once 'includes/class-wc-gateway-komoju-request.php';
+        $order          = wc_get_order($order_id);
+        $payment_method = [sanitize_text_field($_POST['komoju-method'])];
+        $return_url     = $this->get_mydefault_api_url();
 
         // new session
-        $komoju_api = $this->komoju_api;
+        $komoju_api     = $this->komoju_api;
         $komoju_request = $komoju_api->createSession([
-            'return_url'  => $return_url,
+            'return_url'     => $return_url,
             'default_locale' => $this->get_locale_or_fallback(),
-            'payment_types' => $payment_method,
-            'payment_data' => [
-                'amount' => $order->get_total(),
-                'currency' => get_woocommerce_currency(),
-                'external_order_num' => $this->external_order_num( $order )
+            'payment_types'  => $payment_method,
+            'payment_data'   => [
+                'amount'             => $order->get_total(),
+                'currency'           => get_woocommerce_currency(),
+                'external_order_num' => $this->external_order_num($order),
             ],
         ]);
 
-        return array(
+        return [
             'result'   => 'success',
-            'redirect' => $komoju_request->session_url
-        );
+            'redirect' => $komoju_request->session_url,
+        ];
     }
 
     /**
@@ -155,11 +157,14 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
     /**
      * set KOMOJU side reference for order
+     *
      * @param WC_Order $order
      */
-    private function external_order_num( $order ) {
-      $suffix = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
-      return ($this->get_option('invoice_prefix') . $order->get_order_number() . '-' . $suffix);
+    private function external_order_num($order)
+    {
+        $suffix = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 6);
+
+        return $this->get_option('invoice_prefix') . $order->get_order_number() . '-' . $suffix;
     }
 
     /**
@@ -195,7 +200,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         return WC()->api_request_url('WC_Gateway_Komoju');
     }
 
-    private function get_input_field_data() {
+    private function get_input_field_data()
+    {
         $komoju_client = $this->komoju_api;
 
         try {
@@ -266,6 +272,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
             return false;
         }
+
         return true;
     }
 }
