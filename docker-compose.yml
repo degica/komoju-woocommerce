@@ -28,6 +28,8 @@ services:
      environment:
        WORDPRESS_DEBUG: 1
        WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_NAME: wordpress
+       WORDPRESS_DB_USER: wordpress
        WORDPRESS_DB_PASSWORD: wordpress
        WORDPRESS_CONFIG_EXTRA: |
         define( 'WPLANG', '${WPLANG}');
