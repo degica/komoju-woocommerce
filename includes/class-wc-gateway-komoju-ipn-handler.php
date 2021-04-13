@@ -66,8 +66,8 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         if (!empty($entityBody) && $this->validate_hmac($entityBody)) {
             $webhookEvent = new WC_Gateway_Komoju_Webhook_Event($entityBody);
 
-            // do_action('valid-komoju-standard-ipn-request', $webhookEvent);
-            valid_response($webhookEvent);
+            // NOTE: direct function call doesn't work
+            do_action('valid-komoju-standard-ipn-request', $webhookEvent);
             exit;
         }
         wp_die('Komoju IPN Request Failure', 'Komoju IPN', ['response' => 500]);
