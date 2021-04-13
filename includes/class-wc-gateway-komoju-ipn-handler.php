@@ -44,11 +44,11 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             // null payment on a session indicates incomplete payment flow
             if ($session->status === 'completed' && !is_null($order)) {
                 $success_url = $this->gateway->get_return_url($order);
-                header("Location: { $success_url }");
+                wp_redirect($success_url);
                 exit;
             } elseif (is_null($session)) {
                 $checkout_url = wc_get_checkout_url();
-                header("Location: { $checkout_url } }");
+                wp_redirect($checkout_url);
                 wp_add_notice(
                   __('Encountered an issue communicating with KOMOJU. Please wait a moment and try again.'),
                   'error'
@@ -56,16 +56,18 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
                 exit;
             } else {
                 $checkout_url = wc_get_checkout_url();
-                header("Location: { $checkout_url } }");
+                wp_redirect($checkout_url);
                 exit;
             }
         }
 
         // Webhook (IPN)
+        $entityBody = file_get_contents('php://input');
         if (!empty($entityBody) && $this->validate_hmac($entityBody)) {
             $webhookEvent = new WC_Gateway_Komoju_Webhook_Event($entityBody);
 
-            do_action('valid-komoju-standard-ipn-request', $webhookEvent);
+            // do_action('valid-komoju-standard-ipn-request', $webhookEvent);
+            valid_response($webhookEvent);
             exit;
         }
         wp_die('Komoju IPN Request Failure', 'Komoju IPN', ['response' => 500]);
