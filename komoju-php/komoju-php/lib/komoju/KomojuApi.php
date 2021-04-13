@@ -5,6 +5,7 @@ class KomojuApi
     public function __construct($secretKey)
     {
         $this->endpoint  = 'https://komoju.com';
+        $this->via       = 'woocommerce';
         $this->secretKey = $secretKey;
     }
 
@@ -66,7 +67,10 @@ class KomojuApi
         $data_json = json_encode($payload);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            "komoju-via: {$this->via}",
+        ]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_USERPWD, $this->secretKey . ':');
         $result = curl_exec($ch);

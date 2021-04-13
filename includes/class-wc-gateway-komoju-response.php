@@ -37,6 +37,31 @@ abstract class WC_Gateway_Komoju_Response
     }
 
     /**
+     * Get an order from a payment associated with a KOMOJU session
+     *
+     * @param string $session_id
+     * @param string $invoice_prefix set as an option in Komoju plugin dashboard
+     */
+    protected function get_order_from_komoju_session($session, $invoice_prefix)
+    {
+        $payment = $session->payment;
+        if (is_null($payment)) {
+            return null;
+        }
+
+        $order_id = $payment->external_order_num;
+        $order    = wc_get_order(substr($order_id, strlen($invoice_prefix), -7));
+
+        if (!$order) {
+            WC_Gateway_Komoju::log('Error: Cannot locate order in WC with order_id: .' . $order_id . ' minus prefix: ' . $invoice_prefix);
+
+            return null;
+        }
+
+        return $order;
+    }
+
+    /**
      * Complete order, add transaction ID and note
      *
      * @param WC_Order $order

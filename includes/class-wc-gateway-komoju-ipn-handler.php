@@ -12,6 +12,7 @@ include_once 'class-wc-gateway-komoju-webhook-event.php';
  */
 class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
 {
+    protected $gateway;
     protected $webhookSecretToken;
     protected $secret_key;
     protected $invoice_prefix;
@@ -19,26 +20,53 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
     /**
      * Constructor
      */
-    public function __construct($webhookSecretToken = '', $secret_key = '', $invoice_prefix = '')
+    public function __construct($gateway, $webhookSecretToken = '', $secret_key = '', $invoice_prefix = '')
     {
         add_action('woocommerce_api_wc_gateway_komoju', [$this, 'check_response']);
         add_action('valid-komoju-standard-ipn-request', [$this, 'valid_response']);
 
-        $this->webhookSecretToken = $webhookSecretToken;
-        $this->secret_key         = $secret_key;
-        $this->invoice_prefix     = $invoice_prefix;
+        $this->gateway                = $gateway;
+        $this->webhookSecretToken	  	 = $webhookSecretToken;
+        $this->secret_key	   	        = $secret_key;
+        $this->invoice_prefix			      = $invoice_prefix;
     }
 
     /**
-     * Check for Komoju IPN Response
+     * Check for Komoju IPN or Session Response
      */
     public function check_response()
     {
-        $entityBody = file_get_contents('php://input');
+        // callback from session page
+        if (isset($_GET['session_id'])) {
+            $session = $this->get_session($_GET['session_id']);
+            $order   = $this->get_order_from_komoju_session($session, $this->invoice_prefix);
 
+            // null payment on a session indicates incomplete payment flow
+            if ($session->status === 'completed' && !is_null($order)) {
+                $success_url = $this->gateway->get_return_url($order);
+                wp_redirect($success_url);
+                exit;
+            } elseif (is_null($session)) {
+                $checkout_url = wc_get_checkout_url();
+                wp_redirect($checkout_url);
+                wp_add_notice(
+                  __('Encountered an issue communicating with KOMOJU. Please wait a moment and try again.'),
+                  'error'
+                );
+                exit;
+            } else {
+                $checkout_url = wc_get_checkout_url();
+                wp_redirect($checkout_url);
+                exit;
+            }
+        }
+
+        // Webhook (IPN)
+        $entityBody = file_get_contents('php://input');
         if (!empty($entityBody) && $this->validate_hmac($entityBody)) {
             $webhookEvent = new WC_Gateway_Komoju_Webhook_Event($entityBody);
 
+            // NOTE: direct function call doesn't work
             do_action('valid-komoju-standard-ipn-request', $webhookEvent);
             exit;
         }
@@ -216,6 +244,24 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         if ($order->get_total() == ($webhookEvent->amount_refunded())) {
             // Mark order as refunded
             $order->update_status('refunded', sprintf(__('Payment %s via IPN.', 'komoju-woocommerce'), strtolower($webhookEvent->status())));
+        }
+    }
+
+    /**
+     * Retrieve session from KOMOJU
+     *
+     * @param string $session_id
+     */
+    private function get_session($session_id)
+    {
+        $client = new KomojuApi($this->secret_key);
+
+        try {
+            $session = $client->session($session_id);
+
+            return $session;
+        } catch (KomojuExceptionBadServer | KomojuExceptionBadJson $e) {
+            return null;
         }
     }
 
