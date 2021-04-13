@@ -46,7 +46,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
                 $success_url = $this->gateway->get_return_url($order);
                 header("Location: { $success_url }");
                 exit;
-            } elseif is_null($session) {
+            } elseif (is_null($session)) {
                 $checkout_url = wc_get_checkout_url();
                 header("Location: { $checkout_url } }");
                 wp_add_notice(
