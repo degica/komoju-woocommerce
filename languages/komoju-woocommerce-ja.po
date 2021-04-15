@@ -183,3 +183,13 @@ msgstr "ロギングを有効"
 #, php-format
 msgid "Log Komoju events inside <code>%s</code>"
 msgstr "Komoju のイベントログ <code>%s</code>"
+
+#: includes/settings-komoju.php
+#, php-format
+msgid "Use on-hold status for pending payments"
+msgstr "保留中ステータスを利用する"
+
+#: includes/settings-komoju.php
+#, php-format
+msgid "Use 'on-hold' status for payments that are authorized on komoju but awaiting capture. If not selected, 'payment pending' status will be used."
+msgstr "Use 'on-hold' status for payments that are authorized on komoju but awaiting capture. If not selected, 'payment pending' status will be used."
