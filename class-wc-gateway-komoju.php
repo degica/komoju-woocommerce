@@ -51,9 +51,10 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $this->init_settings();
 
         // Define user set variables
-        $this->title        = $this->get_option('title');
-        $this->description  = $this->get_option('description');
-        $this->instructions = $this->get_option('instructions', $this->description);
+        $this->title                = $this->get_option('title');
+        $this->description          = $this->get_option('description');
+        $this->instructions         = $this->get_option('instructions', $this->description);
+        $this->useOnHold            = $this->get_option('useOnHold');
 
         // Filters
         // Actions
@@ -63,7 +64,13 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             WC_Gateway_Komoju::log('is not valid for use. No IPN set.');
         } else {
             include_once 'includes/class-wc-gateway-komoju-ipn-handler.php';
-            new WC_Gateway_Komoju_IPN_Handler($this, $this->webhookSecretToken, $this->secretKey, $this->invoice_prefix);
+            new WC_Gateway_Komoju_IPN_Handler(
+              $this,
+              $this->webhookSecretToken,
+              $this->secretKey,
+              $this->invoice_prefix,
+              $this->useOnHold
+            );
         }
     }
 

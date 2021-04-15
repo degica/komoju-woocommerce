@@ -22,6 +22,13 @@ return [
         'default'     => __('Komoju', 'komoju-woocommerce'),
         'desc_tip'    => true,
     ],
+    'useOnHold' => [
+        'title'       => 'Use on-hold status for pending payments',
+        'type'        => 'checkbox',
+        'description' => 'Use "on-hold" status for payments that are authorized on komoju but awaiting capture. If not selected, "processing" status will be used.',
+        'default'     => 'no',
+        'desc_tip'    => true,
+    ],
     'API_settings' => [
         'title'       => 'API Settings',
         'type'        => 'title',
