@@ -1,0 +1,12 @@
+/.github export-ignore
+/bin export-ignore
+/vendor export-ignore
+/docs export-ignore
+
+/composer.phar export-ignore
+/composer.lock export-ignore
+/.php_cs.dist export-ignore
+
+/.env export-ignore
+/docker-compose.yml export-ignore
+/Dockerfile export-ignore
