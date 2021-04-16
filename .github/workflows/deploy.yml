@@ -9,6 +9,8 @@ jobs:
     name: Deploy Wordpress Plugin
     runs-on: ubuntu-latest
     steps:
+    - name: setup
+      uses: actions/checkout@master
     - name: deploy plugin
       uses: 10up/action-wordpress-plugin-deploy@stable
       env:
