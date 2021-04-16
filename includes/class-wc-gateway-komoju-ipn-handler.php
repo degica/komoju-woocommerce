@@ -16,11 +16,12 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
     protected $webhookSecretToken;
     protected $secret_key;
     protected $invoice_prefix;
+    protected $useOnHold;
 
     /**
      * Constructor
      */
-    public function __construct($gateway, $webhookSecretToken = '', $secret_key = '', $invoice_prefix = '')
+    public function __construct($gateway, $webhookSecretToken = '', $secret_key = '', $invoice_prefix = '', $useOnHold)
     {
         add_action('woocommerce_api_wc_gateway_komoju', [$this, 'check_response']);
         add_action('valid-komoju-standard-ipn-request', [$this, 'valid_response']);
@@ -29,6 +30,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         $this->webhookSecretToken	  	 = $webhookSecretToken;
         $this->secret_key	   	        = $secret_key;
         $this->invoice_prefix			      = $invoice_prefix;
+        $this->useOnHold              = $useOnHold;
     }
 
     /**
@@ -227,7 +229,11 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
      */
     protected function payment_status_authorized($order, $webhookEvent)
     {
-        $order->update_status('pending-payment');
+        if ($this->useOnHold === 'yes') {
+            $order->update_status('on-hold');
+        } else {
+            $order->update_status('pending-payment');
+        }
         $order->add_order_note(sprintf(__('Payment %s via IPN.', 'komoju-woocommerce'), wc_clean($webhookEvent->status())));
     }
 
