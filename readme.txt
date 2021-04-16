@@ -2,7 +2,7 @@
 Contributors: degica
 Tags: WooCommerce,Payment Gateway,Komoju
 Requires at least: 5.3
-Tested up to: 5.4
+Tested up to: 5.7.1
 Stable tag: trunk
 Requires PHP: 7.2
 WC requires at least: 3.0.0
