@@ -132,3 +132,7 @@ Fix issue preventing coupon discounts from being applied at checkout.
 Available payment methods on checkout will now match those available on the user's KOMOJU account.
 Removed settings related to payment methods. Payment Methods should now be managed directly through KOMOJU.
 Removed payment method icons on checkout (To be re-added at a later date)
+
+= 2.0 =
+Introduced new hosted checkout design
+Added option to use 'on-hold' status for authorized payments
