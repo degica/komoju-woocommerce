@@ -212,7 +212,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $komoju_client = $this->komoju_api;
 
         try {
-            $methods       = apply_filters( 'woocommerce_komoju_payment_methods', $komoju_client->paymentMethods());
+            $methods       = apply_filters('woocommerce_komoju_payment_methods', $komoju_client->paymentMethods());
             $page_locale   = $this->get_locale_or_fallback();
             $name_property = "name_{$page_locale}";
 
