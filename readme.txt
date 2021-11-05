@@ -136,3 +136,6 @@ Removed payment method icons on checkout (To be re-added at a later date)
 = 2.0 =
 Introduced new hosted checkout design
 Added option to use 'on-hold' status for authorized payments
+
+= 2.1.0 =
+Added filter 'woocommerce_komoju_payment_methods' to allow users to change the list of offered payment methods to their users.
