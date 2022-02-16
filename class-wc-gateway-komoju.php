@@ -135,6 +135,20 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $payment_method = [sanitize_text_field($_POST['komoju-method'])];
         $return_url     = $this->get_mydefault_api_url();
 
+        // construct line items
+        $line_items = [];
+        foreach ($order->get_items() as $item) {
+            $image_parser = new DomDocument();
+            $image_parser->loadHTML($item->get_product()->get_image());
+            $img = $image_parser->getElementsByTagName('img')->item(0);
+
+            $line_items[] = [
+                'description' => $item->get_name(),
+                'quantity'    => $item->get_quantity(),
+                'image'       => $img->attributes->getNamedItem('src')->nodeValue,
+            ];
+        }
+
         // new session
         $komoju_api     = $this->komoju_api;
         $komoju_request = $komoju_api->createSession([
@@ -146,6 +160,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 'currency'           => get_woocommerce_currency(),
                 'external_order_num' => $this->external_order_num($order),
             ],
+            'line_items' => $line_items,
         ]);
 
         return [
