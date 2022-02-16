@@ -138,15 +138,15 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         // construct line items
         $line_items = [];
         foreach ($order->get_items() as $item) {
-          $image_parser = new DomDocument();
-          $image_parser->loadHTML($item->get_product()->get_image());
-          $img = $image_parser->getElementsByTagName('img')->item(0);
+            $image_parser = new DomDocument();
+            $image_parser->loadHTML($item->get_product()->get_image());
+            $img = $image_parser->getElementsByTagName('img')->item(0);
 
-          $line_items[] = [
-            'description' => $item->get_name(),
-            'quantity'    => $item->get_quantity(),
-            'image'       => $img->attributes->getNamedItem('src')->nodeValue,
-          ];
+            $line_items[] = [
+                'description' => $item->get_name(),
+                'quantity'    => $item->get_quantity(),
+                'image'       => $img->attributes->getNamedItem('src')->nodeValue,
+            ];
         }
 
         // new session
