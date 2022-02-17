@@ -34,7 +34,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     public function __construct()
     {
         $this->id                	  = 'komoju';
-        $this->icon              	  = apply_filters('woocommerce_komoju_icon', plugins_url('assets/images/komoju-logo.png', __FILE__));
         $this->has_fields         	 = true;
         $this->method_title       	 = __('Komoju', 'komoju-woocommerce');
         $this->method_description 	 = __('Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce');
