@@ -148,6 +148,30 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             ];
         }
 
+        $billing_address = null;
+        if ($order->has_billing_address()) {
+            $billing_address = [
+                'zipcode'         => $order->get_billing_postcode(),
+                'street_address1' => $order->get_billing_address_1(),
+                'street_address2' => trim(join(' ', [$order->get_billing_address_2(), $order->get_billing_company()])),
+                'country'         => $order->get_billing_country(),
+                'state'           => $order->get_billing_state(),
+                'city'            => $order->get_billing_city(),
+            ];
+        }
+
+        $shipping_address = null;
+        if ($order->has_shipping_address()) {
+            $shipping_address = [
+                'zipcode'         => $order->get_shipping_postcode(),
+                'street_address1' => $order->get_shipping_address_1(),
+                'street_address2' => trim(join(' ', [$order->get_shipping_address_2(), $order->get_shipping_company()])),
+                'country'         => $order->get_shipping_country(),
+                'state'           => $order->get_shipping_state(),
+                'city'            => $order->get_shipping_city(),
+            ];
+        }
+
         // new session
         $komoju_api     = $this->komoju_api;
         $komoju_request = $komoju_api->createSession([
@@ -158,6 +182,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 'amount'             => $order->get_total(),
                 'currency'           => get_woocommerce_currency(),
                 'external_order_num' => $this->external_order_num($order),
+                'billing_address'    => $billing_address,
+                'shipping_address'   => $shipping_address,
             ],
             'line_items' => $line_items,
         ]);
