@@ -12,61 +12,92 @@ License URI: https://directory.fsf.org/wiki/License:X11
 
 == Description ==
 
-KOMOJUは革新的なオンライン決済を提供する決済プラットフォームです。KOMOJUプラグインをインストールして、ビジネスを成長させましょう。
+## KOMOJU Global Payment Gateway
 
-KOMOJUを使えば、あなたのWooCommerceストア上ですべての主要な決済手段を直接利用することができます。
-サポートしている決済方法：
-クレジットカード（Visa, Mastercard, American Express, JCB, Diners Club）
-銀行振込
-コンビニ支払い
-スマホ決済（PayPay、LINE Pay、メルペイ）
-Pay-easy（ペイジー）
-キャリア決済（au、docomo、SoftBank）
-電子マネー（BitCash、WebMoney、NET CASH）
+**Expand your business to global markets and accept payments as a local!**
 
-KOMOJUを選ぶ理由
+Give your customers a local payment experience they expect. Increase conversion rates with our local payment methods such as Alipay, Credit Cards (South-Korea & Japan), GrabPay (Singapore), Konbini (Japan), POLi (Australia) and many more!
 
-KOMOJUは初期費用や月額料金が掛からず、取引ごとに手数料を支払うだけです。また、週次振込を導入することで、売上金を最短5営業日で受け取ることができます。
+If you're expanding your business globally and need a payment partner with local experience, [KOMOJU](https://en.komoju.com/) is right for you. Adding the payment methods your customer expects is key to success and will drastically decrease abandon rates and increase conversion and sales. Give your customers a local payment experience, in the local currency they are familiar with and with their preferred payment method.
 
-簡単なサインアップと迅速な承認
+[KOMOJU](https://en.komoju.com/) integrates seamlessly with your checkout and all payment options are displayed dynamically. This means you do not have to make any additional configuration after setting up our plugin.
 
-KOMOJUのプラグインは簡単にインストールでき、わずかなステップでKOMOJUとあなたのストアを接続することができます。KOMOJUアカウントにサインアップすると、2～3営業日で承認されます。
+### Features
 
-最高のセキュリティスタンダード
+KOMOJU lets you accept payments in multiple currencies through a variety of local payment methods and credit/debit cards. We cover payment methods in Japan, South-Korea, China, South-East Asia, Australia and Europe!
 
-当社のWooCommerceプラグインは、セキュリティを十分に考慮して開発されています。すべてのカード会員データは当社のサーバーで処理され、PCI-DSSに完全に準拠しています。あなたの顧客は常に安全な方法で支払いを完了することができます。
+- **Clear pricing**: You only pay per transaction - no hidden fees, charges or setup costs!
+- **Fast Payout**: Choose between a monthly or weekly cycle - you'll get your funds quickly.
+- **Multi-Currency:** Accept payments in local currency, and receive your funds in your preferred currency. We support USD, EUR, JPY, SGD, HKD and AUD for payouts.
+- **Easy onboarding:** We quickly review every merchant and can provide payments fast.
+- **Many payment methods accepted**: We provide payment methods across 6 regions, with most payment methods covered.
 
-不正検知
+### Benefits
 
-当社独自の不正防止システムは、不正な取引を事前に検知し、不要なチャージバック、その他の不正行為を未然に防ぎます。 システムは機械学習により自動的に最適化されます。
+When enabling KOMOJU Payment Gateway on your store, you will be able to accept payments from your customers, worldwide. Your customers will pay in their preferred currency and payment method.
 
-Install KOMOJU plugin and start growing your business with our innovative payment solutions.
+Our plugin is fully PCI-DSS compliant, so you do not need to worry about regulations and cardholder safety. With 3D-Secure 2.0, you can be rest assured that your payments are secured and authenticated.
 
-KOMOJU allows you to accept all major payment methods directly on your WooCommerce store.
-We support:
-Credit cards (Visa, Mastercard, American Express, JCB, Diners Club)
-Bank transfer
-Convenience store payments (konbini)
-Smartphone payments (PayPay, LINE Pay, Merpay)
-Pay-easy
-Carrier billing (au, docomo, SoftBank)
-E-money (BitCash, WebMoney, NET CASH)
+You can accept payments with digital wallets such as Alipay, WeChat Pay, PayPay, LINE Pay, Toss, PAYCO, GrabPay, Doku, OVO and many more. Payments with digital wallets give your customers a customised, trusted and convenient payment option.
 
-Why choose KOMOJU?
+We support businesses that are conducting business cross-border. For the majority of the payment methods we do not require a local entity or bank account. Accept payments wherever you're located, and ship your products worldwide.
 
-KOMOJU has no sign up fees and no monthly fees - you pay per transaction only. Weekly payout option allows you to have your sales transferred in as little as 5 business days.
+**KOMOJU is the ideal way to accept payments on your store to ensure your customers can pay without friction with the payment methods they want.**
 
-Simple sign-up and fast approval
+### Accepted Payment Methods
 
-Our plugin is easy to install, and takes it just a few steps to get KOMOJU connected to your store. Sign up for your KOMOJU account from our website and have your application approved in 2-3 business days.
+We currently accept the following payment methods: 
 
-High Security Standards
+**Japan**
 
-Our plugin is developed with security in mind. All cardholder data is processed on our servers, and fully compliant with PCI-DSS. Your customers will always have a secure way to complete their payments.
+- Credit / Debit Cards Japan (Visa, Mastercard, American Express, JCB, Diners Club)
+- Convenience Store (Konbini)
+- Pay-Easy
+- Japan Bank Transfer
+- PayPay
+- LINE Pay
+- MerPay
+- RakutenPay
+- Paidy
+- Carrier Billing (NTT Docomo, Softbank, au)
+- Prepaid Vouchers (WebMoney, BitCash, NET Cash)
 
-Fraud Prevention System
+**South-Korea**
 
-Our in-house fraud prevention system can identify fraud transactions before they take place to prevent chargebacks and other fraud. Thanks to machine learning, our system adapts automatically and stops fraud in its tracks
+- Credit / Debit Cards (Samsung, Lotte, Hyundai, Hana, BC, NH, Shinhan, KB)
+- Toss
+- Payco
+
+**China**
+
+- Alipay
+- WeChat Pay
+- UnionPay
+
+**South-East Asia**
+
+- Doku
+- OVO
+- eNETS
+- GrabPay
+- Dragonpay
+- FPX
+
+**Australia**
+
+- POLi
+
+**Europe**
+
+- iDEAL
+- Bancontact
+- Multibanco
+- EPS
+- Giropay
+- Przelewy24
+- BLIK
+- MyBank
+- Sofort
 
 == Installation ==
 
