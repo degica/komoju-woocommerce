@@ -1,4 +1,4 @@
-=== KOMOJU Japanese Payments ===
+=== KOMOJU Payments ===
 Contributors: degica
 Tags: WooCommerce,Payment Gateway,Komoju
 Requires at least: 5.3
@@ -46,7 +46,7 @@ We support businesses that are conducting business cross-border. For the majorit
 
 ### Accepted Payment Methods
 
-We currently accept the following payment methods: 
+We currently accept the following payment methods:
 
 **Japan**
 
@@ -170,3 +170,6 @@ Added option to use 'on-hold' status for authorized payments
 
 = 2.1.0 =
 Added filter 'woocommerce_komoju_payment_methods' to allow users to change the list of offered payment methods to their users.
+
+= 2.1.1 =
+Update Plugin Name
