@@ -237,7 +237,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
       * Process an incoming subscription charge
      */
     public function process_subscription($amount_to_charge, $order) {
-        // NOTE: this seems ridiculous but I couldn't figure out another way to get the subscription from the order here
         foreach ( wcs_get_subscriptions_for_order( $order, array( 'order_type' => 'any' ) ) as $subscription ) {
               $parent_order_id = $subscription->get_parent_id();
         }
@@ -251,10 +250,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         }
         try {
             $komoju_request = $this->create_komoju_payment($token, $order);
-            var_dump($komoju_request);
             WC_Subscriptions_Manager::process_subscription_payments_on_order( $order );
         } catch (Exception $e) {
-            var_dump($e);
             $order->add_order_note("KOMOJU Subscription payment failed");
             WC_Subscriptions_Manager::process_subscription_payment_failure_on_order( $order );
         }
