@@ -43,6 +43,20 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $this->secretKey     		     = $this->get_option('secretKey');
         $this->webhookSecretToken   = $this->get_option('webhookSecretToken');
         $this->komoju_api           = new KomojuApi($this->secretKey);
+
+        // enable subscriptions
+        $this->supports = array(
+            'subscriptions',
+            'subscription_cancellation',
+            'subscription_suspension',
+            'subscription_reactivation',
+            'subscription_amount_changes',
+            'subscription_date_changes',
+            'subscription_payment_method_changes',
+            'subscription_payment_method_change_admin',
+            'multiple_subscriptions',
+        );
+
         self::$log_enabled    		    = $this->debug;
 
         // Load the settings.
@@ -58,6 +72,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         // Filters
         // Actions
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
+        add_action( 'woocommerce_scheduled_subscription_payment_' . $this->id, array( $this, 'process_subscription' ), 10, 3 );
         if (!$this->is_valid_for_use()) {
             $this->enabled = 'no';
             WC_Gateway_Komoju::log('is not valid for use. No IPN set.');
@@ -134,6 +149,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $payment_method = [sanitize_text_field($_POST['komoju-method'])];
         $return_url     = $this->get_mydefault_api_url();
 
+
         // construct line items
         $line_items = [];
         foreach ($order->get_items() as $item) {
@@ -172,26 +188,85 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             ];
         }
 
-        // new session
+        // --- construct a KOMOJU payment session --- //
         $komoju_api     = $this->komoju_api;
-        $komoju_request = $komoju_api->createSession([
-            'return_url'     => $return_url,
-            'default_locale' => $this->get_locale_or_fallback(),
-            'payment_types'  => $payment_method,
-            'payment_data'   => [
-                'amount'             => $order->get_total(),
-                'currency'           => get_woocommerce_currency(),
-                'external_order_num' => $this->external_order_num($order),
-                'billing_address'    => $billing_address,
-                'shipping_address'   => $shipping_address,
-            ],
-            'line_items' => $line_items,
-        ]);
+
+        // check if order contains a subscription - will need customer mode on KOMOJU to process
+        if ( class_exists("WC_Subscriptions_Order") && WC_Subscriptions_Order::order_contains_subscription( $order_id )) {
+            // customer mode session
+
+            $return_url_with_id = add_query_arg( array('external_order_num' => $order_id), $return_url );
+            $komoju_request = $komoju_api->createSession([
+                'mode'           => 'customer',
+                'return_url'     => $return_url_with_id,
+                'default_locale' => $this->get_locale_or_fallback(),
+                'payment_types'  => $payment_method,
+                'payment_data'   => [
+                    'amount'             => $order->get_total(),
+                    'currency'           => get_woocommerce_currency(),
+                    'external_order_num' => $this->external_order_num($order),
+                    'billing_address'    => $billing_address,
+                    'shipping_address'   => $shipping_address,
+                ],
+                'line_items' => $line_items,
+            ]);
+        } else {
+            // regular session
+            $komoju_request = $komoju_api->createSession([
+                'return_url'     => $return_url,
+                'default_locale' => $this->get_locale_or_fallback(),
+                'payment_types'  => $payment_method,
+                'payment_data'   => [
+                    'amount'             => $order->get_total(),
+                    'currency'           => get_woocommerce_currency(),
+                    'external_order_num' => $this->external_order_num($order),
+                    'billing_address'    => $billing_address,
+                    'shipping_address'   => $shipping_address,
+                ],
+                'line_items' => $line_items,
+            ]);
+        }
 
         return [
             'result'   => 'success',
             'redirect' => $komoju_request->session_url,
         ];
+    }
+
+    /**
+      * Process an incoming subscription charge
+     */
+    public function process_subscription($amount_to_charge, $order) {
+        // NOTE: this seems ridiculous but I couldn't figure out another way to get the subscription from the order here
+        foreach ( wcs_get_subscriptions_for_order( $order, array( 'order_type' => 'any' ) ) as $subscription ) {
+              $parent_order_id = $subscription->get_parent_id();
+        }
+
+        // fetch token from the subscription's parent order
+        $token = get_post_meta($parent_order_id, 'komoju_payment_token', true);
+        if (empty($token)) {
+            $this->log('ERROR: token missing on subscription payment metadata');
+            WC_Subscriptions_Manager::process_subscription_payment_failure_on_order($order);
+            return;
+        }
+        try {
+            $komoju_request = $this->create_komoju_payment($token, $order);
+            var_dump($komoju_request);
+            WC_Subscriptions_Manager::process_subscription_payments_on_order( $order );
+        } catch (Exception $e) {
+            var_dump($e);
+            $order->add_order_note("KOMOJU Subscription payment failed");
+            WC_Subscriptions_Manager::process_subscription_payment_failure_on_order( $order );
+        }
+    }
+
+    public function create_komoju_payment($customer, $order) {
+          return $this->komoju_api->createPayment([
+                'amount'  => $order->get_total(),
+                'external_order_num' => $this->external_order_num($order),
+                'currency' => get_woocommerce_currency(),
+                'customer' => $customer,
+          ]);
     }
 
     /**

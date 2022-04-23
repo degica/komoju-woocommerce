@@ -41,6 +41,17 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         // callback from session page
         if (isset($_GET['session_id'])) {
             $session = $this->get_session($_GET['session_id']);
+            // session was customer mode
+            if (!is_null($session->customer_id)) {
+                $external_order_num_param = $_GET['external_order_num']; // only passed in customer mode
+                update_post_meta($external_order_num_param, 'komoju_payment_token', wc_clean($session->customer_id));
+                // create initial payment for parent order of subscription
+                $this->gateway->create_komoju_payment($session->customer_id, wc_get_order($external_order_num_param));
+                $success_url = $this->gateway->get_return_url($order);
+                wp_redirect($success_url);
+                exit;
+            }
+
             $order   = $this->get_order_from_komoju_session($session, $this->invoice_prefix);
 
             // null payment on a session indicates incomplete payment flow

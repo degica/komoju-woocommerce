@@ -29,6 +29,11 @@ class KomojuApi
         return $this->get('/api/v1/sessions/' . $sessionUuid);
     }
 
+    public function createPayment($payload)
+    {
+        return $this->post('/api/v1/payments', $payload);
+    }
+
     private function get($uri)
     {
         $ch = curl_init($this->endpoint . $uri);
