@@ -148,6 +148,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             ];
         }
 
+        $name = null;
+        $email = null;
         $billing_address = null;
         if ($order->has_billing_address()) {
             $billing_address = [
@@ -158,6 +160,9 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 'state'           => $order->get_billing_state(),
                 'city'            => $order->get_billing_city(),
             ];
+
+            $name = trim(join(' ', [$order->get_billing_first_name(), $order->get_billing_last_name()]));
+            $email = $order->get_billing_email();
         }
 
         $shipping_address = null;
@@ -177,12 +182,14 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $komoju_request = $komoju_api->createSession([
             'return_url'     => $return_url,
             'default_locale' => $this->get_locale_or_fallback(),
+            'email'          => $email,
             'payment_types'  => $payment_method,
             'payment_data'   => [
                 'amount'             => $order->get_total(),
                 'currency'           => get_woocommerce_currency(),
                 'external_order_num' => $this->external_order_num($order),
                 'billing_address'    => $billing_address,
+                'name'               => $name,
                 'shipping_address'   => $shipping_address,
             ],
             'line_items' => $line_items,
