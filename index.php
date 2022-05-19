@@ -33,5 +33,15 @@ function woocommerce_komoju_init()
         return $methods;
     }
 
+    /**
+     * Add the KOMOJU settings page to WooCommerce
+     **/
+    function woocommerce_add_komoju_settings_page($settings) {
+        require_once 'class-wc-settings-page-komoju.php';
+        $settings[] = new WC_Settings_Page_Komoju();
+        return $settings;
+    }
+
     add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
+    add_filter('woocommerce_get_settings_pages', 'woocommerce_add_komoju_settings_page');
 }
