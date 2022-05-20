@@ -24,4 +24,39 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
 
         parent::__construct();
     }
+
+    public function get_sections()
+    {
+        $sections = array (
+            '' => __('KOMOJU account settings', 'komoju-woocommerce')
+        );
+        return apply_filters('woocommerce_get_sections_' . $this->id, $sections);
+    }
+
+    public function get_settings($current_section = '')
+    {
+        $settings = array();
+
+        if ('' === $current_section) {
+            $settings = apply_filters(
+                'woocommerce_komoju_settings',
+                include 'includes/global-settings-komoju.php'
+            );
+        }
+
+        return apply_filters( 'woocommerce_get_settings_' . $this->id, $settings, $current_section );
+    }
+
+    public function output()
+    {
+        parent::output();
+        echo '</table>'; // Not totally sure why the table tag is not closed by WC_Settings_Page
+    }
+
+    private function url_for_webhooks()
+    {
+        // In dev the relative plugin URL will remove the host name, but it
+        // will appear in production instances
+        return WC()->api_request_url('WC_Gateway_Komoju');
+    }
 }

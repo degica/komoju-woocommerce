@@ -33,17 +33,16 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
      */
     public function __construct()
     {
-        $this->id                	  = 'komoju';
-        $this->has_fields         	 = true;
-        $this->method_title       	 = __('Komoju', 'komoju-woocommerce');
-        $this->method_description 	 = __('Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce');
-        $this->debug          		    = 'yes' === $this->get_option('debug', 'yes');
-        $this->invoice_prefix		     = $this->get_option('invoice_prefix');
-        $this->accountID     		     = $this->get_option('accountID');
-        $this->secretKey     		     = $this->get_option('secretKey');
-        $this->webhookSecretToken   = $this->get_option('webhookSecretToken');
+        $this->id                   = 'komoju';
+        $this->has_fields           = true;
+        $this->method_title         = __('Komoju', 'komoju-woocommerce');
+        $this->method_description   = __('Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce');
+        $this->debug                = 'yes' === $this->get_option_compat('debug_log', 'debug');
+        $this->invoice_prefix       = $this->get_option_compat('invoice_prefix', 'invoice_prefix');
+        $this->secretKey            = $this->get_option_compat('secret_key', 'secretKey');
+        $this->webhookSecretToken   = $this->get_option_compat('webhook_secret', 'webhookSecretToken');
         $this->komoju_api           = new KomojuApi($this->secretKey);
-        self::$log_enabled    		    = $this->debug;
+        self::$log_enabled          = $this->debug;
 
         // Load the settings.
         $this->init_form_fields();
@@ -117,7 +116,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
      */
     public function init_form_fields()
     {
-        $this->form_fields = include 'includes/settings-komoju.php';
+        $this->form_fields = include 'includes/gateway-settings-komoju.php';
     }
 
     /**
@@ -247,13 +246,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         <?php
     }
 
-    private function get_mydefault_api_url()
-    {
-        // In dev the relative plugin URL will remove the host name, but it
-        // will appear in production instances
-        return WC()->api_request_url('WC_Gateway_Komoju');
-    }
-
     private function get_input_field_data()
     {
         $komoju_client = $this->komoju_api;
@@ -327,5 +319,21 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         }
 
         return true;
+    }
+
+    /**
+     * We moved a lot of gateway settings into global options.
+     *
+     * We don't want to require people to go update their settings, so we use this function to
+     * first check for the new setting, and then use the old one if not present.
+     */
+    public function get_option_compat($new_global_key, $old_local_key)
+    {
+        $new_option = get_option('komoju_woocommerce_' . $new_global_key);
+        if ($new_option) {
+            return $new_option;
+        }
+
+        return get_option('woocommerce_komoju_settings')[$old_local_key];
     }
 }

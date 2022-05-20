@@ -11,3 +11,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 }
 
 delete_option('woocommerce_komoju_settings');
+delete_option('komoju_woocommerce_secret_key');
+delete_option('komoju_woocommerce_webhook_secret');
+delete_option('komoju_woocommerce_invoice_prefix');
+delete_option('komoju_woocommerce_debug_log');
