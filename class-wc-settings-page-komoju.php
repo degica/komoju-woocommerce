@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
@@ -27,15 +28,16 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
 
     public function get_sections()
     {
-        $sections = array (
-            '' => __('KOMOJU account settings', 'komoju-woocommerce')
-        );
+        $sections = [
+            '' => __('KOMOJU account settings', 'komoju-woocommerce'),
+        ];
+
         return apply_filters('woocommerce_get_sections_' . $this->id, $sections);
     }
 
     public function get_settings($current_section = '')
     {
-        $settings = array();
+        $settings = [];
 
         if ('' === $current_section) {
             $settings = apply_filters(
@@ -44,7 +46,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
             );
         }
 
-        return apply_filters( 'woocommerce_get_settings_' . $this->id, $settings, $current_section );
+        return apply_filters('woocommerce_get_settings_' . $this->id, $settings, $current_section);
     }
 
     public function output()

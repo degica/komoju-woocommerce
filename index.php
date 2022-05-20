@@ -36,9 +36,11 @@ function woocommerce_komoju_init()
     /**
      * Add the KOMOJU settings page to WooCommerce
      **/
-    function woocommerce_add_komoju_settings_page($settings) {
+    function woocommerce_add_komoju_settings_page($settings)
+    {
         require_once 'class-wc-settings-page-komoju.php';
         $settings[] = new WC_Settings_Page_Komoju();
+
         return $settings;
     }
 

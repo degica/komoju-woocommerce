@@ -147,8 +147,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             ];
         }
 
-        $name = null;
-        $email = null;
+        $name            = null;
+        $email           = null;
         $billing_address = null;
         if ($order->has_billing_address()) {
             $billing_address = [
@@ -160,7 +160,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 'city'            => $order->get_billing_city(),
             ];
 
-            $name = trim(join(' ', [$order->get_billing_first_name(), $order->get_billing_last_name()]));
+            $name  = trim(join(' ', [$order->get_billing_first_name(), $order->get_billing_last_name()]));
             $email = $order->get_billing_email();
         }
 
