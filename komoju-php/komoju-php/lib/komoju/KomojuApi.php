@@ -16,7 +16,7 @@ class KomojuApi
 
     public function paymentMethods()
     {
-        return $this->get('/api/v1/payment_methods');
+        return $this->get('/api/v1/payment_methods', true);
     }
 
     public function createSession($payload)
@@ -29,7 +29,7 @@ class KomojuApi
         return $this->get('/api/v1/sessions/' . $sessionUuid);
     }
 
-    private function get($uri)
+    private function get($uri, $asArray = false)
     {
         $ch = curl_init($this->endpoint . $uri);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -50,7 +50,7 @@ class KomojuApi
 
         curl_close($ch);
 
-        $decoded = json_decode($result);
+        $decoded = json_decode($result, $asArray);
         if ($decoded === null) {
             throw new KomojuExceptionBadJson($result);
         }
