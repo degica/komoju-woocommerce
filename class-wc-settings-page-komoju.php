@@ -65,19 +65,18 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     // Action handler for rendering settings with type = 'komoju_payment_types'
     public function output_payment_methods($setting)
     {
-        $locale = WC_Gateway_Komoju::get_locale_or_fallback();
+        $locale              = WC_Gateway_Komoju::get_locale_or_fallback();
         $all_payment_methods = $this->fetch_all_payment_methods();
         if ($all_payment_methods === null) {
             ?>
                 <div style="color: darkred">
-                    <?php echo __('Unable to reach KOMOJU. Is your secret key correct?', 'komoju-woocommerce') ?>
+                    <?php echo __('Unable to reach KOMOJU. Is your secret key correct?', 'komoju-woocommerce'); ?>
                 </div>
             <?php
             return;
         }
 
-        // Show each payment method as a checkbox with an icon
-        ?>
+        // Show each payment method as a checkbox with an icon?>
         <h4><?php echo $setting['title']; ?></h4>
         <div style="display: flex; flex-flow: row wrap">
         <?php
@@ -89,12 +88,14 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
               type="checkbox"
               name="<?php echo esc_attr($setting['id']); ?>[]"
               value="<?php echo esc_attr($slug); ?>"
-              <?php if (in_array($slug, $setting['value'])) echo 'checked'; ?>
+              <?php if (in_array($slug, $setting['value'])) {
+                echo 'checked';
+            } ?>
             >
             <img
               width="38"
               height="24"
-              src="https://komoju.com/payment_methods/<?php echo esc_attr($slug) ?>.svg">
+              src="https://komoju.com/payment_methods/<?php echo esc_attr($slug); ?>.svg">
             <?php echo $payment_method['name_' . $locale]; ?>
             </label>
             <?php
@@ -113,7 +114,9 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     public function on_payment_types_updated($old_payment_types, $payment_types)
     {
         $all_payment_methods = $this->fetch_all_payment_methods();
-        if ($all_payment_methods === null) { return; }
+        if ($all_payment_methods === null) {
+            return;
+        }
 
         // Clear gateway settings from removed entries
         $to_remove = array_diff($old_payment_types, $payment_types);
@@ -161,11 +164,13 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
 
         try {
             $all_payment_methods = $api->paymentMethods();
-            $methods_by_slug = [];
+            $methods_by_slug     = [];
 
             foreach ($all_payment_methods as $payment_method) {
                 $slug = $payment_method['type_slug'];
-                if (isset($methods_by_slug[$slug])) { continue; }
+                if (isset($methods_by_slug[$slug])) {
+                    continue;
+                }
                 $methods_by_slug[$slug] = $payment_method;
             }
 
@@ -184,6 +189,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
             // global settings page, but want to continue supporting old setups.
             return WC_Gateway_Komoju::get_legacy_setting('secretKey');
         }
+
         return $global_option;
     }
 }

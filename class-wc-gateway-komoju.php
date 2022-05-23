@@ -350,9 +350,13 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     public static function get_legacy_setting($name, $default_value = null)
     {
         $legacy_settings = get_option('woocommerce_komoju_settings');
-        if ($legacy_settings === false) return $default_value;
+        if ($legacy_settings === false) {
+            return $default_value;
+        }
 
-        if (isset($legacy_settings[$name])) return $legacy_settings[$name];
+        if (isset($legacy_settings[$name])) {
+            return $legacy_settings[$name];
+        }
 
         return $default_value;
     }

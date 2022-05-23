@@ -16,8 +16,8 @@ return [
         'desc'        => sprintf(__('Default url for the webhook is %s. Use this if you\'re not sure what it should be.', 'komoju-woocommerce'), $this->url_for_webhooks()),
     ],
     [
-        'id'          => 'komoju_woocommerce_payment_types',
-        'type'        => 'komoju_payment_types',
+        'id'           => 'komoju_woocommerce_payment_types',
+        'type'         => 'komoju_payment_types',
         'title'        => __('Payment Gateways'),
     ],
     [
@@ -56,5 +56,5 @@ return [
     [
         'id'       => 'api-settings-in-komoju-end',
         'type'     => 'sectionend',
-    ]
+    ],
 ];
