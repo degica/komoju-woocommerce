@@ -14,10 +14,13 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 {
     public function __construct($payment_method)
     {
+        $slug = $payment_method['type_slug'];
+
         $this->payment_method = $payment_method;
-        $this->id             = 'komoju_' . $payment_method['type_slug'];
+        $this->id             = 'komoju_' . $slug;
         $this->has_fields     = false;
         $this->method_title   = __('Komoju', 'komoju-woocommerce') . ' - ' . $this->default_title();
+        $this->icon           = "https://komoju.com/payment_methods/$slug.svg";
 
         parent::__construct();
     }
@@ -32,9 +35,9 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         // No fields!
     }
 
-    public function process_payment($order_id, $payment_method = null)
+    public function process_payment($order_id, $payment_type = null)
     {
-        return parent::process_payment($order_id, $this->payment_method);
+        return parent::process_payment($order_id, $this->payment_method['type_slug']);
     }
 
     public function default_title()

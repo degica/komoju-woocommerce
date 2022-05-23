@@ -32,8 +32,10 @@ function woocommerce_komoju_init()
         $methods[] = new WC_Gateway_Komoju();
 
         $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
-        foreach ($komoju_payment_methods as $payment_method) {
-            $methods[] = new WC_Gateway_Komoju_Single_Slug($payment_method);
+        if (gettype($komoju_payment_methods) == 'array') {
+            foreach ($komoju_payment_methods as $payment_method) {
+                $methods[] = new WC_Gateway_Komoju_Single_Slug($payment_method);
+            }
         }
 
         return $methods;

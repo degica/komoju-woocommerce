@@ -127,7 +127,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
             $payment_methods[$slug] = $all_payment_methods[$slug];
         }
 
-        update_option('komoju_woocommerce_payment_methods', $payment_methods);
+        update_option('komoju_woocommerce_payment_methods', $payment_methods, true);
     }
 
     private function url_for_webhooks()
@@ -182,7 +182,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
             // This is for backwards compatibility. We used to have all settings saved under
             // a single payment gateway called "Komoju". We've sinced moved to having this
             // global settings page, but want to continue supporting old setups.
-            return get_option('woocommerce_komoju_settings')['secretKey'];
+            return WC_Gateway_Komoju::get_legacy_setting('secretKey');
         }
         return $global_option;
     }

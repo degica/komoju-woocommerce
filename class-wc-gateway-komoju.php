@@ -123,18 +123,18 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
      * Process the payment and return the result
      *
      * @param int $order_id
-     * @param string $payment_method
+     * @param string $payment_type
      *
      * @return array
      */
-    public function process_payment($order_id, $payment_method = null)
+    public function process_payment($order_id, $payment_type = null)
     {
         include_once 'includes/class-wc-gateway-komoju-request.php';
         $order      = wc_get_order($order_id);
-        $return_url = $this->get_mydefault_api_url();
+        $return_url = WC()->api_request_url('WC_Gateway_Komoju');
 
-        if ($payment_method === null) {
-            $payment_method = [sanitize_text_field($_POST['komoju-method'])];
+        if ($payment_type === null) {
+            $payment_type = sanitize_text_field($_POST['komoju-method']);
         }
 
         // construct line items
@@ -186,7 +186,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             'return_url'     => $return_url,
             'default_locale' => self::get_locale_or_fallback(),
             'email'          => $email,
-            'payment_types'  => $payment_method,
+            'payment_types'  => [$payment_type],
             'payment_data'   => [
                 'amount'             => $order->get_total(),
                 'currency'           => get_woocommerce_currency(),
@@ -280,10 +280,10 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                       id="' . esc_attr($this->id) . '-method"
                       class="input-radio"
                       type="radio"
-                      value="' . esc_attr($method->type_slug) . '"
+                      value="' . esc_attr($method['type_slug']) . '"
                       name="' . esc_attr($this->id) . '-method"
                     />
-                    ' . ($method->{$name_property}) . '
+                    ' . ($method[$name_property]) . '
                     <br/>
                   </label>';
             }
@@ -338,7 +338,23 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             return $new_option;
         }
 
-        return get_option('woocommerce_komoju_settings')[$old_local_key];
+        return self::get_legacy_setting($old_local_key);
+    }
+
+    /**
+     * Quick helper for grabbing legacy settings.
+     *
+     * We used to have everything saved on the gateway, but now global stuff like
+     * API keys are stored separately in order to support multiple gateways.
+     */
+    public static function get_legacy_setting($name, $default_value = null)
+    {
+        $legacy_settings = get_option('woocommerce_komoju_settings');
+        if ($legacy_settings === false) return $default_value;
+
+        if (isset($legacy_settings[$name])) return $legacy_settings[$name];
+
+        return $default_value;
     }
 
     /**
