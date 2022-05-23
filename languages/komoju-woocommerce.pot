@@ -43,6 +43,18 @@ msgstr ""
 msgid "Please select a payment method (how you want to pay)"
 msgstr ""
 
+#: class-wc-gateway-komoju.php:190
+msgid "Encountered an issue communicating with KOMOJU. Please wait a moment and try again."
+msgstr ""
+
+#: class-wc-settings-page-komoju.php:44
+msgid "KOMOJU account settings"
+msgstr ""
+
+#: class-wc-settings-page-komoju.php:73
+msgid "Unable to reach KOMOJU. Is your secret key correct?"
+msgstr ""
+
 #: includes/class-wc-gateway-komoju-ipn-handler.php:94
 #: includes/class-wc-gateway-komoju-ipn-handler.php:108
 #: includes/class-wc-gateway-komoju-ipn-handler.php:111
