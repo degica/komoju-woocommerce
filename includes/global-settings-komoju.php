@@ -13,7 +13,7 @@ return [
         'title'       => 'API Settings',
         'type'        => 'title',
         'id'          => 'api-settings-in-komoju',
-        'description' => sprintf(__('Default url for the webhook is %s. Use this if you\'re not sure what it should be.', 'komoju-woocommerce'), $this->url_for_webhooks()),
+        'desc'        => sprintf(__('Default url for the webhook is %s. Use this if you\'re not sure what it should be.', 'komoju-woocommerce'), $this->url_for_webhooks()),
     ],
     [
         'id'          => 'komoju_woocommerce_secret_key',
@@ -42,7 +42,8 @@ return [
     ],
     [
         'id'          => 'komoju_woocommerce_debug_log',
-        'placeholder' => sprintf(__('Log Komoju events inside <code>%s</code>', 'komoju-woocommerce'), wc_get_log_file_path('komoju')),
+        'desc'        => sprintf(__('Log Komoju events inside <code>%s</code>', 'komoju-woocommerce'), wc_get_log_file_path('komoju')),
+        'desc_tip'    => true,
         'title'       => __('Debug Log', 'komoju-woocommerce'),
         'type'        => 'checkbox',
         'label'       => __('Enable logging', 'komoju-woocommerce'),
