@@ -18,7 +18,7 @@ return [
     [
         'id'           => 'komoju_woocommerce_payment_types',
         'type'         => 'komoju_payment_types',
-        'title'        => __('Payment Gateways'),
+        'title'        => __('Payment Gateways', 'komoju-woocommerce'),
     ],
     [
         'id'          => 'komoju_woocommerce_secret_key',
