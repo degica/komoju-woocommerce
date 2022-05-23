@@ -52,7 +52,6 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     public function output()
     {
         parent::output();
-        echo '</table>'; // Not totally sure why the table tag is not closed by WC_Settings_Page
     }
 
     private function url_for_webhooks()

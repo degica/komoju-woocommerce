@@ -50,4 +50,8 @@ return [
         'default'     => get_option('woocommerce_komoju_settings')['debug'] ?
                          get_option('woocommerce_komoju_settings')['debug'] : 'no',
     ],
+    [
+        'id'       => 'api-settings-in-komoju-end',
+        'type'     => 'sectionend',
+    ]
 ];
