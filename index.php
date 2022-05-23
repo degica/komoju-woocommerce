@@ -28,7 +28,13 @@ function woocommerce_komoju_init()
      **/
     function woocommerce_add_komoju_gateway($methods)
     {
-        $methods[] = 'WC_Gateway_Komoju';
+        require_once 'includes/class-wc-gateway-komoju-single-slug.php';
+        $methods[] = new WC_Gateway_Komoju();
+
+        $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
+        foreach ($komoju_payment_methods as $payment_method) {
+            $methods[] = new WC_Gateway_Komoju_Single_Slug($payment_method);
+        }
 
         return $methods;
     }

@@ -65,7 +65,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     // Action handler for rendering settings with type = 'komoju_payment_types'
     public function output_payment_methods($setting)
     {
-        $locale = $this->get_locale_or_fallback();
+        $locale = WC_Gateway_Komoju::get_locale_or_fallback();
         $all_payment_methods = $this->fetch_all_payment_methods();
         if ($all_payment_methods === null) {
             ?>
@@ -185,19 +185,5 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
             return get_option('woocommerce_komoju_settings')['secretKey'];
         }
         return $global_option;
-    }
-
-    // TODO this is copy/pasta; put it somewhere else
-    private function get_locale_or_fallback()
-    {
-        $fallback_locale   = 'en';
-        $supported_locales = ['ja', 'en', 'ko'];
-        $page_locale       = get_locale();
-
-        if (in_array($page_locale, $supported_locales)) {
-            return $page_locale;
-        } else {
-            return $fallback_locale;
-        }
     }
 }

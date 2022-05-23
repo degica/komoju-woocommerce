@@ -33,9 +33,9 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
      */
     public function __construct()
     {
-        $this->id                   = 'komoju';
-        $this->has_fields           = true;
-        $this->method_title         = __('Komoju', 'komoju-woocommerce');
+        $this->id                   = $this->id ? $this->id : 'komoju';
+        $this->has_fields           = gettype($this->has_fields) == 'boolean' ? $this->has_fields : true;
+        $this->method_title         = $this->method_title ? $this->method_title : __('Komoju', 'komoju-woocommerce');
         $this->method_description   = __('Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce');
         $this->debug                = 'yes' === $this->get_option_compat('debug_log', 'debug');
         $this->invoice_prefix       = $this->get_option_compat('invoice_prefix', 'invoice_prefix');
@@ -123,15 +123,19 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
      * Process the payment and return the result
      *
      * @param int $order_id
+     * @param string $payment_method
      *
      * @return array
      */
-    public function process_payment($order_id)
+    public function process_payment($order_id, $payment_method = null)
     {
         include_once 'includes/class-wc-gateway-komoju-request.php';
-        $order          = wc_get_order($order_id);
-        $payment_method = [sanitize_text_field($_POST['komoju-method'])];
-        $return_url     = $this->get_mydefault_api_url();
+        $order      = wc_get_order($order_id);
+        $return_url = $this->get_mydefault_api_url();
+
+        if ($payment_method === null) {
+            $payment_method = [sanitize_text_field($_POST['komoju-method'])];
+        }
 
         // construct line items
         $line_items = [];
@@ -180,7 +184,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $komoju_api     = $this->komoju_api;
         $komoju_request = $komoju_api->createSession([
             'return_url'     => $return_url,
-            'default_locale' => $this->get_locale_or_fallback(),
+            'default_locale' => self::get_locale_or_fallback(),
             'email'          => $email,
             'payment_types'  => $payment_method,
             'payment_data'   => [
@@ -294,7 +298,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         return $field_data;
     }
 
-    private function get_locale_or_fallback()
+    public static function get_locale_or_fallback()
     {
         $fallback_locale   = 'en';
         $supported_locales = ['ja', 'en', 'ko'];
@@ -335,5 +339,13 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         }
 
         return get_option('woocommerce_komoju_settings')[$old_local_key];
+    }
+
+    /**
+     * Default customer-facing title of this payment gateway.
+     */
+    protected function default_title()
+    {
+        return __('Komoju', 'komoju-woocommerce');
     }
 }
