@@ -78,7 +78,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
 
         // Show each payment method as a checkbox with an icon?>
         <h4><?php echo $setting['title']; ?></h4>
-        <div style="display: flex; flex-flow: row wrap">
+        <div style="display: flex; flex-flow: row wrap; max-width: 800px">
         <?php
 
         foreach ($all_payment_methods as $slug => $payment_method) {
