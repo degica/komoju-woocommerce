@@ -62,7 +62,7 @@ Cypress.Commands.add('signinToWordpress', () => {
 });
 
 Cypress.Commands.add('installWooCommerce', () => {
-  cy.contains('Plugins').click();
+  cy.visit('/wp-admin/plugins.php');
 
   cy.window().then(win => {
     if (!win.document.querySelector('tr[data-slug="woocommerce"].inactive')) {
@@ -119,7 +119,7 @@ Cypress.Commands.add('installWooCommerce', () => {
 });
 
 Cypress.Commands.add('installKomoju', () => {
-  cy.contains('Plugins').click();
+  cy.visit('/wp-admin/plugins.php');
 
   cy.window().then(win => {
     if (!win.document.querySelector('tr[data-slug="komoju-japanese-payments"].inactive')) {
