@@ -39,6 +39,7 @@ describe('KOMOJU for WooCommerce', () => {
     cy.fillInAddress();
 
     cy.contains('Konbini').click();
+    cy.wait(200);
     cy.contains('Place order').click();
 
     cy.location('host').should('equal', 'komoju.com');
