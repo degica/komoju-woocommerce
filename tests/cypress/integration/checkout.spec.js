@@ -17,11 +17,13 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.fillInAddress();
 
     cy.contains('Komoju').click();
+    cy.get('.blockUI,.blockOverlay').should('not.exist');
 
-    // Not sure why this click is flaky. I guess because of the JS animation?
-    cy.wait(600);
-    cy.get('#komoju-cc-form').contains('Konbini').click();
-    cy.wait(200);
+    // This waits for the "expanding box" animation to finish
+    cy.get('.payment_method_komoju[style]').should('not.exist');
+
+    cy.get('#komoju-cc-form').contains('Pay Easy').click();
+    cy.get('.blockUI,.blockOverlay').should('not.exist');
 
     cy.get('#place_order').click();
     cy.location('host').should('equal', 'komoju.com');
@@ -39,7 +41,8 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.fillInAddress();
 
     cy.get('#payment_method_komoju_konbini').click();
-    cy.wait(400);
+    cy.get('.payment_method_komoju[style="display: none;"]').should('exist');
+    cy.get('.blockUI,.blockOverlay').should('not.exist');
     cy.get('#place_order').click();
 
     cy.location('host').should('equal', 'komoju.com');
