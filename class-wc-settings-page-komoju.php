@@ -138,6 +138,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
 
         update_option('komoju_woocommerce_payment_methods', $payment_methods, true);
     }
+
     // TODO: override save
 
     private function url_for_webhooks()
