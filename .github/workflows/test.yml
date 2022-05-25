@@ -17,8 +17,14 @@ jobs:
           npm install
           npx cypress run
       - name: Upload screenshots
-        if: always()
+        if: failure()
         uses: actions/upload-artifact@v3
         with:
           name: screenshots
           path: tests/cypress/screenshots/
+      - name: Upload videos
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: videos
+          path: tests/cypress/videos/
