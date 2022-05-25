@@ -16,11 +16,16 @@ return [
         'desc'        => sprintf(__('Default url for the webhook is %s. Use this if you\'re not sure what it should be.', 'komoju-woocommerce'), $this->url_for_webhooks()),
     ],
     [
+        'id'           => 'komoju_woocommerce_payment_types',
+        'type'         => 'komoju_payment_types',
+        'title'        => __('Payment Gateways', 'komoju-woocommerce'),
+    ],
+    [
         'id'          => 'komoju_woocommerce_secret_key',
         'placeholder' => 'sk_live_000000000000000000000000',
         'title'       => __('Secret Key from Komoju', 'komoju-woocommerce'),
         'type'        => 'text',
-        'default'     => get_option('woocommerce_komoju_settings')['secretKey'],
+        'default'     => WC_Gateway_Komoju::get_legacy_setting('secretKey'),
         'desc_tip'    => true,
     ],
     [
@@ -28,7 +33,7 @@ return [
         'placeholder' => __('Please enter your Komoju Webhook Secret Token', 'komoju-woocommerce'),
         'title'       => __('Webhook Secret Token', 'komoju-woocommerce'),
         'type'        => 'text',
-        'default'     => get_option('woocommerce_komoju_settings')['webhookSecretToken'],
+        'default'     => WC_Gateway_Komoju::get_legacy_setting('webhookSecretToken'),
         'desc_tip'    => true,
     ],
     [
@@ -36,8 +41,7 @@ return [
         'placeholder' => __('Please enter a prefix for your invoice numbers. If you use your Komoju account for multiple stores ensure this prefix is unique.', 'komoju-woocommerce'),
         'title'       => __('Invoice Prefix', 'komoju-woocommerce'),
         'type'        => 'text',
-        'default'     => get_option('woocommerce_komoju_settings')['invoice_prefix'] ?
-                         get_option('woocommerce_komoju_settings')['invoice_prefix'] : 'WC-',
+        'default'     => WC_Gateway_Komoju::get_legacy_setting('invoice_prefix', 'WC-'),
         'desc_tip'    => true,
     ],
     [
@@ -47,7 +51,10 @@ return [
         'title'       => __('Debug Log', 'komoju-woocommerce'),
         'type'        => 'checkbox',
         'label'       => __('Enable logging', 'komoju-woocommerce'),
-        'default'     => get_option('woocommerce_komoju_settings')['debug'] ?
-                         get_option('woocommerce_komoju_settings')['debug'] : 'no',
+        'default'     => WC_Gateway_Komoju::get_legacy_setting('debug', 'no'),
+    ],
+    [
+        'id'       => 'api-settings-in-komoju-end',
+        'type'     => 'sectionend',
     ],
 ];

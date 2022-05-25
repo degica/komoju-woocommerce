@@ -19,7 +19,7 @@ return [
         'title'       => __('Title', 'komoju-woocommerce'),
         'type'        => 'text',
         'description' => __('This controls the title which the user sees during checkout.', 'komoju-woocommerce'),
-        'default'     => __('Komoju', 'komoju-woocommerce'),
+        'default'     => $this->default_title(),
         'desc_tip'    => true,
     ],
     'useOnHold' => [
