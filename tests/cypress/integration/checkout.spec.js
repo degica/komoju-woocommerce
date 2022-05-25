@@ -1,4 +1,4 @@
-describe('KOMOJU for WooCommerce', () => {
+describe('KOMOJU for WooCommerce: Checkout', () => {
   beforeEach(() => {
     cy.installWordpress();
     cy.signinToWordpress();
@@ -20,7 +20,7 @@ describe('KOMOJU for WooCommerce', () => {
 
     // Not sure why this click is flaky. I guess because of the JS animation?
     cy.wait(600);
-    cy.contains('Pay Easy').click({ force: true });
+    cy.get('#komoju-cc-form').contains('Konbini').click();
     cy.wait(200);
 
     cy.contains('Place order').click();
@@ -38,27 +38,11 @@ describe('KOMOJU for WooCommerce', () => {
     cy.contains('Proceed to checkout').click();
     cy.fillInAddress();
 
-    cy.contains('Konbini').click();
-    cy.wait(200);
+    cy.get('#payment_method_komoju_konbini').click();
+    cy.wait(400);
     cy.contains('Place order').click();
 
     cy.location('host').should('equal', 'komoju.com');
     cy.location('pathname').should('include', '/sessions/');
-  })
-
-  it('lets me add and remove specialized payment gateways', () => {
-    cy.setupKomoju(['konbini', 'credit_card']);
-    cy.contains('Payments').click();
-
-    cy.get('.form-table').should('include.text', 'Komoju - Konbini');
-    cy.get('.form-table').should('include.text', 'Komoju - Credit Card');
-
-    cy.setupKomoju(['docomo', 'softbank']);
-    cy.contains('Payments').click();
-
-    cy.get('.form-table').should('not.include.text', 'Komoju - Konbini');
-    cy.get('.form-table').should('not.include.text', 'Komoju - Credit Card');
-    cy.get('.form-table').should('include.text',     'Komoju - SoftBank');
-    cy.get('.form-table').should('include.text',     'Komoju - docomo');
   })
 });
