@@ -152,7 +152,7 @@ Cypress.Commands.add('setupKomoju', (paymentTypes = [], secretKey = 'degica-mart
 
 Cypress.Commands.add('enablePaymentGateway', (slug) => {
   cy.get(`tr[data-gateway_id="${slug}"]`)
-    .get('.woocommerce-input-toggle')
+    .find('.woocommerce-input-toggle')
     .each($match => {
       if ($match[0].textContent === 'No') cy.wrap($match).click();
     });

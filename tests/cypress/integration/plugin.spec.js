@@ -17,7 +17,11 @@ describe('KOMOJU for WooCommerce', () => {
     cy.fillInAddress();
 
     cy.contains('Komoju').click();
+
+    // Not sure why this click is flaky. I guess because of the JS animation?
+    cy.wait(600);
     cy.contains('Pay Easy').click({ force: true });
+    cy.wait(200);
 
     cy.contains('Place order').click();
     cy.location('host').should('equal', 'komoju.com');
