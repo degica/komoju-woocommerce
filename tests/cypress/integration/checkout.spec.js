@@ -23,7 +23,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.get('#komoju-cc-form').contains('Konbini').click();
     cy.wait(200);
 
-    cy.contains('Place order').click();
+    cy.get('#place_order').click();
     cy.location('host').should('equal', 'komoju.com');
     cy.location('pathname').should('include', '/sessions/');
   })
@@ -40,7 +40,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
     cy.get('#payment_method_komoju_konbini').click();
     cy.wait(400);
-    cy.contains('Place order').click();
+    cy.get('#place_order').click();
 
     cy.location('host').should('equal', 'komoju.com');
     cy.location('pathname').should('include', '/sessions/');
