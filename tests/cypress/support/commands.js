@@ -77,7 +77,7 @@ Cypress.Commands.add('installWooCommerce', () => {
     // that automatically adds "jetpack". This unfortunately means we must
     // branch again to click the 'continue with old wizard' button whenever
     // the modal pops up.
-    cy.wait(2000);
+    cy.wait(1000);
     cy.window().then(win => {
       for (const a of win.document.querySelectorAll('a')) {
         if (a.textContent.includes('Continue with the old setup wizard')) {

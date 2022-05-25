@@ -28,12 +28,6 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
             [$this, 'output_payment_methods']
         );
 
-        add_action(
-            'update_option_komoju_woocommerce_payment_types',
-            [$this, 'on_payment_types_updated'],
-            10, 2
-        );
-
         parent::__construct();
     }
 
@@ -60,6 +54,18 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         }
 
         return apply_filters('woocommerce_get_settings_' . $this->id, $settings, $current_section);
+    }
+
+    // Override from WC_Settings_Page
+    public function save()
+    {
+        $old_payment_types = get_option('komoju_woocommerce_payment_types');
+        parent::save();
+        $new_payment_types = get_option('komoju_woocommerce_payment_types');
+
+        if ($old_payment_types != $new_payment_types) {
+            $this->cache_payment_methods_from_komoju($old_payment_types, $new_payment_types);
+        }
     }
 
     // Action handler for rendering settings with type = 'komoju_payment_types'
@@ -103,15 +109,13 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         echo '</div>';
     }
 
-    // This gets called on the update_option that saves our list of payment methods.
-    //
     // Basically, the 'komoju_woocommerce_payment_types' option is just an array of slugs,
     // and 'komoju_woocommerce_payment_methods' holds the actual payment method objects
     // we get from the KOMOJU API.
     //
     // This action handler updates the 'komoju_woocommerce_payment_types' option
     // to match the 'komoju_woocommerce_payment_types' option.
-    public function on_payment_types_updated($old_payment_types, $payment_types)
+    public function cache_payment_methods_from_komoju($old_payment_types, $payment_types)
     {
         $all_payment_methods = $this->fetch_all_payment_methods();
         if ($all_payment_methods === null) {
@@ -119,9 +123,11 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         }
 
         // Clear gateway settings from removed entries
-        $to_remove = array_diff($old_payment_types, $payment_types);
-        foreach ($to_remove as $slug) {
-            delete_option('woocommerce_komoju_' . $slug . '_settings');
+        if ($old_payment_types) {
+            $to_remove = array_diff($old_payment_types, $payment_types);
+            foreach ($to_remove as $slug) {
+                delete_option('woocommerce_komoju_' . $slug . '_settings');
+            }
         }
 
         // Populate komoju_woocommerce_payment_methods option with fresh values from KOMOJU
@@ -132,6 +138,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
 
         update_option('komoju_woocommerce_payment_methods', $payment_methods, true);
     }
+    // TODO: override save
 
     private function url_for_webhooks()
     {

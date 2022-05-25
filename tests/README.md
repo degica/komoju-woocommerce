@@ -6,8 +6,7 @@ These tests should work on a fresh `docker-compose up`. If your database is not 
 
 ```bash
 # delete dev containers and database
-docker-compose down
-docker volume rm komoju-woocommerce_db_data
+docker-compose down --volumes
 ```
 
 

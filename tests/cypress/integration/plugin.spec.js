@@ -17,11 +17,7 @@ describe('KOMOJU for WooCommerce', () => {
     cy.fillInAddress();
 
     cy.contains('Komoju').click();
-
-    // Not sure why this is flaky...
-    cy.wait(300);
-    cy.contains('Pay Easy').click();
-    cy.wait(300);
+    cy.contains('Pay Easy').click({ force: true });
 
     cy.contains('Place order').click();
     cy.location('host').should('equal', 'komoju.com');
@@ -43,5 +39,21 @@ describe('KOMOJU for WooCommerce', () => {
 
     cy.location('host').should('equal', 'komoju.com');
     cy.location('pathname').should('include', '/sessions/');
+  })
+
+  it('lets me add and remove specialized payment gateways', () => {
+    cy.setupKomoju(['konbini', 'credit_card']);
+    cy.contains('Payments').click();
+
+    cy.get('.form-table').should('include.text', 'Komoju - Konbini');
+    cy.get('.form-table').should('include.text', 'Komoju - Credit Card');
+
+    cy.setupKomoju(['docomo', 'softbank']);
+    cy.contains('Payments').click();
+
+    cy.get('.form-table').should('not.include.text', 'Komoju - Konbini');
+    cy.get('.form-table').should('not.include.text', 'Komoju - Credit Card');
+    cy.get('.form-table').should('include.text',     'Komoju - SoftBank');
+    cy.get('.form-table').should('include.text',     'Komoju - docomo');
   })
 });
