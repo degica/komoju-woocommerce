@@ -114,6 +114,7 @@ Cypress.Commands.add('installWooCommerce', () => {
       });
       cy.contains('Continue').click();
       cy.contains('Run the importer').click();
+      cy.contains('Import complete! 1 product imported').should('exist');
     });
   });
 });
