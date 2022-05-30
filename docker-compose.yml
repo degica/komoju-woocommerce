@@ -33,6 +33,7 @@ services:
        WORDPRESS_DB_PASSWORD: wordpress
        WORDPRESS_CONFIG_EXTRA: |
         define( 'WPLANG', '${WPLANG}');
+        define( 'UPLOADS', '/var/www/html/wp-content/uploads' );
         define( 'WP_DEBUG_LOG', '/tmp/wp-errors.log');
         define( 'WP_SITEURL', 'http://' . $$_SERVER['HTTP_HOST']);
         define( 'WP_HOME', 'http://' . $$_SERVER['HTTP_HOST']);
