@@ -15,6 +15,8 @@ RUN apt-get update \
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+ENV WORDPRESS_CONFIG_EXTRA="define( 'UPLOADS', '/var/www/html/wp-content/uploads' );"
+
 RUN mkdir -p /var/www/html/wp-content/uploads/wc-logs/ \
     && chmod -R 666 /var/www/html/wp-content/uploads \
     && chown -R www-data /var/www/html/wp-content/uploads/
