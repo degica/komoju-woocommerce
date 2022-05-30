@@ -16,6 +16,7 @@ RUN apt-get update \
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 RUN mkdir -p /var/www/html/wp-content/uploads/wc-logs/ \
-    && chown -R www-data /var/www/html/wp-content/uploads/wc-logs/
+    && chmod -R 666 /var/www/html/wp-content/uploads \
+    && chown -R www-data /var/www/html/wp-content/uploads/
 
 COPY . /var/www/html/wp-content/plugins/komoju-woocommerce
