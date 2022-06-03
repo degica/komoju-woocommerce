@@ -42,7 +42,7 @@ services:
 volumes:
     db_data:
 
-## Uncomment to use with Kaiser
+# # Uncomment to use with Kaiser
 # networks:
 #   default:
 #     name: kaiser_net
