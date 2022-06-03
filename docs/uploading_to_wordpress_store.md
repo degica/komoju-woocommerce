@@ -19,7 +19,7 @@ svn co https://plugins.svn.wordpress.org/komoju-japanese-payments
 1. Copy the files to the `trunk/` directory:
 ```bash
 $ cd komoju-woocommerce
-$ cp -R MIT-LICENSE README.md readme.txt languages/* includes/* assets/* class-wc-gateway-komoju.php changelog.txt index.php uninstall.php ../komoju-japanese-payments/trunk
+$ rsync -r MIT-LICENSE README.md readme.txt languages includes assets class-wc-gateway-komoju.php class-wc-settings-page-komoju.php changelog.txt index.php uninstall.php ../komoju-japanese-payments/trunk
 ```
 1. If this release includes any new files you will need to add them to SVN (this is similar to `git add`):
 ```bash
