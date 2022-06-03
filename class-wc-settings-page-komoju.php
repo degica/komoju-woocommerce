@@ -45,21 +45,29 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     public function get_sections()
     {
         $sections = [
-            '' => __('KOMOJU account settings', 'komoju-woocommerce'),
+            '' => __('Payment methods', 'komoju-woocommerce'),
+            'api_settings' => __('API settings', 'komoju-woocommerce'),
         ];
 
         return apply_filters('woocommerce_get_sections_' . $this->id, $sections);
     }
 
     // Override from WC_Settings_Page
-    public function get_settings($current_section = '')
+    public function get_settings()
     {
+        global $current_section;
         $settings = [];
 
         if ('' === $current_section) {
             $settings = apply_filters(
                 'woocommerce_komoju_settings',
-                include 'includes/global-settings-komoju.php'
+                include 'includes/account-settings-komoju.php'
+            );
+        }
+        else if ('api_settings' === $current_section) {
+            $settings = apply_filters(
+                'woocommerce_komoju_settings',
+                include 'includes/api-settings-komoju.php'
             );
         }
 
@@ -226,7 +234,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         $all_payment_methods = $this->fetch_all_payment_methods();
         if ($all_payment_methods === null) {
             ?>
-                <tr style="color: darkred; border-bottom: 1px solid #c3c4c7"><td></td><td>
+                <tr style="color: darkred"><td></td><td>
                     <?php
                         $secret_key = $this->secret_key();
                         if ($secret_key && $secret_key !== '')
@@ -240,7 +248,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         }
 
         // Show each payment method as a checkbox with an icon?>
-        <tr style="border-bottom: 1px solid #c3c4c7">
+        <tr>
         <th class="titledesc" scope="row">
             <label><?php echo $setting['title']; ?></label>
         </th>

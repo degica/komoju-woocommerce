@@ -5,7 +5,7 @@ describe('KOMOJU for WooCommerce: Admin', () => {
     cy.installWooCommerce();
     cy.installKomoju();
 
-    cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings');
+    cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
     cy.get('.komoju-endpoint-field').contains('Reset').click();
     cy.contains('Save changes').click();
   })
@@ -27,26 +27,31 @@ describe('KOMOJU for WooCommerce: Admin', () => {
   })
 
   it('lets me change the KOMOJU endpoint', () => {
-    cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings');
+    cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
     cy.get('.komoju-endpoint-field').contains('Edit').click();
     cy.get('#komoju_woocommerce_api_endpoint').type('{selectAll}https://requestbin.labs.degica.com');
     cy.contains('Save changes').click();
 
+    cy.contains('Payment methods').click();
     cy.get('#mainform').should('include.text', 'Unable to reach KOMOJU. Is your secret key correct?');
+    cy.contains('API settings').click();
 
     cy.get('.komoju-endpoint-field').contains('Reset').click();
     cy.contains('Save changes').click();
 
+    cy.contains('Payment methods').click();
     cy.get('#mainform').should('not.include.text', 'Unable to reach KOMOJU. Is your secret key correct?');
   })
 
   // Unfortunately this spec relies rather heavily on production KOMOJU state
   it('lets me sign into KOMOJU to automatically set my secret key', () => {
-    cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings');
+    cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
     cy.get('#komoju_woocommerce_secret_key').type('{selectAll}{backspace}');
     cy.contains('Save changes').click();
+
+    cy.contains('Payment methods').click();
 
     cy.get('#mainform').should('include.text', 'Once signed into KOMOJU, you can select payment methods to use as WooCommerce gateways.');
 

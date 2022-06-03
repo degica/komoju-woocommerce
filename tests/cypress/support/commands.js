@@ -133,10 +133,12 @@ Cypress.Commands.add('installKomoju', () => {
 });
 
 Cypress.Commands.add('setupKomoju', (paymentTypes = [], secretKey = 'degica-mart-test') => {
-  cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings');
+  cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
   cy.get('#komoju_woocommerce_secret_key').type('{selectAll}').type(secretKey);
   cy.contains('Save changes').click();
+
+  cy.contains('Payment methods').click();
 
   cy.get('input[type="checkbox"]').each($match => {
     $match.each(function() {
