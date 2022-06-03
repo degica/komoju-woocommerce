@@ -26,7 +26,6 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.get('.blockUI,.blockOverlay').should('not.exist');
 
     cy.get('#place_order').click();
-    cy.location('host').should('equal', 'komoju.com');
     cy.location('pathname').should('include', '/sessions/');
   })
 
@@ -45,7 +44,6 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.get('.blockUI,.blockOverlay').should('not.exist');
     cy.get('#place_order').click();
 
-    cy.location('host').should('equal', 'komoju.com');
     cy.location('pathname').should('include', '/sessions/');
   })
 });
