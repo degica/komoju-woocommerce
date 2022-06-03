@@ -7,15 +7,20 @@ class KomojuApi
         return 'https://komoju.com';
     }
 
+    public static function endpoint()
+    {
+        $endpoint = get_option('komoju_woocommerce_api_endpoint');
+        if (!$endpoint) {
+            $endpoint = self::defaultEndpoint();
+        }
+        return $endpoint;
+    }
+
     public function __construct($secretKey)
     {
-        $this->endpoint  = get_option('komoju_woocommerce_api_endpoint');
+        $this->endpoint  = self::endpoint();
         $this->via       = 'woocommerce';
         $this->secretKey = $secretKey;
-
-        if (!$this->endpoint) {
-            $this->endpoint = self::defaultEndpoint();
-        }
     }
 
     public function setEndpoint($endpoint)

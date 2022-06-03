@@ -13,7 +13,12 @@ return [
         'title'       => 'API Settings',
         'type'        => 'title',
         'id'          => 'api-settings-in-komoju',
-        'desc'        => sprintf(__('Default url for the webhook is %s. Use this if you\'re not sure what it should be.', 'komoju-woocommerce'), $this->url_for_webhooks()),
+        'desc'        => __('On this page, you can connect your KOMOJU account to your WooCommerce store.'),
+    ],
+    [
+        'id'           => 'komoju_setup_button',
+        'type'         => 'komoju_setup_button',
+        'title'        => __('Quick Connect', 'komoju-woocommerce'),
     ],
     [
         'id'           => 'komoju_woocommerce_payment_types',

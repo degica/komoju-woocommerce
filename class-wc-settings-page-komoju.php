@@ -29,6 +29,11 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         );
 
         add_action(
+            'woocommerce_admin_field_komoju_setup_button',
+            [$this, 'output_setup_button']
+        );
+
+        add_action(
             'woocommerce_admin_field_komoju_endpoint',
             [$this, 'output_endpoint_field']
         );
@@ -71,6 +76,29 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         if ($old_payment_types != $new_payment_types) {
             $this->cache_payment_methods_from_komoju($old_payment_types, $new_payment_types);
         }
+    }
+
+    // Override from WC_Settings_Page
+    public function output()
+    {
+        if (get_option('komoju_woocommerce_just_connected_merchant_name')) {
+            $this->output_connected_notice();
+        }
+        parent::output();
+    }
+
+    // Action handler that prints out a flash notice for a successfully connected merchant.
+    // This happens after the merchant clicks "sign into komoju" or "reconnect with komoju"
+    // on the KOMOJU settings page.
+    public function output_connected_notice()
+    {
+        $merchant_name = get_option('komoju_woocommerce_just_connected_merchant_name');
+        delete_option('komoju_woocommerce_just_connected_merchant_name');
+        ?>
+        <div id="message" class="updated inline">
+            <p><strong><?php echo sprintf(__('Successfully connected to KOMOJU account %s.'), $merchant_name) ?></strong></p>
+        </div>
+        <?php
     }
 
     // Action handler for rendering settings with type = 'komoju_endpoint'
@@ -134,6 +162,62 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
 <?php
     }
 
+    // Action handler for rendering settings with type = 'komoju_setup_button'
+    public function output_setup_button($setting)
+    {
+        $nonce = wp_generate_uuid4();
+        update_option('komoju_woocommerce_nonce', $nonce);
+
+        $already_connected = get_option('komoju_woocommerce_secret_key') ? true : false;
+
+        $setup_url = KomojuApi::endpoint() . '/plugin/auth?' .
+            'post_url=' . rawurlencode($this->url_for_webhooks()) . '&' .
+            'webhook_url=' . rawurlencode($this->url_for_webhooks()) . '&' .
+            'nonce=' . rawurlencode($nonce);
+
+        ?>
+        <tr>
+            <th class="titledesc" scope="row">
+                <label><?php echo $setting['title']; ?></label>
+            </th>
+            <td class="forminp forminp-text komoju-setup-button" style="height: 60px">
+                <a href="<?php echo esc_attr($setup_url) ?>"
+                   class='komoju-setup <?php echo $already_connected ? 'connected' : '' ?>'>
+                    <?php
+                        if ($already_connected) echo __('Reconnect with KOMOJU', 'komoju-woocommerce');
+                        else                    echo __('Sign into KOMOJU', 'komoju-woocommerce');
+                    ?>
+                </a>
+
+                <style>
+                a.komoju-setup {
+                    text-decoration: none;
+                    background-color: #1880DE;
+                    font-size: 18px;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 26px;
+                    margin-bottom: 12px;
+                }
+                a.komoju-setup:hover {
+                    background-color: #3590E1;
+                }
+
+                a.komoju-setup.connected {
+                    background-color: white;
+                    color: #172E44;
+                    border: 2px solid #C1CDD8;
+                }
+                a.komoju-setup.connected:hover {
+                    background-color: #F0F8FF;
+                }
+                </style>
+            </td>
+        </tr>
+        <?php
+    }
+
     // Action handler for rendering settings with type = 'komoju_payment_types'
     public function output_payment_methods($setting)
     {
@@ -142,38 +226,49 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         $all_payment_methods = $this->fetch_all_payment_methods();
         if ($all_payment_methods === null) {
             ?>
-                <div style="color: darkred">
-                    <?php echo __('Unable to reach KOMOJU. Is your secret key correct?', 'komoju-woocommerce'); ?>
-                </div>
+                <tr style="color: darkred; border-bottom: 1px solid #c3c4c7"><td></td><td>
+                    <?php
+                        $secret_key = $this->secret_key();
+                        if ($secret_key && $secret_key !== '')
+                            echo __('Unable to reach KOMOJU. Is your secret key correct?', 'komoju-woocommerce');
+                        else
+                            echo __('Once signed into KOMOJU, you can select payment methods to use as WooCommerce gateways.', 'komoju-woocommerce');
+                    ?>
+                </td></tr>
             <?php
             return;
         }
 
         // Show each payment method as a checkbox with an icon?>
-        <h4><?php echo $setting['title']; ?></h4>
-        <div style="display: flex; flex-flow: row wrap; max-width: 800px">
-        <?php
-
-        foreach ($all_payment_methods as $slug => $payment_method) {
-            ?>
-            <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px; width: 200px">
-            <input
-              type="checkbox"
-              name="<?php echo esc_attr($setting['id']); ?>[]"
-              value="<?php echo esc_attr($slug); ?>"
-              <?php if (in_array($slug, $value)) {
-                echo 'checked';
-            } ?>
-            >
-            <img
-              width="38"
-              height="24"
-              src="https://komoju.com/payment_methods/<?php echo esc_attr($slug); ?>.svg">
-            <?php echo $payment_method['name_' . $locale]; ?>
-            </label>
+        <tr style="border-bottom: 1px solid #c3c4c7">
+        <th class="titledesc" scope="row">
+            <label><?php echo $setting['title']; ?></label>
+        </th>
+        <td class="forminp forminp-text komoju-payment-methods"
+            style="display: flex; flex-flow: row wrap; max-width: 800px; margin-bottom: 12px">
             <?php
-        }
-        echo '</div>';
+            foreach ($all_payment_methods as $slug => $payment_method) {
+                ?>
+                <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px; width: 200px">
+                <input
+                  type="checkbox"
+                  name="<?php echo esc_attr($setting['id']); ?>[]"
+                  value="<?php echo esc_attr($slug); ?>"
+                  <?php if (in_array($slug, $value)) {
+                    echo 'checked';
+                } ?>
+                >
+                <img
+                  width="38"
+                  height="24"
+                  src="https://komoju.com/payment_methods/<?php echo esc_attr($slug); ?>.svg">
+                <?php echo $payment_method['name_' . $locale]; ?>
+                </label>
+                <?php
+            }?>
+        </td>
+        </tr>
+        <?php
     }
 
     // Basically, the 'komoju_woocommerce_payment_types' option is just an array of slugs,
@@ -205,8 +300,6 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
 
         update_option('komoju_woocommerce_payment_methods', $payment_methods, true);
     }
-
-    // TODO: override save
 
     private function url_for_webhooks()
     {
