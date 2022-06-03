@@ -56,6 +56,18 @@ msgstr "KOMOJUのアカウント設定"
 msgid "Unable to reach KOMOJU. Is your secret key correct?"
 msgstr "KOMOJUへの接続に失敗しました。シークレットキーをご確認ください。"
 
+#: class-wc-settings-page-komoju.php:92
+msgid "Only modify this if you know what you're doing."
+msgstr "詳細設定です。特別な理由がなければ、変更しないでください。"
+
+#: class-wc-settings-page-komoju.php:97
+msgid "Edit"
+msgstr "変更"
+
+#: class-wc-settings-page-komoju.php:102
+msgid "Reset"
+msgstr "初期化"
+
 #: includes/class-wc-gateway-komoju-ipn-handler.php:94
 #: includes/class-wc-gateway-komoju-ipn-handler.php:108
 #: includes/class-wc-gateway-komoju-ipn-handler.php:111
@@ -195,6 +207,10 @@ msgstr "デバッグログ"
 #: includes/settings-komoju.php:105 includes/settings-komoju.php:110
 msgid "Enable logging"
 msgstr "ロギングを有効"
+
+#: includes/global-settings-komoju.php:58
+msgid "KOMOJU Endpoint"
+msgstr "KOMOJUのエンドポイント"
 
 #: includes/settings-komoju.php:107 includes/settings-komoju.php:112
 #, php-format

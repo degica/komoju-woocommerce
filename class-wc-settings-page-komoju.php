@@ -89,7 +89,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
            type="text"
            <?php if ($untainted) echo 'disabled' ?>>
     <p class="description">
-        <?php echo __("Only modify this if you know what you're doing.") ?>
+        <?php echo __("Only modify this if you know what you're doing.", 'komoju-woocommerce') ?>
     </p>
     <div>
         <?php if ($untainted) { ?>
