@@ -54,6 +54,12 @@ return [
         'default'     => WC_Gateway_Komoju::get_legacy_setting('debug', 'no'),
     ],
     [
+        'id'          => 'komoju_woocommerce_api_endpoint',
+        'title'       => __('KOMOJU Endpoint', 'komoju-woocommerce'),
+        'type'        => 'komoju_endpoint',
+        'default'     => KomojuApi::defaultEndpoint(),
+    ],
+    [
         'id'       => 'api-settings-in-komoju-end',
         'type'     => 'sectionend',
     ],

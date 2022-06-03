@@ -41,3 +41,9 @@ services:
         - .:/var/www/html/wp-content/plugins/komoju-woocommerce
 volumes:
     db_data:
+
+## Uncomment to use with Kaiser
+# networks:
+#   default:
+#     name: kaiser_net
+#     external: true
