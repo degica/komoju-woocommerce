@@ -173,3 +173,7 @@ Added filter 'woocommerce_komoju_payment_methods' to allow users to change the l
 
 = 2.1.1 =
 Update Plugin Name
+
+= 2.2.0 =
+Users can now select individual payment methods to be exposed as WooCommerce payment gateways.
+This should provide better compatibility with other plugins that filter or otherwise interact with payment gateways.
