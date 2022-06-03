@@ -40,4 +40,24 @@ describe('KOMOJU for WooCommerce: Admin', () => {
 
     cy.get('#mainform').should('not.include.text', 'Unable to reach KOMOJU. Is your secret key correct?');
   })
+
+  // Unfortunately this spec relies rather heavily on production KOMOJU state
+  it('lets me sign into KOMOJU to automatically set my secret key', () => {
+    cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings');
+
+    cy.get('#komoju_woocommerce_secret_key').type('{selectAll}{backspace}');
+    cy.contains('Save changes').click();
+
+    cy.get('#mainform').should('include.text', 'Once signed into KOMOJU, you can select payment methods to use as WooCommerce gateways.');
+
+    cy.contains('Sign into KOMOJU').click();
+
+    // TODO this will fail from here on right now because the feature is not yet deployed to KOMOJU.
+
+    cy.get('#user_email').type('shopifydemo@example.com');
+    cy.get('#user_password').type('ShopifyTest123');
+    cy.get('input[type="submit"]').click();
+
+    cy.pause();
+  })
 });
