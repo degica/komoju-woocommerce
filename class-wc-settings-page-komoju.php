@@ -28,6 +28,11 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
             [$this, 'output_payment_methods']
         );
 
+        add_action(
+            'woocommerce_admin_field_komoju_endpoint',
+            [$this, 'output_endpoint_field']
+        );
+
         parent::__construct();
     }
 
@@ -66,6 +71,67 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         if ($old_payment_types != $new_payment_types) {
             $this->cache_payment_methods_from_komoju($old_payment_types, $new_payment_types);
         }
+    }
+
+    // Action handler for rendering settings with type = 'komoju_endpoint'
+    public function output_endpoint_field($setting)
+    {
+        $value     = isset($setting['value']) ? $setting['value'] : $setting['default'];
+        $untainted = $value === $setting['default']; ?>
+<th class="titledesc" scope="row">
+    <label for="<?php echo esc_attr($setting['id']); ?>"><?php echo $setting['title']; ?></label>
+</th>
+<td class="forminp forminp-text komoju-endpoint-field">
+    <input id="<?php echo esc_attr($setting['id']); ?>"
+           name="<?php echo esc_attr($setting['id']); ?>"
+           value="<?php echo esc_attr($value); ?>"
+           type="text"
+           <?php if ($untainted) {
+            echo 'disabled';
+        } ?>>
+    <p class="description">
+        <?php echo __("Only modify this if you know what you're doing.", 'komoju-woocommerce'); ?>
+    </p>
+    <div>
+        <?php if ($untainted) { ?>
+            <button type="button" onclick="komoju_woocommerce_enable_endpoint_field(event)">
+                <?php echo __('Edit', 'komoju-woocommerce'); ?>
+            </button>
+        <?php } ?>
+
+        <button type="button" onclick="komoju_woocommerce_reset_endpoint_field(event)">
+            <?php echo __('Reset', 'komoju-woocommerce'); ?>
+        </button>
+    </div>
+
+    <script>
+        function komoju_woocommerce_enable_endpoint_field(event) {
+            const input = document.getElementById("<?php echo esc_js($setting['id']); ?>");
+            input.disabled = false;
+            event.target.remove();
+        }
+        function komoju_woocommerce_reset_endpoint_field(event) {
+            const input = document.getElementById("<?php echo esc_js($setting['id']); ?>");
+            input.value = "<?php echo esc_js($setting['default']); ?>";
+        }
+    </script>
+
+    <style>
+        .komoju-endpoint-field {
+            display: flex;
+            flex-flow: column wrap;
+            align-items: flex-start;
+            gap: 4px;
+        }
+        .komoju-endpoint-field button {
+            min-width: 80px;
+        }
+        .komoju-endpoint-field p.description {
+            margin: 0;
+        }
+    </style>
+</td>
+<?php
     }
 
     // Action handler for rendering settings with type = 'komoju_payment_types'

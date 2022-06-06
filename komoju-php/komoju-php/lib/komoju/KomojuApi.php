@@ -2,11 +2,20 @@
 
 class KomojuApi
 {
+    public static function defaultEndpoint()
+    {
+        return 'https://komoju.com';
+    }
+
     public function __construct($secretKey)
     {
-        $this->endpoint  = 'https://komoju.com';
+        $this->endpoint  = get_option('komoju_woocommerce_api_endpoint');
         $this->via       = 'woocommerce';
         $this->secretKey = $secretKey;
+
+        if (!$this->endpoint) {
+            $this->endpoint = self::defaultEndpoint();
+        }
     }
 
     public function setEndpoint($endpoint)
