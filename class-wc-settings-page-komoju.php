@@ -76,7 +76,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     // Action handler for rendering settings with type = 'komoju_endpoint'
     public function output_endpoint_field($setting)
     {
-        $value     = isset($setting['value']) ? $setting['value'] : $setting('default');
+        $value     = isset($setting['value']) ? $setting['value'] : $setting['default'];
         $untainted = $value === $setting['default']; ?>
 <th class="titledesc" scope="row">
     <label for="<?php echo esc_attr($setting['id']); ?>"><?php echo $setting['title']; ?></label>
@@ -112,7 +112,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         }
         function komoju_woocommerce_reset_endpoint_field(event) {
             const input = document.getElementById("<?php echo esc_js($setting['id']); ?>");
-            input.value = "https://komoju.com";
+            input.value = "<?php echo esc_js($setting['default']); ?>";
         }
     </script>
 
