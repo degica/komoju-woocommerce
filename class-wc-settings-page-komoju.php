@@ -89,19 +89,18 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     // Override from WC_Settings_Page
     public function output()
     {
-        if (get_option('komoju_woocommerce_just_connected_merchant_name')) {
-            $this->output_connected_notice();
+        $just_connected = get_option('komoju_woocommerce_just_connected_merchant_name');
+        if ($just_connected) {
+            delete_option('komoju_woocommerce_just_connected_merchant_name');
+            $this->output_connected_notice($just_connected);
         }
         parent::output();
     }
 
-    // Action handler that prints out a flash notice for a successfully connected merchant.
-    // This happens after the merchant clicks "sign into komoju" or "reconnect with komoju"
-    // on the KOMOJU settings page.
-    public function output_connected_notice()
+    // This shows a flash message (meant for the top of the KOMOJU settings page) for when
+    // the user returns from the quick setup feature.
+    public function output_connected_notice($merchant_name)
     {
-        $merchant_name = get_option('komoju_woocommerce_just_connected_merchant_name');
-        delete_option('komoju_woocommerce_just_connected_merchant_name');
         ?>
         <div id="message" class="updated inline">
             <p><strong><?php echo sprintf(__('Successfully connected to KOMOJU account %s.'), $merchant_name) ?></strong></p>
