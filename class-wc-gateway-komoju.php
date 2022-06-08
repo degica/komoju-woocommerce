@@ -198,7 +198,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             'line_items' => $line_items,
         ];
         $komoju_request = $komoju_api->createSession(
-            array_filter($session_params, function($v) { return !is_null($v); })
+            array_filter($session_params, function ($v) { return !is_null($v); })
         );
 
         return [
