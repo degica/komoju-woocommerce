@@ -182,7 +182,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
         // new session
         $komoju_api     = $this->komoju_api;
-        $komoju_request = $komoju_api->createSession([
+        $session_params = [
             'return_url'     => $return_url,
             'default_locale' => self::get_locale_or_fallback(),
             'email'          => $email,
@@ -196,7 +196,10 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 'shipping_address'   => $shipping_address,
             ],
             'line_items' => $line_items,
-        ]);
+        ]
+        $komoju_request = $komoju_api->createSession(
+            array_filter($session_params, function($v) { return !is_null($v) })
+        );
 
         return [
             'result'   => 'success',
