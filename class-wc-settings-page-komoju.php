@@ -137,6 +137,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     // Action handler for rendering settings with type = 'komoju_payment_types'
     public function output_payment_methods($setting)
     {
+        $value               = is_array($setting['value']) ? $setting['value'] : [];
         $locale              = WC_Gateway_Komoju::get_locale_or_fallback();
         $all_payment_methods = $this->fetch_all_payment_methods();
         if ($all_payment_methods === null) {
@@ -160,7 +161,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
               type="checkbox"
               name="<?php echo esc_attr($setting['id']); ?>[]"
               value="<?php echo esc_attr($slug); ?>"
-              <?php if (in_array($slug, $setting['value'])) {
+              <?php if (in_array($slug, $value)) {
                 echo 'checked';
             } ?>
             >

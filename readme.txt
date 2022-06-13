@@ -177,3 +177,9 @@ Update Plugin Name
 = 2.2.0 =
 Users can now select individual payment methods to be exposed as WooCommerce payment gateways.
 This should provide better compatibility with other plugins that filter or otherwise interact with payment gateways.
+
+= 2.2.3 =
+Fixed issue with orders that don't have an email address.
+
+= 2.2.4 =
+Fixed issue where some stores saw errors on the settings page after filling in their secret key.
