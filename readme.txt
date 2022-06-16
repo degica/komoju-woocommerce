@@ -183,3 +183,6 @@ Fixed issue with orders that don't have an email address.
 
 = 2.2.4 =
 Fixed issue where some stores saw errors on the settings page after filling in their secret key.
+
+= 2.2.5 =
+Fixed problem where some installs were not generating order IDs correctly.
