@@ -224,7 +224,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     {
         $suffix = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 6);
 
-        return $this->get_option('invoice_prefix') . $order->get_order_number() . '-' . $suffix;
+        return $this->invoice_prefix . $order->get_order_number() . '-' . $suffix;
     }
 
     /**
