@@ -186,3 +186,6 @@ Fixed issue where some stores saw errors on the settings page after filling in t
 
 = 2.2.5 =
 Fixed problem where some installs were not generating order IDs correctly.
+
+= 2.2.6 =
+Fixed issue where new versions were not being registered automatically.
