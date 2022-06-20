@@ -177,8 +177,8 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         $already_connected = get_option('komoju_woocommerce_secret_key') ? true : false;
 
         $setup_url = KomojuApi::endpoint() . '/plugin/auth?' .
-            'post_url=' . rawurlencode($this->url_for_webhooks()) . '&' .
-            'webhook_url=' . rawurlencode($this->url_for_webhooks()) . '&' .
+            'post_url=' . rawurlencode($this->contracted_url_for_webhooks()) . '&' .
+            'webhook_url=' . rawurlencode($this->contracted_url_for_webhooks()) . '&' .
             'nonce=' . rawurlencode($nonce); ?>
         <tr>
             <th class="titledesc" scope="row">
@@ -312,6 +312,18 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         // In dev the relative plugin URL will remove the host name, but it
         // will appear in production instances
         return WC()->api_request_url('WC_Gateway_Komoju');
+    }
+
+    // There is a quirk in our production setup where all HTTP requests containing the
+    // word "localhost" are rejected. We still want local setup to work, so we use
+    // "local" as an alias for localhost.
+    private function contracted_url_for_webhooks()
+    {
+        $url = $this->url_for_webhooks();
+        $url = str_ireplace('http://localhost:', 'http://local:', $url);
+        $url = str_ireplace('http://127.0.0.1:', 'http://local:', $url);
+
+        return $url;
     }
 
     // Returns a list of payment methods from KOMOJU.
