@@ -55,6 +55,13 @@ return [
         'default'     => KomojuApi::defaultEndpoint(),
     ],
     [
+        'id'          => 'komoju_woocommerce_waf_staging_token',
+        'desc'        => __('Usually you want this to be empty.', 'komoju-woocommerce'),
+        'title'       => __('Staging token', 'komoju-woocommerce'),
+        'type'        => 'text',
+        'default'     => '',
+    ],
+    [
         'id'       => 'api-settings-in-komoju-end',
         'type'     => 'sectionend',
     ],
