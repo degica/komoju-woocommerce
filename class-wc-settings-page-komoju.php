@@ -45,7 +45,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     public function get_sections()
     {
         $sections = [
-            '' => __('Payment methods', 'komoju-woocommerce'),
+            ''             => __('Payment methods', 'komoju-woocommerce'),
             'api_settings' => __('API settings', 'komoju-woocommerce'),
         ];
 
@@ -63,8 +63,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
                 'woocommerce_komoju_settings',
                 include 'includes/account-settings-komoju.php'
             );
-        }
-        else if ('api_settings' === $current_section) {
+        } elseif ('api_settings' === $current_section) {
             $settings = apply_filters(
                 'woocommerce_komoju_settings',
                 include 'includes/api-settings-komoju.php'
@@ -103,7 +102,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     {
         ?>
         <div id="message" class="updated inline">
-            <p><strong><?php echo sprintf(__('Successfully connected to KOMOJU account %s.'), $merchant_name) ?></strong></p>
+            <p><strong><?php echo sprintf(__('Successfully connected to KOMOJU account %s.'), $merchant_name); ?></strong></p>
         </div>
         <?php
     }
@@ -180,20 +179,20 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         $setup_url = KomojuApi::endpoint() . '/plugin/auth?' .
             'post_url=' . rawurlencode($this->url_for_webhooks()) . '&' .
             'webhook_url=' . rawurlencode($this->url_for_webhooks()) . '&' .
-            'nonce=' . rawurlencode($nonce);
-
-        ?>
+            'nonce=' . rawurlencode($nonce); ?>
         <tr>
             <th class="titledesc" scope="row">
                 <label><?php echo $setting['title']; ?></label>
             </th>
             <td class="forminp forminp-text komoju-setup-button" style="height: 60px">
-                <a href="<?php echo esc_attr($setup_url) ?>"
-                   class='komoju-setup <?php echo $already_connected ? 'connected' : '' ?>'>
+                <a href="<?php echo esc_attr($setup_url); ?>"
+                   class='komoju-setup <?php echo $already_connected ? 'connected' : ''; ?>'>
                     <?php
-                        if ($already_connected) echo __('Reconnect with KOMOJU', 'komoju-woocommerce');
-                        else                    echo __('Sign into KOMOJU', 'komoju-woocommerce');
-                    ?>
+                        if ($already_connected) {
+                            echo __('Reconnect with KOMOJU', 'komoju-woocommerce');
+                        } else {
+                            echo __('Sign into KOMOJU', 'komoju-woocommerce');
+                        } ?>
                 </a>
 
                 <style>
@@ -236,11 +235,11 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
                 <tr style="color: darkred"><td></td><td>
                     <?php
                         $secret_key = $this->secret_key();
-                        if ($secret_key && $secret_key !== '')
-                            echo __('Unable to reach KOMOJU. Is your secret key correct?', 'komoju-woocommerce');
-                        else
-                            echo __('Once signed into KOMOJU, you can select payment methods to use as WooCommerce gateways.', 'komoju-woocommerce');
-                    ?>
+            if ($secret_key && $secret_key !== '') {
+                echo __('Unable to reach KOMOJU. Is your secret key correct?', 'komoju-woocommerce');
+            } else {
+                echo __('Once signed into KOMOJU, you can select payment methods to use as WooCommerce gateways.', 'komoju-woocommerce');
+            } ?>
                 </td></tr>
             <?php
             return;
@@ -272,7 +271,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
                 <?php echo $payment_method['name_' . $locale]; ?>
                 </label>
                 <?php
-            }?>
+            } ?>
         </td>
         </tr>
         <?php

@@ -83,11 +83,12 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
 
     public function quick_setup($post)
     {
-        $saved_nonce = get_option('komoju_woocommerce_nonce');
+        $saved_nonce       = get_option('komoju_woocommerce_nonce');
         $nonce_from_komoju = $post['nonce'];
 
         if ($saved_nonce === false || $saved_nonce !== $nonce_from_komoju) {
             wp_die('Invalid nonce. Please try again.', 'KOMOJU quick setup', ['response' => 422]);
+
             return;
         }
 

@@ -13,6 +13,7 @@ class KomojuApi
         if (!$endpoint) {
             $endpoint = self::defaultEndpoint();
         }
+
         return $endpoint;
     }
 
