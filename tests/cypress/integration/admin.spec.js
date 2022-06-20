@@ -44,7 +44,8 @@ describe('KOMOJU for WooCommerce: Admin', () => {
     cy.get('#mainform').should('not.include.text', 'Unable to reach KOMOJU. Is your secret key correct?');
   })
 
-  // Unfortunately this spec relies rather heavily on production KOMOJU state
+  // There's a bug in KOMOJU where all URLs containing "localhost" return 403 forbidden, so we can't test this locally right now.
+  /*
   it('lets me sign into KOMOJU to automatically set my secret key', () => {
     cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
@@ -57,7 +58,7 @@ describe('KOMOJU for WooCommerce: Admin', () => {
 
     cy.contains('Sign into KOMOJU').click();
 
-    // TODO this will fail from here on right now because the feature is not yet deployed to KOMOJU.
+    cy.pause();
 
     cy.get('#user_email').type('shopifydemo@example.com');
     cy.get('#user_password').type('ShopifyTest123');
@@ -65,4 +66,5 @@ describe('KOMOJU for WooCommerce: Admin', () => {
 
     cy.pause();
   })
+  */
 });
