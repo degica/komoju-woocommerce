@@ -44,27 +44,54 @@ describe('KOMOJU for WooCommerce: Admin', () => {
     cy.get('#mainform').should('not.include.text', 'Unable to reach KOMOJU. Is your secret key correct?');
   })
 
-  // There's a bug in KOMOJU where all URLs containing "localhost" return 403 forbidden, so we can't test this locally right now.
-  /*
-  it('lets me sign into KOMOJU to automatically set my secret key', () => {
+  it('updates secret key with one-click setup', () => {
     cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
     cy.get('#komoju_woocommerce_secret_key').type('{selectAll}{backspace}');
+    cy.get('#komoju_woocommerce_webhook_secret').type('{selectAll}{backspace}');
     cy.contains('Save changes').click();
 
     cy.contains('Payment methods').click();
 
     cy.get('#mainform').should('include.text', 'Once signed into KOMOJU, you can select payment methods to use as WooCommerce gateways.');
 
-    cy.contains('Sign into KOMOJU').click();
+    let nonce;
+    cy.contains('Sign into KOMOJU').then((connectButton) => {
+      const href = connectButton.attr('href');
+      nonce = href.split('&nonce=')[1];
+    })
 
-    cy.pause();
+    const options = {
+      method: 'POST',
+      url: '/?wc-api=WC_Gateway_Komoju',
+      body: {
+        secret_key: 'abc123',
+        nonce: 'wrong',
+        webhook_secret: 'webhooks123'
+      },
+      failOnStatusCode: false,
+      form: true
+    }
 
-    cy.get('#user_email').type('shopifydemo@example.com');
-    cy.get('#user_password').type('ShopifyTest123');
-    cy.get('input[type="submit"]').click();
+    cy.request(options)
+      .should(response => {
+        expect(response.status).to.eq(422)
+        expect(response.body).to.include('Invalid nonce. Please try again.')
+      })
+      .then(() => {
+        options.body.nonce = nonce;
+        options.failOnStatusCode = true;
 
-    cy.pause();
+        cy.request(options)
+          .should(response => {
+            expect(response.status).to.eq(200)
+          })
+      })
+
+    cy.reload()
+    cy.get('.komoju-setup').should('include.text', 'Reconnect with KOMOJU')
+    cy.contains('API settings').click()
+    cy.get('#komoju_woocommerce_secret_key').should('have.value', 'abc123')
+    cy.get('#komoju_woocommerce_webhook_secret').should('have.value', 'webhooks123')
   })
-  */
 });
