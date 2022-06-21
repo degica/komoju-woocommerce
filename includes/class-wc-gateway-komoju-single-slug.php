@@ -20,7 +20,10 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         $this->id             = 'komoju_' . $slug;
         $this->has_fields     = false;
         $this->method_title   = __('Komoju', 'komoju-woocommerce') . ' - ' . $this->default_title();
-        $this->icon           = "https://komoju.com/payment_methods/$slug.svg";
+
+        if ($this->get_option('showIcon') == 'yes') {
+            $this->icon = "https://komoju.com/payment_methods/$slug.svg";
+        }
 
         parent::__construct();
     }
