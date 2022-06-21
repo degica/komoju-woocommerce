@@ -57,19 +57,14 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         // Filters
         // Actions
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
-        if (!$this->is_valid_for_use()) {
-            $this->enabled = 'no';
-            WC_Gateway_Komoju::log('is not valid for use. No IPN set.');
-        } else {
-            include_once 'includes/class-wc-gateway-komoju-ipn-handler.php';
-            new WC_Gateway_Komoju_IPN_Handler(
-              $this,
-              $this->webhookSecretToken,
-              $this->secretKey,
-              $this->invoice_prefix,
-              $this->useOnHold
-            );
-        }
+        include_once 'includes/class-wc-gateway-komoju-ipn-handler.php';
+        new WC_Gateway_Komoju_IPN_Handler(
+          $this,
+          $this->webhookSecretToken,
+          $this->secretKey,
+          $this->invoice_prefix,
+          $this->useOnHold
+        );
     }
 
     /**
@@ -84,30 +79,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 self::$log = new WC_Logger();
             }
             self::$log->add('komoju', $message);
-        }
-    }
-
-    /**
-     * Check if this gateway is enabled and available in the user's country
-     *
-     * @return bool
-     */
-    public function is_valid_for_use()
-    {
-        return in_array(get_woocommerce_currency(), apply_filters('woocommerce_komoju_supported_currencies', ['JPY']));
-    }
-
-    /**
-     * Admin Panel Options
-     */
-    public function admin_options()
-    {
-        if ($this->is_valid_for_use()) {
-            parent::admin_options();
-        } else {
-            ?>
-            <div class="inline error"><p><strong><?php _e('Gateway Disabled', 'komoju-woocommerce'); ?></strong>: <?php _e('Komoju does not support your store currency.', 'komoju-woocommerce'); ?></p></div>
-            <?php
         }
     }
 
