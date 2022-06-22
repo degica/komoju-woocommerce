@@ -183,13 +183,13 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         // new session
         $komoju_api     = $this->komoju_api;
         $session_params = [
+            'amount'         => $order->get_total(),
+            'currency'       => get_woocommerce_currency(),
             'return_url'     => $return_url,
             'default_locale' => self::get_locale_or_fallback(),
             'email'          => $email,
             'payment_types'  => [$payment_type],
             'payment_data'   => [
-                'amount'             => $order->get_total(),
-                'currency'           => get_woocommerce_currency(),
                 'external_order_num' => $this->external_order_num($order),
                 'billing_address'    => $billing_address,
                 'name'               => $name,
@@ -197,9 +197,13 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             ],
             'line_items' => $line_items,
         ];
-        $komoju_request = $komoju_api->createSession(
-            array_filter($session_params, function ($v) { return !is_null($v); })
+        $remove_nulls = function ($v) { return !is_null($v); };
+        $session_params['payment_data'] = array_filter(
+            $session_params['payment_data'],
+            $remove_nulls
         );
+        $session_params = array_filter($session_params, $remove_nulls);
+        $komoju_request = $komoju_api->createSession($session_params);
 
         return [
             'result'   => 'success',
