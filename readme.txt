@@ -189,3 +189,6 @@ Fixed problem where some installs were not generating order IDs correctly.
 
 = 2.2.6 =
 Fixed issue where new versions were not being registered automatically.
+
+= 2.2.7 =
+Fixed issue with orders that don't have a customer name.
