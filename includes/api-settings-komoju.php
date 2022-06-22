@@ -16,11 +16,6 @@ return [
         'desc'        => sprintf(__('Default url for the webhook is %s. Use this if you\'re not sure what it should be.', 'komoju-woocommerce'), $this->url_for_webhooks()),
     ],
     [
-        'id'           => 'komoju_woocommerce_payment_types',
-        'type'         => 'komoju_payment_types',
-        'title'        => __('Payment Gateways', 'komoju-woocommerce'),
-    ],
-    [
         'id'          => 'komoju_woocommerce_secret_key',
         'placeholder' => 'sk_live_000000000000000000000000',
         'title'       => __('Secret Key from Komoju', 'komoju-woocommerce'),
@@ -58,6 +53,13 @@ return [
         'title'       => __('KOMOJU Endpoint', 'komoju-woocommerce'),
         'type'        => 'komoju_endpoint',
         'default'     => KomojuApi::defaultEndpoint(),
+    ],
+    [
+        'id'          => 'komoju_woocommerce_waf_staging_token',
+        'desc'        => __('Usually you want this to be empty.', 'komoju-woocommerce'),
+        'title'       => __('Staging token', 'komoju-woocommerce'),
+        'type'        => 'text',
+        'default'     => '',
     ],
     [
         'id'       => 'api-settings-in-komoju-end',

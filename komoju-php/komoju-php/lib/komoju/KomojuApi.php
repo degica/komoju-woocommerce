@@ -7,15 +7,21 @@ class KomojuApi
         return 'https://komoju.com';
     }
 
+    public static function endpoint()
+    {
+        $endpoint = get_option('komoju_woocommerce_api_endpoint');
+        if (!$endpoint) {
+            $endpoint = self::defaultEndpoint();
+        }
+
+        return $endpoint;
+    }
+
     public function __construct($secretKey)
     {
-        $this->endpoint  = get_option('komoju_woocommerce_api_endpoint');
+        $this->endpoint  = self::endpoint();
         $this->via       = 'woocommerce';
         $this->secretKey = $secretKey;
-
-        if (!$this->endpoint) {
-            $this->endpoint = self::defaultEndpoint();
-        }
     }
 
     public function setEndpoint($endpoint)
@@ -42,6 +48,7 @@ class KomojuApi
     {
         $ch = curl_init($this->endpoint . $uri);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers());
         curl_setopt($ch, CURLOPT_USERPWD, $this->secretKey . ':');
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
@@ -76,10 +83,7 @@ class KomojuApi
         $data_json = json_encode($payload);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            "komoju-via: {$this->via}",
-        ]);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_USERPWD, $this->secretKey . ':');
         $result = curl_exec($ch);
@@ -104,5 +108,20 @@ class KomojuApi
         }
 
         return $decoded;
+    }
+
+    private function headers()
+    {
+        $result = [
+            'Content-Type: application/json',
+            "komoju-via: {$this->via}",
+        ];
+
+        $waf_token = get_option('komoju_woocommerce_waf_staging_token');
+        if ($waf_token) {
+            $result[] = "Cookie: waf_staging_token=$waf_token";
+        }
+
+        return $result;
     }
 }

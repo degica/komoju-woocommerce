@@ -52,9 +52,17 @@ msgstr "KOMOJUを読み込みませんでした。しばらく待ってから再
 msgid "KOMOJU account settings"
 msgstr "KOMOJUのアカウント設定"
 
+#: class-wc-settings-page-komoju.php:48
+msgid "Payment methods"
+msgstr "支払い方法"
+
+#: class-wc-settings-page-komoju.php:49
+msgid "API settings"
+msgstr "API設定"
+
 #: class-wc-settings-page-komoju.php:73
 msgid "Unable to reach KOMOJU. Is your secret key correct?"
-msgstr "KOMOJUへの接続に失敗しました。シークレットキーをご確認ください。"
+msgstr "KOMOJUへの接続に失敗しました。非公開鍵をご確認ください。"
 
 #: class-wc-settings-page-komoju.php:92
 msgid "Only modify this if you know what you're doing."
@@ -147,11 +155,11 @@ msgstr "支払い方法"
 
 #: includes/settings-komoju.php:81 includes/settings-komoju.php:82
 msgid "Secret Key from Komoju"
-msgstr "Komoju シークレットキー"
+msgstr "Komoju 非公開鍵"
 
 #: includes/settings-komoju.php:83 includes/settings-komoju.php:84
 msgid "Please enter your Komoju secret key."
-msgstr "Komoju のシークレットキーを入力してください"
+msgstr "Komoju の非公開鍵を入力してください"
 
 #: includes/settings-komoju.php:88
 msgid "Callback Url"
@@ -171,7 +179,7 @@ msgstr ""
 
 #: includes/settings-komoju.php:91
 msgid "Please enter your Komoju Webhook Secret Token"
-msgstr "Komoju のシークレットキーを入力してください"
+msgstr "Komoju のシークレットトークンを入力してください"
 
 #: includes/settings-komoju.php:94
 msgid "Komoju Sandbox"
@@ -211,6 +219,14 @@ msgstr "ロギングを有効"
 #: includes/global-settings-komoju.php:58
 msgid "KOMOJU Endpoint"
 msgstr "KOMOJUのエンドポイント"
+
+#: includes/api-settings-komoju.php:59
+msgid "Usually you want this to be empty."
+msgstr "ほとんどの場合、これは空でいい"
+
+#: includes/api-settings-komoju.php:60
+msgid "Staging token"
+msgstr "Staging token"
 
 #: includes/settings-komoju.php:107 includes/settings-komoju.php:112
 #, php-format
