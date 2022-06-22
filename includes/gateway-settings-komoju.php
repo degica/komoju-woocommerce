@@ -15,6 +15,12 @@ return [
         'label'   => __('Enable Komoju', 'komoju-woocommerce'),
         'default' => 'no',
     ],
+    'showIcon' => [
+        'title'       => __('Icon', 'komoju-woocommerce'),
+        'label'       => __('Show icon on checkout', 'komoju-woocommerce'),
+        'type'        => 'checkbox',
+        'default'     => 'yes',
+    ],
     'title' => [
         'title'       => __('Title', 'komoju-woocommerce'),
         'type'        => 'text',

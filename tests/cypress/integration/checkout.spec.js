@@ -48,4 +48,40 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.contains('Choose a Convenience Store').should('exist');
     cy.location('pathname').should('include', '/sessions/');
   })
+
+  it('lets me turn checkout icons on and off', () => {
+    cy.setupKomoju(['konbini', 'credit_card']);
+    cy.contains('Payments').click();
+    cy.enablePaymentGateway('komoju_credit_card');
+
+    cy.get('[data-gateway_id="komoju_credit_card"] a.button')
+      .click()
+
+    cy.get('#woocommerce_komoju_credit_card_showIcon').then(input => {
+      cy.log(input.attr('checked'));
+      if (input.attr('checked')) input.click()
+    })
+    cy.contains('Save changes').click()
+    cy.contains('Your settings have been saved.').should('exist')
+
+    cy.goToStore();
+    cy.contains('Add to cart').click();
+    cy.contains('Cart').click();
+    cy.contains('Proceed to checkout').click();
+    cy.get('label[for="payment_method_komoju_credit_card"] img').should('not.exist')
+
+    cy.visit('/wp-admin/admin.php?page=wc-settings&tab=checkout')
+    cy.get('[data-gateway_id="komoju_credit_card"] a.button')
+      .click()
+
+    cy.get('#woocommerce_komoju_credit_card_showIcon').click()
+    cy.contains('Save changes').click()
+    cy.contains('Your settings have been saved.').should('exist')
+
+    cy.goToStore();
+    cy.contains('Add to cart').click();
+    cy.contains('Cart').click();
+    cy.contains('Proceed to checkout').click();
+    cy.get('label[for="payment_method_komoju_credit_card"] img').should('exist')
+  })
 });
