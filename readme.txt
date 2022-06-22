@@ -189,3 +189,7 @@ Fixed problem where some installs were not generating order IDs correctly.
 
 = 2.2.6 =
 Fixed issue where new versions were not being registered automatically.
+
+= 2.3.0 =
+Introduced quick-setup, removing the need to copy/paste values from KOMOJU.
+Fixed issue with stores that don't produce a customer name.
