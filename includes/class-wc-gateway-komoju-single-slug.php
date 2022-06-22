@@ -25,6 +25,12 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
             $this->icon = "https://komoju.com/payment_methods/$slug.svg";
         }
 
+        // TODO: It would be nice if KOMOJU told us in the payment method object whether or
+        // not it supports refunds. For now, we'll just wing it.
+        if (!in_array($slug, ['konbini', 'pay_easy', 'bank_transfer'])) {
+            $this->supports[] = 'refunds';
+        }
+
         parent::__construct();
     }
 
