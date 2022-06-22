@@ -57,14 +57,37 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         // Filters
         // Actions
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
-        include_once 'includes/class-wc-gateway-komoju-ipn-handler.php';
-        new WC_Gateway_Komoju_IPN_Handler(
-          $this,
-          $this->webhookSecretToken,
-          $this->secretKey,
-          $this->invoice_prefix,
-          $this->useOnHold
-        );
+
+        if ($this->id === 'komoju') {
+            include_once 'includes/class-wc-gateway-komoju-ipn-handler.php';
+            new WC_Gateway_Komoju_IPN_Handler(
+                $this,
+                $this->webhookSecretToken,
+                $this->secretKey,
+                $this->invoice_prefix,
+                $this->useOnHold
+            );
+            add_filter('woocommerce_admin_order_data_after_billing_address', [$this, 'show_komoju_link_on_order_page'], 10, 1);
+        }
+    }
+
+    /*
+     * This shows a link to komoju on order pages that were paid with this gateway.
+     */
+    public function show_komoju_link_on_order_page($order)
+    {
+        $payment_id = $order->get_meta('komoju_payment_id');
+        if (!$payment_id) {
+            return;
+        }
+
+        $url = $this->komoju_api->endpoint . '/admin/payments/' . $payment_id; ?>
+        <p>
+            <a href="<?php echo esc_attr($url); ?>">
+                <?php echo __('View payment on KOMOJU', 'komoju-woocommerce'); ?>
+            </a>
+        </p>
+<?php
     }
 
     /**
