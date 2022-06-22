@@ -34,6 +34,52 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         parent::__construct();
     }
 
+    /**
+     * Process refund.
+     *
+     * Attempts to refund the passed-in amount with KOMOJU.
+     *
+     * @param int $order_id order ID
+     * @param float|null $amount refund amount
+     * @param string $reason refund reason
+     *
+     * @return bool true or false based on success, or a WP_Error object
+     */
+    public function process_refund($order_id, $amount = null, $reason = '')
+    {
+        $order      = wc_get_order($order_id);
+        $payment_id = $order->get_meta('komoju_payment_id');
+
+        if ($payment_id == '') {
+            return false;
+        }
+
+        $payload = [];
+        if (!is_null($amount)) {
+            $payload['amount'] = $amount;
+        }
+        if ($reason != '') {
+            $payload['description'] = $reason;
+        }
+
+        try {
+            $payment = $this->komoju_api->refund($payment_id, $payload);
+        } catch (KomojuExceptionBadServer | KomojuExceptionBadJson $e) {
+            $error_message = $e->getMessage();
+            $this->log($error_message);
+
+            return new WP_Error('komoju_refund_failed', $error_message);
+        }
+
+        $refund = $payment->refunds[count($payment->refunds) - 1];
+
+        if ($refund && $refund->amount == $amount) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function validate_fields()
     {
         return true;

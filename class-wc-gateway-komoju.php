@@ -183,41 +183,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     }
 
     /**
-     * Process refund.
-     *
-     * Attempts to refund the passed-in amount with KOMOJU.
-     *
-     * @param int $order_id order ID
-     * @param float|null $amount refund amount
-     * @param string $reason refund reason
-     *
-     * @return bool true or false based on success, or a WP_Error object
-     */
-    public function process_refund($order_id, $amount = null, $reason = '')
-    {
-        $order      = wc_get_order($order_id);
-        $payment_id = $order->get_meta('komoju_payment_id');
-
-        if ($payment_id == '') {
-            return false;
-        }
-
-        $payload = json_encode([
-            'amount'      => $amount,
-            'description' => $reason,
-        ]);
-        $payment = $this->komoju_api->post('/api/v1/payments/' . $payment_id . '/refund', $payload);
-
-        $refund = array_slice($payment->refunds, -1)[0];
-
-        if ($refund && $refund->status == 'completed' && $refund->amount == $amount) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Payment form on checkout page
      */
     public function payment_fields()
