@@ -195,3 +195,4 @@ Fixed issue with stores that don't produce a customer name.
 
 = 2.3.0 =
 Introduced quick-setup, removing the need to copy/paste values from KOMOJU.
+Removed currency restriction, allowing the plugin to be used with any store currency.
