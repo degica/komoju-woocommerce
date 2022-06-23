@@ -47,7 +47,6 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             if ($session->status === 'completed' && !is_null($order)) {
                 $success_url = $this->gateway->get_return_url($order);
                 wp_redirect($success_url);
-                exit;
             } elseif (is_null($session)) {
                 $checkout_url = wc_get_checkout_url();
                 wp_redirect($checkout_url);
@@ -55,12 +54,14 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
                   __('Encountered an issue communicating with KOMOJU. Please wait a moment and try again.'),
                   'error'
                 );
-                exit;
-            } else {
+            } elseif (is_null($order)) {
                 $checkout_url = wc_get_checkout_url();
                 wp_redirect($checkout_url);
-                exit;
+            } else {
+                $payment_url = $order->get_checkout_payment_url(false);
+                wp_redirect($payment_url);
             }
+            exit;
         }
 
         // Quick setup POST from KOMOJU

@@ -167,6 +167,9 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 'shipping_address'   => $shipping_address,
             ],
             'line_items' => $line_items,
+            'metadata'   => [
+                'woocommerce_order_id' => $order->get_order_number(),
+            ],
         ];
         $remove_nulls = function ($v) { return !is_null($v); };
         $session_params['payment_data'] = array_filter(
