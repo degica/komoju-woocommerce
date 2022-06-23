@@ -44,6 +44,11 @@ abstract class WC_Gateway_Komoju_Response
      */
     protected function get_order_from_komoju_session($session, $invoice_prefix)
     {
+        $order = wc_get_order($session->metadata->woocommerce_order_id);
+        if ($order) {
+            return $order;
+        }
+
         $payment = $session->payment;
         if (is_null($payment)) {
             return null;
