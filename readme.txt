@@ -196,3 +196,9 @@ Fixed issue with stores that don't produce a customer name.
 = 2.3.0 =
 Introduced quick-setup, removing the need to copy/paste values from KOMOJU.
 Removed currency restriction, allowing the plugin to be used with any store currency.
+
+= 2.4.0 =
+Refunding KOMOJU payments through the WooCommerce dashboard is now supported.
+Added a link to the KOMOJU admin page for orders paid with KOMOJU.
+Clicking "back to merchant" on KOMOJU will now take you to the pay-order page instead of checkout.
+Can now toggle whether or not KOMOJU payment method icons appear.
