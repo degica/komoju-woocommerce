@@ -175,7 +175,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         }
 
         // new session
-        $currency       = get_woocommerce_currency();
+        $currency       = $order->get_currency();
         $komoju_api     = $this->komoju_api;
         $session_params = [
             'amount'         => self::to_cents($order->get_total(), $currency),

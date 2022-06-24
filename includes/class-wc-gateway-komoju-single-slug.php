@@ -49,6 +49,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
     {
         $order      = wc_get_order($order_id);
         $payment_id = $order->get_meta('komoju_payment_id');
+        $currency   = $order->get_currency();
 
         if ($payment_id == '') {
             return false;
@@ -56,7 +57,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 
         $payload = [];
         if (!is_null($amount)) {
-            $payload['amount'] = $amount;
+            $payload['amount'] = self::to_cents($amount, $currency);
         }
         if ($reason != '') {
             $payload['description'] = $reason;
@@ -73,7 +74,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 
         $refund = $payment->refunds[count($payment->refunds) - 1];
 
-        if ($refund && $refund->amount == $amount) {
+        if ($refund && $refund->amount == self::to_cents($amount, $currency)) {
             return true;
         } else {
             return false;
