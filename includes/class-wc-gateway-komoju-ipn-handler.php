@@ -315,5 +315,8 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         if (!empty($webhookEvent->additional_information())) {
             update_post_meta($order->get_id(), 'Additional info', wc_clean(print_r($webhookEvent->additional_information(), true)));
         }
+        if (!empty($webhookEvent->uuid())) {
+            $order->add_meta_data('komoju_payment_id', $webhookEvent->uuid(), true);
+        }
     }
 }

@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
  * @class       WC_Gateway_Komoju
  * @extends     WC_Payment_Gateway
  *
- * @version     2.3.0
+ * @version     2.3.1
  *
  * @author      Komoju
  */
@@ -57,14 +57,37 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         // Filters
         // Actions
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
-        include_once 'includes/class-wc-gateway-komoju-ipn-handler.php';
-        new WC_Gateway_Komoju_IPN_Handler(
-          $this,
-          $this->webhookSecretToken,
-          $this->secretKey,
-          $this->invoice_prefix,
-          $this->useOnHold
-        );
+
+        if ($this->id === 'komoju') {
+            include_once 'includes/class-wc-gateway-komoju-ipn-handler.php';
+            new WC_Gateway_Komoju_IPN_Handler(
+                $this,
+                $this->webhookSecretToken,
+                $this->secretKey,
+                $this->invoice_prefix,
+                $this->useOnHold
+            );
+            add_filter('woocommerce_admin_order_data_after_billing_address', [$this, 'show_komoju_link_on_order_page'], 10, 1);
+        }
+    }
+
+    /*
+     * This shows a link to komoju on order pages that were paid with this gateway.
+     */
+    public function show_komoju_link_on_order_page($order)
+    {
+        $payment_id = $order->get_meta('komoju_payment_id');
+        if (!$payment_id) {
+            return;
+        }
+
+        $url = $this->komoju_api->endpoint . '/merchant/payments/' . $payment_id; ?>
+        <p>
+            <a href="<?php echo esc_attr($url); ?>">
+                <?php echo __('View payment on KOMOJU', 'komoju-woocommerce'); ?>
+            </a>
+        </p>
+<?php
     }
 
     /**
@@ -152,10 +175,11 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         }
 
         // new session
+        $currency       = $order->get_currency();
         $komoju_api     = $this->komoju_api;
         $session_params = [
-            'amount'         => $order->get_total(),
-            'currency'       => get_woocommerce_currency(),
+            'amount'         => self::to_cents($order->get_total(), $currency),
+            'currency'       => $currency,
             'return_url'     => $return_url,
             'default_locale' => self::get_locale_or_fallback(),
             'email'          => $email,
@@ -348,5 +372,40 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     protected function default_title()
     {
         return __('Komoju', 'komoju-woocommerce');
+    }
+
+    public static function to_cents($total, $currency = '')
+    {
+        if (!$currency) {
+            $currency = get_woocommerce_currency();
+        }
+
+        if (in_array(strtolower($currency), self::no_decimal_currencies())) {
+            return absint($total);
+        } else {
+            return absint(wc_format_decimal(((float) $total * 100), wc_get_price_decimals())); // In cents.
+        }
+    }
+
+    public static function no_decimal_currencies()
+    {
+        return [
+            'bif', // Burundian Franc
+            'clp', // Chilean Peso
+            'djf', // Djiboutian Franc
+            'gnf', // Guinean Franc
+            'jpy', // Japanese Yen
+            'kmf', // Comorian Franc
+            'krw', // South Korean Won
+            'mga', // Malagasy Ariary
+            'pyg', // Paraguayan Guaraní
+            'rwf', // Rwandan Franc
+            'ugx', // Ugandan Shilling
+            'vnd', // Vietnamese Đồng
+            'vuv', // Vanuatu Vatu
+            'xaf', // Central African Cfa Franc
+            'xof', // West African Cfa Franc
+            'xpf', // Cfp Franc
+        ];
     }
 }
