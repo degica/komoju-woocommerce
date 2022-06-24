@@ -46,7 +46,6 @@ jobs:
         with:
           repository: 'degica/komoju-e2e-tests'
           submodules: recursive
-          ref: 6ce1d1f0a9dd887f97337d520ed920893716ddb4
           token: ${{ secrets.BUNDLER_SSH_KEY }}
       - uses: actions/download-artifact@v3
         with:
