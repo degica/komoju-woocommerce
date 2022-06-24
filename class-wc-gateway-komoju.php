@@ -152,10 +152,11 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         }
 
         // new session
+        $currency       = get_woocommerce_currency();
         $komoju_api     = $this->komoju_api;
         $session_params = [
-            'amount'         => $order->get_total(),
-            'currency'       => get_woocommerce_currency(),
+            'amount'         => self::to_cents($order->get_total(), $currency),
+            'currency'       => $currency,
             'return_url'     => $return_url,
             'default_locale' => self::get_locale_or_fallback(),
             'email'          => $email,
@@ -345,5 +346,40 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     protected function default_title()
     {
         return __('Komoju', 'komoju-woocommerce');
+    }
+
+    public static function to_cents($total, $currency = '')
+    {
+        if (!$currency) {
+            $currency = get_woocommerce_currency();
+        }
+
+        if (in_array(strtolower($currency), self::no_decimal_currencies())) {
+            return absint($total);
+        } else {
+            return absint(wc_format_decimal(((float) $total * 100), wc_get_price_decimals())); // In cents.
+        }
+    }
+
+    public static function no_decimal_currencies()
+    {
+        return [
+            'bif', // Burundian Franc
+            'clp', // Chilean Peso
+            'djf', // Djiboutian Franc
+            'gnf', // Guinean Franc
+            'jpy', // Japanese Yen
+            'kmf', // Comorian Franc
+            'krw', // South Korean Won
+            'mga', // Malagasy Ariary
+            'pyg', // Paraguayan Guaraní
+            'rwf', // Rwandan Franc
+            'ugx', // Ugandan Shilling
+            'vnd', // Vietnamese Đồng
+            'vuv', // Vanuatu Vatu
+            'xaf', // Central African Cfa Franc
+            'xof', // West African Cfa Franc
+            'xpf', // Cfp Franc
+        ];
     }
 }
