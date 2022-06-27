@@ -173,3 +173,29 @@ Added filter 'woocommerce_komoju_payment_methods' to allow users to change the l
 
 = 2.1.1 =
 Update Plugin Name
+
+= 2.2.0 =
+Users can now select individual payment methods to be exposed as WooCommerce payment gateways.
+This should provide better compatibility with other plugins that filter or otherwise interact with payment gateways.
+
+= 2.2.3 =
+Fixed issue with orders that don't have an email address.
+
+= 2.2.4 =
+Fixed issue where some stores saw errors on the settings page after filling in their secret key.
+
+= 2.2.5 =
+Fixed problem where some installs were not generating order IDs correctly.
+
+= 2.2.6 =
+Fixed issue where new versions were not being registered automatically.
+
+= 2.2.7 =
+Fixed issue with stores that don't produce a customer name.
+
+= 2.3.0 =
+Introduced quick-setup, removing the need to copy/paste values from KOMOJU.
+Removed currency restriction, allowing the plugin to be used with any store currency.
+
+= 2.3.1 =
+Fixed cents conversion problem with currencies that use decimal points.

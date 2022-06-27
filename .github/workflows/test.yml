@@ -1,0 +1,60 @@
+name: test
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  cypress-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: isbang/compose-action@v1.0.0
+        with:
+          down-flags: '--volumes'
+      - name: Run tests
+        run: |
+          cd tests
+          npm install
+          npx cypress run
+      - name: Upload screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshots
+          path: tests/cypress/screenshots/
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build plugin zip file
+        run: ./build.bash
+      - uses: actions/upload-artifact@v3
+        with:
+          name: komoju-japanese-payments
+          path: komoju-japanese-payments.zip
+          retention-days: 1
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: [build]
+    env:
+      TARGET: staging
+      WAF_STAGING_TOKEN: ${{ secrets.WAF_STAGING_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: 'degica/komoju-e2e-tests'
+          submodules: recursive
+          token: ${{ secrets.BUNDLER_SSH_KEY }}
+      - uses: actions/download-artifact@v3
+        with:
+          name: komoju-japanese-payments
+      - name: Show files
+        run: ls
+      - name: Set up docker-compose
+        run: |-
+          docker-compose build
+          docker-compose up -d
+      - name: Run e2e tests
+        run: docker-compose run tester rspec spec/woocommerce
