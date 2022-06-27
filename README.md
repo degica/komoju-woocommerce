@@ -130,7 +130,7 @@ Always start the configuration by using the test mode secret key and do a few te
 To enable Debug click the 'Enable logging' box.
 
 
-### Configuring your Komoju account
+### Configuring your KOMOJU account
 
 To ensure that the WooCommerce plugin works correctly you will need to set up a webhook from your Komoju dashboard to the wordpress instance. To do this you will need to go to your [Webhook page on the Komoju dashboard](https://komoju.com/admin/webhooks) and click "New Webhook". If you don't know what the webhook URL should be you can check the admin page for this plugin on your wordpress instance to see the default address. The secret can be anything you want (as long as you remember it), but you must make sure the following events are ticked:
 

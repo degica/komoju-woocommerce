@@ -16,15 +16,15 @@ msgstr ""
 #: class-wc-gateway-komoju.php:369 class-wc-settings-page-komoju.php:24
 #: includes/class-wc-gateway-komoju-single-slug.php:22
 #: includes/settings-komoju.php:21
-msgid "Komoju"
+msgid "KOMOJU"
 msgstr ""
 
 #: class-wc-gateway-komoju.php:37
 msgid ""
-"Allows payments by Komoju, dedicated to Japanese online and offline payment "
+"Allows payments by KOMOJU, dedicated to Japanese online and offline payment "
 "gateways."
 msgstr ""
-"Komoju は日本独自のオンラインと オフラインの決済を提供するゲートウェイです。"
+"KOMOJU は日本独自のオンラインと オフラインの決済を提供するゲートウェイです。"
 
 #: class-wc-gateway-komoju.php:100 class-wc-gateway-komoju.php:102
 msgid "Gateway Disabled"
@@ -32,8 +32,8 @@ msgstr "ゲートウェイ無効"
 
 #: class-wc-gateway-komoju.php:100 class-wc-gateway-komoju.php:102
 #: class-wc-gateway-komoju.php:109
-msgid "Komoju does not support your store currency."
-msgstr "Komoju はあなたのストアの通貨をサポートしていません"
+msgid "KOMOJU does not support your store currency."
+msgstr "KOMOJU はあなたのストアの通貨をサポートしていません"
 
 #: class-wc-gateway-komoju.php:152 class-wc-gateway-komoju.php:154
 #: class-wc-gateway-komoju.php:270
@@ -80,14 +80,14 @@ msgstr "初期化"
 #: includes/class-wc-gateway-komoju-ipn-handler.php:108
 #: includes/class-wc-gateway-komoju-ipn-handler.php:111
 #, php-format
-msgid "Validation error: Komoju currencies do not match (code %s)."
+msgid "Validation error: KOMOJU currencies do not match (code %s)."
 msgstr "エラー: 通貨が不正です (code %s)。"
 
 #: includes/class-wc-gateway-komoju-ipn-handler.php:108
 #: includes/class-wc-gateway-komoju-ipn-handler.php:123
 #: includes/class-wc-gateway-komoju-ipn-handler.php:126
 #, php-format
-msgid "Validation error: Komoju amounts do not match (total %s)."
+msgid "Validation error: KOMOJU amounts do not match (total %s)."
 msgstr "エラー: 金額が不正です (total %s)。"
 
 #: includes/class-wc-gateway-komoju-ipn-handler.php:128
@@ -123,8 +123,8 @@ msgid "Enable/Disable"
 msgstr "有効 / 無効"
 
 #: includes/settings-komoju.php:14
-msgid "Enable Komoju"
-msgstr "有効 Komoju"
+msgid "Enable KOMOJU"
+msgstr "有効 KOMOJU"
 
 #: includes/settings-komoju.php:18
 msgid "Title"
@@ -142,24 +142,24 @@ msgid ""
 msgstr "Webhook のデフォルト URL は %s です。"
 
 #: includes/settings-komoju.php:74 includes/settings-komoju.php:75
-msgid "Komoju merchant ID"
-msgstr "Komoju マーチャントID"
+msgid "KOMOJU merchant ID"
+msgstr "KOMOJU マーチャントID"
 
 #: includes/settings-komoju.php:76 includes/settings-komoju.php:77
-msgid "Please enter your Komoju account ID."
-msgstr "Komoju のアカウントID を入力してください"
+msgid "Please enter your KOMOJU account ID."
+msgstr "KOMOJU のアカウントID を入力してください"
 
 #: includes/global-settings-komoju.php:21
 msgid "Payment Gateways"
 msgstr "支払い方法"
 
 #: includes/settings-komoju.php:81 includes/settings-komoju.php:82
-msgid "Secret Key from Komoju"
-msgstr "Komoju 非公開鍵"
+msgid "Secret Key from KOMOJU"
+msgstr "KOMOJU 非公開鍵"
 
 #: includes/settings-komoju.php:83 includes/settings-komoju.php:84
-msgid "Please enter your Komoju secret key."
-msgstr "Komoju の非公開鍵を入力してください"
+msgid "Please enter your KOMOJU secret key."
+msgstr "KOMOJU の非公開鍵を入力してください"
 
 #: includes/settings-komoju.php:88
 msgid "Callback Url"
@@ -178,16 +178,16 @@ msgstr ""
 "コールバックURLを指定 (もし分からない場合は空欄でも可能) 。デフォルトURL  %s"
 
 #: includes/settings-komoju.php:91
-msgid "Please enter your Komoju Webhook Secret Token"
-msgstr "Komoju のシークレットトークンを入力してください"
+msgid "Please enter your KOMOJU Webhook Secret Token"
+msgstr "KOMOJU のシークレットトークンを入力してください"
 
 #: includes/settings-komoju.php:94
-msgid "Komoju Sandbox"
-msgstr "Komoju サンドボックス"
+msgid "KOMOJU Sandbox"
+msgstr "KOMOJU サンドボックス"
 
 #: includes/settings-komoju.php:96
-msgid "Enable Komoju sandbox"
-msgstr "Komoju サンドボックスを有効"
+msgid "Enable KOMOJU sandbox"
+msgstr "KOMOJU サンドボックスを有効"
 
 #: includes/settings-komoju.php:96 includes/settings-komoju.php:101
 msgid "Invoice Prefix"
@@ -195,17 +195,17 @@ msgstr "請求書の先頭文字"
 
 #: includes/settings-komoju.php:98 includes/settings-komoju.php:103
 msgid ""
-"Please enter a prefix for your invoice numbers. If you use your Komoju "
+"Please enter a prefix for your invoice numbers. If you use your KOMOJU "
 "account for multiple stores ensure this prefix is unique."
 msgstr "請求書の先頭文字を入力してください。"
 
 #: includes/settings-komoju.php:98
 #, php-format
 msgid ""
-"When checked, your Komoju sandbox will be used in order to test payments. "
+"When checked, your KOMOJU sandbox will be used in order to test payments. "
 "Sign up for a developer account <a href=\"%s\">here</a>."
 msgstr ""
-"支払った際、Komoju サンドボックス上でテストの決済が実行されます。 開発用アカ"
+"支払った際、KOMOJU サンドボックス上でテストの決済が実行されます。 開発用アカ"
 "ウント登録は<a href=\"%s\">こちら</a> 。"
 
 #: includes/settings-komoju.php:103 includes/settings-komoju.php:108
@@ -230,8 +230,8 @@ msgstr "Staging token"
 
 #: includes/settings-komoju.php:107 includes/settings-komoju.php:112
 #, php-format
-msgid "Log Komoju events inside <code>%s</code>"
-msgstr "Komoju のイベントログ <code>%s</code>"
+msgid "Log KOMOJU events inside <code>%s</code>"
+msgstr "KOMOJU のイベントログ <code>%s</code>"
 
 #: includes/settings-komoju.php
 #, php-format

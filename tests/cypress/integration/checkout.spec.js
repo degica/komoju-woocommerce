@@ -16,7 +16,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.contains('Proceed to checkout').click();
     cy.fillInAddress();
 
-    cy.contains('Komoju').click();
+    cy.contains('KOMOJU').click();
     cy.get('.blockUI,.blockOverlay').should('not.exist');
 
     // This waits for the "expanding box" animation to finish

@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Komoju Payment Gateway
+ * WooCommerce KOMOJU Payment Gateway
  * Uninstall - removes all options from DB when user deletes the plugin via WordPress backend.
  *
  * @since 1.0

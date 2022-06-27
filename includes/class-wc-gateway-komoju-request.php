@@ -5,12 +5,12 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Generates requests to send to Komoju
+ * Generates requests to send to KOMOJU
  */
 class WC_Gateway_Komoju_Request
 {
     /**
-     * Stores line items to send to Komoju
+     * Stores line items to send to KOMOJU
      *
      * @var array
      */
@@ -36,7 +36,7 @@ class WC_Gateway_Komoju_Request
     }
 
     /**
-     * Get the Komoju request URL for an order
+     * Get the KOMOJU request URL for an order
      *
      * @param WC_Order $order
      *
@@ -50,7 +50,7 @@ class WC_Gateway_Komoju_Request
     }
 
     /**
-     * Get Komoju Args for passing to Komoju hosted page
+     * Get KOMOJU Args for passing to KOMOJU hosted page
      *
      * @param WC_Order $order
      * @param string $method the method of payment the user has selected, ie credit-card

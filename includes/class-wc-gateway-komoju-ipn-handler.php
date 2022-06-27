@@ -8,7 +8,7 @@ include_once 'class-wc-gateway-komoju-response.php';
 include_once 'class-wc-gateway-komoju-webhook-event.php';
 
 /**
- * Handles responses from Komoju IPN
+ * Handles responses from KOMOJU IPN
  */
 class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
 {
@@ -34,7 +34,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
     }
 
     /**
-     * Check for Komoju IPN or Session Response
+     * Check for KOMOJU IPN or Session Response
      */
     public function check_response()
     {
@@ -78,7 +78,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             do_action('valid-komoju-standard-ipn-request', $webhookEvent);
             exit;
         }
-        wp_die('Komoju IPN Request Failure', 'Komoju IPN', ['response' => 500]);
+        wp_die('KOMOJU IPN Request Failure', 'KOMOJU IPN', ['response' => 500]);
     }
 
     public function quick_setup($post)
@@ -137,7 +137,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
     }
 
     /**
-     * Check Komoju IPN validity (hmac control)
+     * Check KOMOJU IPN validity (hmac control)
      *
      * @param string $requestBody the body of the request. Needed to correctly
      *                            calculate the HMAC for comparison.
@@ -153,7 +153,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         $calcHmac = hash_hmac('sha256', $requestBody, $this->webhookSecretToken);
 
         if ($hmacHeader != $calcHmac) {
-            WC_Gateway_Komoju::log('hmac codes (sent by Komoju / recalculated) don\'t match. Exiting the process...');
+            WC_Gateway_Komoju::log('hmac codes (sent by KOMOJU / recalculated) don\'t match. Exiting the process...');
 
             return false;
         }
@@ -174,7 +174,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             WC_Gateway_Komoju::log('Payment error: Currencies do not match (sent "' . $order->get_currency() . '" | returned "' . $currency . '")');
 
             // Put this order on-hold for manual checking
-            $order->update_status('on-hold', sprintf(__('Validation error: Komoju currencies do not match (code %s).', 'komoju-woocommerce'), $currency));
+            $order->update_status('on-hold', sprintf(__('Validation error: KOMOJU currencies do not match (code %s).', 'komoju-woocommerce'), $currency));
             exit;
         }
     }
@@ -191,7 +191,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             WC_Gateway_Komoju::log('Payment error: Amounts do not match (total: ' . $amount . ') for order #' . $order->get_id() . '(' . $order->get_total() . ')');
 
             // Put this order on-hold for manual checking
-            $order->update_status('on-hold', sprintf(__('Validation error: Komoju amounts do not match (total %s).', 'komoju-woocommerce'), $amount));
+            $order->update_status('on-hold', sprintf(__('Validation error: KOMOJU amounts do not match (total %s).', 'komoju-woocommerce'), $amount));
             exit;
         }
     }

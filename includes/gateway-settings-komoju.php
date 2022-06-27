@@ -5,14 +5,14 @@ if (!defined('ABSPATH')) {
 }
 
 /*
- * Gateway-specific Settings for Komoju
+ * Gateway-specific Settings for KOMOJU
  */
 
 return [
     'enabled' => [
         'title'   => __('Enable/Disable', 'komoju-woocommerce'),
         'type'    => 'checkbox',
-        'label'   => __('Enable Komoju', 'komoju-woocommerce'),
+        'label'   => __('Enable KOMOJU', 'komoju-woocommerce'),
         'default' => 'no',
     ],
     'showIcon' => [
