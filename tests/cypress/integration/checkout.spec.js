@@ -104,6 +104,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.location('pathname').should('include', '/sessions/');
 
     cy.contains('Back to Merchant').click();
+    cy.reload();
     cy.get('#payment_method_komoju_credit_card').click();
     cy.contains('Pay for order').click();
 
