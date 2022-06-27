@@ -239,10 +239,12 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
     public function create_komoju_payment($customer, $order)
     {
+        $currency = $order->get_currency();
+
         return $this->komoju_api->createPayment([
-            'amount'             => $order->get_total(),
+            'amount'             => self::to_cents($order->get_total(), $currency),
             'external_order_num' => $this->external_order_num($order),
-            'currency'           => get_woocommerce_currency(),
+            'currency'           => $currency,
             'customer'           => $customer,
         ]);
     }
