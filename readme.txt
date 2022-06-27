@@ -197,6 +197,9 @@ Fixed issue with stores that don't produce a customer name.
 Introduced quick-setup, removing the need to copy/paste values from KOMOJU.
 Removed currency restriction, allowing the plugin to be used with any store currency.
 
+= 2.3.1 =
+Fixed cents conversion problem with currencies that use decimal points.
+
 = 2.4.0 =
 Refunding KOMOJU payments through the WooCommerce dashboard is now supported.
 Added a link to the KOMOJU admin page for orders paid with KOMOJU.
