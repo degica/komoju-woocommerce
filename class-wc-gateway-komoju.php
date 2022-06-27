@@ -44,19 +44,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $this->komoju_api           = new KomojuApi($this->secretKey);
         self::$log_enabled          = $this->debug;
 
-        // enable subscriptions
-        array_push($this->supports,
-            'subscriptions',
-            'subscription_cancellation',
-            'subscription_suspension',
-            'subscription_reactivation',
-            'subscription_amount_changes',
-            'subscription_date_changes',
-            'subscription_payment_method_changes',
-            'subscription_payment_method_change_admin',
-            'multiple_subscriptions',
-        );
-
         // Load the settings.
         $this->init_form_fields();
         $this->init_settings();
