@@ -84,4 +84,31 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.contains('Proceed to checkout').click();
     cy.get('label[for="payment_method_komoju_credit_card"] img').should('exist')
   })
+
+  it('lets me change my mind on how to pay for the same order', () => {
+    cy.setupKomoju(['konbini', 'credit_card']);
+    cy.contains('Payments').click();
+    cy.enablePaymentGateway('komoju_konbini');
+    cy.enablePaymentGateway('komoju_credit_card');
+
+    cy.goToStore();
+    cy.contains('Add to cart').click();
+    cy.contains('Cart').click();
+    cy.contains('Proceed to checkout').click();
+    cy.fillInAddress();
+
+    cy.get('#payment_method_komoju_konbini').click();
+    cy.get('#place_order').click();
+
+    cy.contains('Choose a Convenience Store').should('exist');
+    cy.location('pathname').should('include', '/sessions/');
+
+    cy.contains('Back to Merchant').click();
+    cy.reload();
+    cy.get('#payment_method_komoju_credit_card').click();
+    cy.contains('Pay for order').click();
+
+    cy.contains('Enter Card Details').should('exist');
+    cy.location('pathname').should('include', '/sessions/');
+  })
 });
