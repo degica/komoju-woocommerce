@@ -199,3 +199,9 @@ Removed currency restriction, allowing the plugin to be used with any store curr
 
 = 2.3.1 =
 Fixed cents conversion problem with currencies that use decimal points.
+
+= 2.4.0 =
+Refunding KOMOJU payments through the WooCommerce dashboard is now supported.
+Added a link to the KOMOJU admin page for orders paid with KOMOJU.
+Clicking "back to merchant" on KOMOJU will now take you to the pay-order page instead of checkout.
+Can now toggle whether or not KOMOJU payment method icons appear.
