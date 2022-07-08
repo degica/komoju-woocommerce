@@ -205,3 +205,6 @@ Refunding KOMOJU payments through the WooCommerce dashboard is now supported.
 Added a link to the KOMOJU admin page for orders paid with KOMOJU.
 Clicking "back to merchant" on KOMOJU will now take you to the pay-order page instead of checkout.
 Can now toggle whether or not KOMOJU payment method icons appear.
+
+= 2.4.1 =
+Fixed bug where plugin would ignore locale strings that include a country code.

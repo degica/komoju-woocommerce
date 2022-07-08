@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
  * @class       WC_Gateway_Komoju
  * @extends     WC_Payment_Gateway
  *
- * @version     2.4.0
+ * @version     2.4.1
  *
  * @author      Komoju
  */
@@ -305,14 +305,15 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
     public static function get_locale_or_fallback()
     {
-        $fallback_locale   = 'en';
-        $supported_locales = ['ja', 'en', 'ko'];
-        $page_locale       = get_locale();
+        $fallback_lang   = 'en';
+        $supported_langs = ['ja', 'en', 'ko'];
+        $page_locale     = get_locale();
+        $lang            = is_string($page_locale) ? substr($page_locale, 0, 2) : $fallback_lang;
 
-        if (in_array($page_locale, $supported_locales)) {
-            return $page_locale;
+        if (in_array($lang, $supported_langs)) {
+            return $lang;
         } else {
-            return $fallback_locale;
+            return $fallback_lang;
         }
     }
 
