@@ -208,3 +208,6 @@ Can now toggle whether or not KOMOJU payment method icons appear.
 
 = 2.4.1 =
 Fixed bug where plugin would ignore locale strings that include a country code.
+
+= 2.5.0 =
+Add 'komoju_session_return_url' filter.

@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
  * @class       WC_Gateway_Komoju
  * @extends     WC_Payment_Gateway
  *
- * @version     2.4.1
+ * @version     2.5.0
  *
  * @author      Komoju
  */
@@ -125,7 +125,12 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     {
         include_once 'includes/class-wc-gateway-komoju-request.php';
         $order      = wc_get_order($order_id);
-        $return_url = WC()->api_request_url('WC_Gateway_Komoju');
+        $return_url = apply_filters(
+            'komoju_session_return_url',
+            WC()->api_request_url('WC_Gateway_Komoju'),
+            $order_id,
+            $payment_type
+        );
 
         if ($payment_type === null) {
             $payment_type = sanitize_text_field($_POST['komoju-method']);
