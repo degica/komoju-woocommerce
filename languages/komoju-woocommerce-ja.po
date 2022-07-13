@@ -12,9 +12,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.3.1\n"
 
-#: class-wc-gateway-komoju.php:36 includes/settings-komoju.php:21
+#: class-wc-gateway-komoju.php:36 class-wc-gateway-komoju.php:38
+#: class-wc-gateway-komoju.php:369 class-wc-settings-page-komoju.php:24
+#: includes/class-wc-gateway-komoju-single-slug.php:22
+#: includes/settings-komoju.php:21
 msgid "Komoju"
-msgstr "Komoju"
+msgstr ""
 
 #: class-wc-gateway-komoju.php:37
 msgid ""
@@ -28,10 +31,12 @@ msgid "Gateway Disabled"
 msgstr "ゲートウェイ無効"
 
 #: class-wc-gateway-komoju.php:100 class-wc-gateway-komoju.php:102
+#: class-wc-gateway-komoju.php:109
 msgid "Komoju does not support your store currency."
 msgstr "Komoju はあなたのストアの通貨をサポートしていません"
 
 #: class-wc-gateway-komoju.php:152 class-wc-gateway-komoju.php:154
+#: class-wc-gateway-komoju.php:270
 msgid "Method of payment:"
 msgstr "決済方法:"
 
@@ -42,6 +47,34 @@ msgstr "決済方法をお選びください。"
 #: class-wc-gateway-komoju.php:190
 msgid "Encountered an issue communicating with KOMOJU. Please wait a moment and try again."
 msgstr "KOMOJUを読み込みませんでした。しばらく待ってから再実行してください。"
+
+#: class-wc-settings-page-komoju.php:44
+msgid "KOMOJU account settings"
+msgstr "KOMOJUのアカウント設定"
+
+#: class-wc-settings-page-komoju.php:48
+msgid "Payment methods"
+msgstr "支払い方法"
+
+#: class-wc-settings-page-komoju.php:49
+msgid "API settings"
+msgstr "API設定"
+
+#: class-wc-settings-page-komoju.php:73
+msgid "Unable to reach KOMOJU. Is your secret key correct?"
+msgstr "KOMOJUへの接続に失敗しました。非公開鍵をご確認ください。"
+
+#: class-wc-settings-page-komoju.php:92
+msgid "Only modify this if you know what you're doing."
+msgstr "詳細設定です。特別な理由がなければ、変更しないでください。"
+
+#: class-wc-settings-page-komoju.php:97
+msgid "Edit"
+msgstr "変更"
+
+#: class-wc-settings-page-komoju.php:102
+msgid "Reset"
+msgstr "初期化"
 
 #: includes/class-wc-gateway-komoju-ipn-handler.php:94
 #: includes/class-wc-gateway-komoju-ipn-handler.php:108
@@ -116,13 +149,17 @@ msgstr "Komoju マーチャントID"
 msgid "Please enter your Komoju account ID."
 msgstr "Komoju のアカウントID を入力してください"
 
+#: includes/global-settings-komoju.php:21
+msgid "Payment Gateways"
+msgstr "支払い方法"
+
 #: includes/settings-komoju.php:81 includes/settings-komoju.php:82
 msgid "Secret Key from Komoju"
-msgstr "Komoju シークレットキー"
+msgstr "Komoju 非公開鍵"
 
 #: includes/settings-komoju.php:83 includes/settings-komoju.php:84
 msgid "Please enter your Komoju secret key."
-msgstr "Komoju のシークレットキーを入力してください"
+msgstr "Komoju の非公開鍵を入力してください"
 
 #: includes/settings-komoju.php:88
 msgid "Callback Url"
@@ -142,7 +179,7 @@ msgstr ""
 
 #: includes/settings-komoju.php:91
 msgid "Please enter your Komoju Webhook Secret Token"
-msgstr "Komoju のシークレットキーを入力してください"
+msgstr "Komoju のシークレットトークンを入力してください"
 
 #: includes/settings-komoju.php:94
 msgid "Komoju Sandbox"
@@ -178,6 +215,18 @@ msgstr "デバッグログ"
 #: includes/settings-komoju.php:105 includes/settings-komoju.php:110
 msgid "Enable logging"
 msgstr "ロギングを有効"
+
+#: includes/global-settings-komoju.php:58
+msgid "KOMOJU Endpoint"
+msgstr "KOMOJUのエンドポイント"
+
+#: includes/api-settings-komoju.php:59
+msgid "Usually you want this to be empty."
+msgstr "ほとんどの場合、これは空でいい"
+
+#: includes/api-settings-komoju.php:60
+msgid "Staging token"
+msgstr "Staging token"
 
 #: includes/settings-komoju.php:107 includes/settings-komoju.php:112
 #, php-format

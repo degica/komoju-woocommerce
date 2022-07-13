@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: KOMOJU
+Plugin Name: KOMOJU Payments
 Plugin URI: https://github.com/komoju/komoju-woocommerce
 Description: Extends WooCommerce with KOMOJU gateway.
-Version: 2.0.0
+Version: 2.5.0
 Author: KOMOJU
 Author URI: https://komoju.com
 */
@@ -28,10 +28,30 @@ function woocommerce_komoju_init()
      **/
     function woocommerce_add_komoju_gateway($methods)
     {
-        $methods[] = 'WC_Gateway_Komoju';
+        require_once 'includes/class-wc-gateway-komoju-single-slug.php';
+        $methods[] = new WC_Gateway_Komoju();
+
+        $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
+        if (gettype($komoju_payment_methods) == 'array') {
+            foreach ($komoju_payment_methods as $payment_method) {
+                $methods[] = new WC_Gateway_Komoju_Single_Slug($payment_method);
+            }
+        }
 
         return $methods;
     }
 
+    /**
+     * Add the KOMOJU settings page to WooCommerce
+     **/
+    function woocommerce_add_komoju_settings_page($settings)
+    {
+        require_once 'class-wc-settings-page-komoju.php';
+        $settings[] = new WC_Settings_Page_Komoju();
+
+        return $settings;
+    }
+
     add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
+    add_filter('woocommerce_get_settings_pages', 'woocommerce_add_komoju_settings_page');
 }

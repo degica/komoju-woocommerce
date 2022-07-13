@@ -2,9 +2,24 @@
 
 class KomojuApi
 {
+    public static function defaultEndpoint()
+    {
+        return 'https://komoju.com';
+    }
+
+    public static function endpoint()
+    {
+        $endpoint = get_option('komoju_woocommerce_api_endpoint');
+        if (!$endpoint) {
+            $endpoint = self::defaultEndpoint();
+        }
+
+        return $endpoint;
+    }
+
     public function __construct($secretKey)
     {
-        $this->endpoint  = 'https://komoju.com';
+        $this->endpoint  = self::endpoint();
         $this->via       = 'woocommerce';
         $this->secretKey = $secretKey;
     }
@@ -16,7 +31,7 @@ class KomojuApi
 
     public function paymentMethods()
     {
-        return $this->get('/api/v1/payment_methods');
+        return $this->get('/api/v1/payment_methods', true);
     }
 
     public function createSession($payload)
@@ -29,10 +44,16 @@ class KomojuApi
         return $this->get('/api/v1/sessions/' . $sessionUuid);
     }
 
-    private function get($uri)
+    public function refund($paymentUuid, $payload)
+    {
+        return $this->post('/api/v1/payments/' . $paymentUuid . '/refund', $payload);
+    }
+
+    private function get($uri, $asArray = false)
     {
         $ch = curl_init($this->endpoint . $uri);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers());
         curl_setopt($ch, CURLOPT_USERPWD, $this->secretKey . ':');
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
@@ -50,7 +71,7 @@ class KomojuApi
 
         curl_close($ch);
 
-        $decoded = json_decode($result);
+        $decoded = json_decode($result, $asArray);
         if ($decoded === null) {
             throw new KomojuExceptionBadJson($result);
         }
@@ -67,10 +88,7 @@ class KomojuApi
         $data_json = json_encode($payload);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            "komoju-via: {$this->via}",
-        ]);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_USERPWD, $this->secretKey . ':');
         $result = curl_exec($ch);
@@ -95,5 +113,20 @@ class KomojuApi
         }
 
         return $decoded;
+    }
+
+    private function headers()
+    {
+        $result = [
+            'Content-Type: application/json',
+            "komoju-via: {$this->via}",
+        ];
+
+        $waf_token = get_option('komoju_woocommerce_waf_staging_token');
+        if ($waf_token) {
+            $result[] = "Cookie: waf_staging_token=$waf_token";
+        }
+
+        return $result;
     }
 }

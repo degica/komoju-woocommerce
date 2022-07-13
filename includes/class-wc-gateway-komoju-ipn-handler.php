@@ -47,7 +47,6 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             if ($session->status === 'completed' && !is_null($order)) {
                 $success_url = $this->gateway->get_return_url($order);
                 wp_redirect($success_url);
-                exit;
             } elseif (is_null($session)) {
                 $checkout_url = wc_get_checkout_url();
                 wp_redirect($checkout_url);
@@ -55,12 +54,20 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
                   __('Encountered an issue communicating with KOMOJU. Please wait a moment and try again.'),
                   'error'
                 );
-                exit;
-            } else {
+            } elseif (is_null($order)) {
                 $checkout_url = wc_get_checkout_url();
                 wp_redirect($checkout_url);
-                exit;
+            } else {
+                $payment_url = $order->get_checkout_payment_url(false);
+                wp_redirect($payment_url);
             }
+            exit;
+        }
+
+        // Quick setup POST from KOMOJU
+        if (isset($_POST['secret_key'])) {
+            $this->quick_setup($_POST);
+            exit;
         }
 
         // Webhook (IPN)
@@ -73,6 +80,26 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             exit;
         }
         wp_die('Komoju IPN Request Failure', 'Komoju IPN', ['response' => 500]);
+    }
+
+    public function quick_setup($post)
+    {
+        $saved_nonce       = get_option('komoju_woocommerce_nonce');
+        $nonce_from_komoju = $post['nonce'];
+
+        if ($saved_nonce === false || $saved_nonce !== $nonce_from_komoju) {
+            wp_die('Invalid nonce. Please try again.', 'KOMOJU quick setup', ['response' => 422]);
+
+            return;
+        }
+
+        update_option('komoju_woocommerce_secret_key', $post['secret_key']);
+        update_option('komoju_woocommerce_webhook_secret', $post['webhook_secret']);
+        delete_option('komoju_woocommerce_nonce');
+
+        update_option('komoju_woocommerce_just_connected_merchant_name', $post['merchant_name']);
+
+        wp_redirect('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings');
     }
 
     /**
@@ -287,6 +314,9 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         }
         if (!empty($webhookEvent->additional_information())) {
             update_post_meta($order->get_id(), 'Additional info', wc_clean(print_r($webhookEvent->additional_information(), true)));
+        }
+        if (!empty($webhookEvent->uuid())) {
+            $order->add_meta_data('komoju_payment_id', $webhookEvent->uuid(), true);
         }
     }
 }
