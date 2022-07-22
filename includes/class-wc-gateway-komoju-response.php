@@ -6,6 +6,11 @@ if (!defined('ABSPATH')) {
 
 abstract class WC_Gateway_Komoju_Response
 {
+
+    public function __construct() {
+        add_action( 'komoju_capture_payment', [ $this, 'payment_complete_async' ]);
+    }
+
     /**
      * Get the order from the Komoju 'transaction' variable
      *
@@ -75,6 +80,13 @@ abstract class WC_Gateway_Komoju_Response
      */
     protected function payment_complete($order, $txn_id = '', $note = '')
     {
+        $order_id = $order->get_id();
+        as_enqueue_async_action( 'komoju_capture_payment', array($order_id, $note, $txn_id), 'komoju-capture' );
+    }
+
+    public function payment_complete_async($order_id, $note, $txn_id)
+    {
+        $order = wc_get_order($order_id);
         $order->add_order_note($note);
         $order->payment_complete($txn_id);
     }

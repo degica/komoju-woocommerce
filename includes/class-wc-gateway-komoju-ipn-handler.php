@@ -25,6 +25,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
     {
         add_action('woocommerce_api_wc_gateway_komoju', [$this, 'check_response']);
         add_action('valid-komoju-standard-ipn-request', [$this, 'valid_response']);
+        add_action( 'komoju_capture_payment', [ $this, 'payment_complete_async' ], 10, 3 );
 
         $this->gateway                = $gateway;
         $this->webhookSecretToken	  	 = $webhookSecretToken;
