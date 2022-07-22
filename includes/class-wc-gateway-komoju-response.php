@@ -7,10 +7,6 @@ if (!defined('ABSPATH')) {
 abstract class WC_Gateway_Komoju_Response
 {
 
-    public function __construct() {
-        add_action( 'komoju_capture_payment', [ $this, 'payment_complete_async' ]);
-    }
-
     /**
      * Get the order from the Komoju 'transaction' variable
      *
