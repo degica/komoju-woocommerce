@@ -79,7 +79,7 @@ abstract class WC_Gateway_Komoju_Response
         if (get_option('komoju_woocommerce_ipn_async') == 'yes') {
             as_enqueue_async_action('komoju_capture_payment', [$order_id, $note, $txn_id], 'komoju-capture');
         } else {
-            do_action('komoju_capture_payment', [$order_id, $note, $txn_id], 'komoju-capture');
+            do_action('komoju_capture_payment', $order_id, $note, $txn_id);
         }
     }
 
