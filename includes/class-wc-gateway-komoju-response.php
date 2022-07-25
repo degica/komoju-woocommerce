@@ -75,6 +75,21 @@ abstract class WC_Gateway_Komoju_Response
      */
     protected function payment_complete($order, $txn_id = '', $note = '')
     {
+        if (get_option('komoju_woocommerce_ipn_async') == 'yes') {
+            $order_id = $order->get_id();
+            as_enqueue_async_action('komoju_capture_payment_async', [$order_id, $note, $txn_id], 'komoju-capture');
+        } else {
+            $this->do_payment_complete($order, $note, $txn_id);
+        }
+    }
+
+    public function payment_complete_async($order_id, $note, $txn_id)
+    {
+        $this->do_payment_complete(wc_get_order($order_id), $note, $txn_id);
+    }
+
+    protected function do_payment_complete($order, $note, $txn_id)
+    {
         $order->add_order_note($note);
         $order->payment_complete($txn_id);
     }

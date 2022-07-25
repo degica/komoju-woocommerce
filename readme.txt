@@ -211,3 +211,6 @@ Fixed bug where plugin would ignore locale strings that include a country code.
 
 = 2.5.0 =
 Add 'komoju_session_return_url' filter.
+
+= 2.6.0 =
+Optionally perform order completion in the background.
