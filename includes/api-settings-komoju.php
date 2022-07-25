@@ -40,6 +40,13 @@ return [
         'desc_tip'    => true,
     ],
     [
+        'id'           => 'komoju_woocommerce_ipn_async',
+        'type'         => 'checkbox',
+        'title'        => __('Process IPNs Asynchronously', 'komoju-woocommerce'),
+        'desc'         => __('When true, IPNs will return immediately, and order completion will be processed in the background.', 'komoju-woocommerce'),
+        'default'      => 'no',
+    ],
+    [
         'id'          => 'komoju_woocommerce_debug_log',
         'desc'        => sprintf(__('Log Komoju events inside <code>%s</code>', 'komoju-woocommerce'), wc_get_log_file_path('komoju')),
         'desc_tip'    => true,
