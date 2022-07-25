@@ -1,0 +1,30 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+  "name": "komoju-woocommerce",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "web",
+  "workspaceFolder": "/var/www/html/wp-content/plugins/komoju-woocommerce",
+  "remoteUser": "me",
+  "extensions": [],
+  "shutdownAction": "stopCompose",
+  "hostRequirements": {
+    "cpus": 1,
+    "memory": "4gb"
+  },
+  "remoteEnv": {
+    "CYPRESS_BASE_URL": "http://localhost"
+  },
+  "forwardPorts": [80],
+  "portsAttributes": {
+    "80": {
+      "label": "WordPress",
+      "onAutoForward": "notify",
+      "requireLocalPort": false
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "silent"
+  }
+}
