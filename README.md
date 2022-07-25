@@ -69,10 +69,6 @@ We currently accept the following payment methods:
 - Dragonpay
 - FPX
 
-**Australia**
-
-- POLi
-
 **Europe**
 
 - iDEAL
