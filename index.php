@@ -3,7 +3,7 @@
 Plugin Name: KOMOJU Payments
 Plugin URI: https://github.com/komoju/komoju-woocommerce
 Description: Extends WooCommerce with KOMOJU gateway.
-Version: 2.6.0
+Version: 2.6.1
 Author: KOMOJU
 Author URI: https://komoju.com
 */

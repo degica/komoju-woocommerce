@@ -189,7 +189,8 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
      */
     protected function validate_amount($order, $amount)
     {
-        if (number_format($order->get_total(), 2, '.', '') != number_format($amount, 2, '.', '')) {
+        $order_amount = WC_Gateway_Komoju::to_cents($order->get_total(), $order->get_currency());
+        if (number_format($order_amount != $amount)) {
             WC_Gateway_Komoju::log('Payment error: Amounts do not match (total: ' . $amount . ') for order #' . $order->get_id() . '(' . $order->get_total() . ')');
 
             // Put this order on-hold for manual checking
