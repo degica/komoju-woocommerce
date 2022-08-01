@@ -214,3 +214,6 @@ Add 'komoju_session_return_url' filter.
 
 = 2.6.0 =
 Optionally perform order completion in the background.
+
+= 2.6.1 =
+Fix webhooks with currencies that use cents.
