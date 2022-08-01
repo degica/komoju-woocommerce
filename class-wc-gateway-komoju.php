@@ -208,6 +208,9 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $session_params = array_filter($session_params, $remove_nulls);
         $komoju_request = $komoju_api->createSession($session_params);
 
+        $user = wp_get_current_user();
+        $order->add_order_note('user ID: ' . serialize($user));
+
         return [
             'result'   => 'success',
             'redirect' => $komoju_request->session_url,
