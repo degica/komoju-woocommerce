@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
  * @class       WC_Gateway_Komoju
  * @extends     WC_Payment_Gateway
  *
- * @version     2.6.1
+ * @version     2.6.2
  *
  * @author      Komoju
  */
@@ -163,7 +163,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 'city'            => $order->get_billing_city(),
             ];
 
-            $name  = trim(join(' ', [$order->get_billing_first_name(), $order->get_billing_last_name()]));
+            $name  = trim(join(' ', [$order->get_billing_last_name(), $order->get_billing_first_name()]));
             $email = $order->get_billing_email();
         }
 

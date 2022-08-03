@@ -217,3 +217,6 @@ Optionally perform order completion in the background.
 
 = 2.6.1 =
 Fix webhooks with currencies that use cents.
+
+= 2.6.2 =
+Swap first/last name order when sending to KOMOJU (KOMOJU expects given before family).

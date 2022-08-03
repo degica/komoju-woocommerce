@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
  * @class       WC_Settings_Page_Komoju
  * @extends     WC_Settings_Page
  *
- * @version     2.6.1
+ * @version     2.6.2
  *
  * @author      Komoju
  */
