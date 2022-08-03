@@ -27,5 +27,8 @@
   "otherPortsAttributes": {
     "onAutoForward": "silent"
   },
-  "postAttachCommand": "bin/devcontainer-setup"
+  "postAttachCommand": "bin/devcontainer-setup",
+  "features": {
+    "github-cli": "latest"
+  }
 }
