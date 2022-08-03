@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "$CODESPACE_NAME" > /tmp/codespace-name.txt

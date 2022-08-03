@@ -16,9 +16,9 @@
   "remoteEnv": {
     "CYPRESS_BASE_URL": "http://localhost"
   },
-  "forwardPorts": [80],
+  "forwardPorts": [8000],
   "portsAttributes": {
-    "80": {
+    "8000": {
       "label": "WordPress",
       "onAutoForward": "notify",
       "requireLocalPort": false
@@ -26,5 +26,6 @@
   },
   "otherPortsAttributes": {
     "onAutoForward": "silent"
-  }
+  },
+  "postAttachCommand": "bin/devcontainer-setup"
 }
