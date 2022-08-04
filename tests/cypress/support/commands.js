@@ -24,6 +24,13 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+Cypress.Commands.add('fullSetup', () => {
+  cy.installWordpress();
+  cy.signinToWordpress();
+  cy.installWooCommerce();
+  cy.installKomoju();
+});
+
 Cypress.Commands.add('installWordpress', () => {
   cy.visit('/wp-admin');
 

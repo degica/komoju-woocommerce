@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+./bin/devcontainer-postattach
+cd tests
+npm install
+./node_modules/.bin/cypress install
+./node_modules/.bin/cypress run --spec cypress/integration/setuponly.spec.js
