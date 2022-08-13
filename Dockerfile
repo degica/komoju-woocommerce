@@ -6,11 +6,14 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends unzip wget gettext vim bash-completion ssh git xvfb chromium sudo \
     && wget https://downloads.wordpress.org/plugin/woocommerce.${woocommerce_version}.zip -O /tmp/woocommerce.zip \
     && wget https://downloads.wordpress.org/plugin/relative-url.0.1.7.zip -O /tmp/relative-url.zip \
+    && wget https://github.com/wp-premium/woocommerce-subscriptions/archive/refs/tags/3.0.1.zip -O /tmp/woocommerce-subscriptions.zip \
     && cd /usr/src/wordpress/wp-content/plugins \
     && unzip /tmp/woocommerce.zip \
     && unzip /tmp/relative-url.zip \
+    && unzip /tmp/woocommerce-subscriptions.zip \
     && rm /tmp/woocommerce.zip \
     && rm /tmp/relative-url.zip \
+    && rm /tmp/woocommerce-subscriptions.zip \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer

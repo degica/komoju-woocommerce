@@ -57,6 +57,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         // Filters
         // Actions
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
+        add_action('woocommerce_scheduled_subscription_payment_' . $this->id, [$this, 'process_subscription'], 10, 3);
 
         if ($this->id === 'komoju') {
             include_once 'includes/class-wc-gateway-komoju-ipn-handler.php';
@@ -200,6 +201,10 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 'woocommerce_order_id' => $order->get_order_number(),
             ],
         ];
+        if (class_exists('WC_Subscriptions_Order') && WC_Subscriptions_Order::order_contains_subscription($order_id)) {
+            $session_params['mode'] = 'customer';
+        }
+
         $remove_nulls = function ($v) { return !is_null($v); };
         $session_params['payment_data'] = array_filter(
             $session_params['payment_data'],
@@ -212,6 +217,44 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             'result'   => 'success',
             'redirect' => $komoju_request->session_url,
         ];
+    }
+
+    /**
+     * Process an incoming subscription charge
+     */
+    public function process_subscription($amount_to_charge, $order)
+    {
+        foreach (wcs_get_subscriptions_for_order($order, ['order_type' => 'any']) as $subscription) {
+            $parent_order_id = $subscription->get_parent_id();
+        }
+
+        // fetch token from the subscription's parent order
+        $token = get_post_meta($parent_order_id, 'komoju_payment_token', true);
+        if (empty($token)) {
+            $this->log('ERROR: token missing on subscription payment metadata');
+            WC_Subscriptions_Manager::process_subscription_payment_failure_on_order($order);
+
+            return;
+        }
+        try {
+            $komoju_request = $this->create_komoju_payment($token, $order);
+            WC_Subscriptions_Manager::process_subscription_payments_on_order($order);
+        } catch (Exception $e) {
+            $order->add_order_note('KOMOJU Subscription payment failed');
+            WC_Subscriptions_Manager::process_subscription_payment_failure_on_order($order);
+        }
+    }
+
+    public function create_komoju_payment($customer, $order)
+    {
+        $currency = $order->get_currency();
+
+        return $this->komoju_api->createPayment([
+            'amount'             => self::to_cents($order->get_total(), $currency),
+            'external_order_num' => $this->external_order_num($order),
+            'currency'           => $currency,
+            'customer'           => $customer,
+        ]);
     }
 
     /**

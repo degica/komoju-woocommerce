@@ -81,3 +81,14 @@ To be able to test the checkout you will first need to have a purchasable produc
 
 If you go to http://127.0.0.1:8000/?post_type=product you should be able to see the shop, with an item for purchase you can use to test the Komoju integration.
 
+
+## Testing subscriptions
+
+1. Follow the setup instructions above
+2. Confirm that the woocommerce subscriptions plugin appears on the list of installed plugins, and that it is enabled.
+3. Create a new product in the same manner as above, but this time choose "Simple Subscription" for product type
+4. select the price and billing cadence
+5. go through the normal checkout flow for the store, with the new subscription product in the cart
+6. complete payment flow
+7. go to the "subscriptions" tab under woocommerce category on the admin and confirm the presence of the subscription
+8. to test subscription renewals - go to the newly created subscription in the subscriptions tab, and select "Process renewal" under subscription actions at the top right of the page

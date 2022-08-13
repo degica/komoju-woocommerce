@@ -44,6 +44,11 @@ class KomojuApi
         return $this->get('/api/v1/sessions/' . $sessionUuid);
     }
 
+    public function createPayment($payload)
+    {
+        return $this->post('/api/v1/payments', $payload);
+    }
+
     public function refund($paymentUuid, $payload)
     {
         return $this->post('/api/v1/payments/' . $paymentUuid . '/refund', $payload);
