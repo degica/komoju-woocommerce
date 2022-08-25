@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- *Komoju Payment Gateway
+ * KOMOJU Payment Gateway
  *
  * Provides access to Japanese local payment methods.
  *
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
  *
  * @version     2.6.2
  *
- * @author      Komoju
+ * @author      KOMOJU
  */
 require_once dirname(__FILE__) . '/komoju-php/komoju-php/lib/komoju.php';
 
@@ -35,8 +35,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     {
         $this->id                   = $this->id ? $this->id : 'komoju';
         $this->has_fields           = gettype($this->has_fields) == 'boolean' ? $this->has_fields : true;
-        $this->method_title         = $this->method_title ? $this->method_title : __('Komoju', 'komoju-woocommerce');
-        $this->method_description   = __('Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce');
+        $this->method_title         = $this->method_title ? $this->method_title : __('KOMOJU', 'komoju-woocommerce');
+        $this->method_description   = __('Allows payments by KOMOJU, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce');
         $this->debug                = 'yes' === $this->get_option_compat('debug_log', 'debug');
         $this->invoice_prefix       = $this->get_option_compat('invoice_prefix', 'invoice_prefix');
         $this->secretKey            = $this->get_option_compat('secret_key', 'secretKey');
@@ -377,7 +377,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
      */
     protected function default_title()
     {
-        return __('Komoju', 'komoju-woocommerce');
+        return __('KOMOJU', 'komoju-woocommerce');
     }
 
     public static function to_cents($total, $currency = '')

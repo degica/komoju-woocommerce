@@ -2,6 +2,17 @@
 
 This document details how to release a new version of the plugin on the WordPress store. This is intended for Komoju developers and requires access to the company's WordPress account.
 
+## The easy way
+
+We now use GitHub Actions to automate all of this. Unless you have an issue, you can ignore the rest of this document and simply run this command:
+
+```bash
+$ git tag v0.0.0 # Replace 0.0.0 with the version you want to upload
+$ git push --tags
+```
+
+That's it. You can check the result on the Actions tab in GitHub.
+
 ## Prerequisites
 
 Before you start, make sure to have the SVN cli tools installed. If you are on a Mac, then you can install them with Homebrew: `brew install svn`

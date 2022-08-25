@@ -55,7 +55,7 @@ and click "Continue"
 16. Click "Save changes" at the bottom:
 ![Set currency](./images/Set_currency.png)
 
-## Setting up the Komoju WooCommerce plugin
+## Setting up the KOMOJU WooCommerce plugin
 
 1. On the WordPress admin page, click "Plugins" on the left side panel
 2. On the Plugins page click "Activate" under "WooCommerce Komoju Gateway"

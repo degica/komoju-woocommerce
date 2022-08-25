@@ -14,16 +14,16 @@ describe('KOMOJU for WooCommerce: Admin', () => {
     cy.setupKomoju(['konbini', 'credit_card']);
     cy.contains('Payments').click();
 
-    cy.get('.form-table').should('include.text', 'Komoju - Konbini');
-    cy.get('.form-table').should('include.text', 'Komoju - Credit Card');
+    cy.get('.form-table').should('include.text', 'KOMOJU - Konbini');
+    cy.get('.form-table').should('include.text', 'KOMOJU - Credit Card');
 
     cy.setupKomoju(['docomo', 'softbank']);
     cy.contains('Payments').click();
 
-    cy.get('.form-table').should('not.include.text', 'Komoju - Konbini');
-    cy.get('.form-table').should('not.include.text', 'Komoju - Credit Card');
-    cy.get('.form-table').should('include.text',     'Komoju - SoftBank');
-    cy.get('.form-table').should('include.text',     'Komoju - docomo');
+    cy.get('.form-table').should('not.include.text', 'KOMOJU - Konbini');
+    cy.get('.form-table').should('not.include.text', 'KOMOJU - Credit Card');
+    cy.get('.form-table').should('include.text',     'KOMOJU - SoftBank');
+    cy.get('.form-table').should('include.text',     'KOMOJU - docomo');
   })
 
   it('lets me change the KOMOJU endpoint', () => {

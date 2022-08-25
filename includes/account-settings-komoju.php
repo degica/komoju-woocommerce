@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 /*
- * Settings for the whole Komoju plugin
+ * Simple settings page with just sign-in button and payment methods
  */
 
 return [

@@ -7,10 +7,10 @@ if (!defined('ABSPATH')) {
 abstract class WC_Gateway_Komoju_Response
 {
     /**
-     * Get the order from the Komoju 'transaction' variable
+     * Get the order from the KOMOJU 'transaction' variable
      *
      * @param WC_Gateway_Komoju_Webhook_Event $webhookEvent Webhook event data
-     * @param string $invoice_prefix set as an option in Komoju plugin dashboard
+     * @param string $invoice_prefix set as an option in KOMOJU plugin dashboard
      *
      * @return bool|WC_Order object
      */
@@ -40,7 +40,7 @@ abstract class WC_Gateway_Komoju_Response
      * Get an order from a payment associated with a KOMOJU session
      *
      * @param string $session_id
-     * @param string $invoice_prefix set as an option in Komoju plugin dashboard
+     * @param string $invoice_prefix set as an option in KOMOJU plugin dashboard
      */
     protected function get_order_from_komoju_session($session, $invoice_prefix)
     {

@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 /*
- * Settings for the whole Komoju plugin
+ * Settings for the whole KOMOJU plugin
  */
 
 return [
@@ -18,14 +18,14 @@ return [
     [
         'id'          => 'komoju_woocommerce_secret_key',
         'placeholder' => 'sk_live_000000000000000000000000',
-        'title'       => __('Secret Key from Komoju', 'komoju-woocommerce'),
+        'title'       => __('Secret Key from KOMOJU', 'komoju-woocommerce'),
         'type'        => 'text',
         'default'     => WC_Gateway_Komoju::get_legacy_setting('secretKey'),
         'desc_tip'    => true,
     ],
     [
         'id'          => 'komoju_woocommerce_webhook_secret',
-        'placeholder' => __('Please enter your Komoju Webhook Secret Token', 'komoju-woocommerce'),
+        'placeholder' => __('Please enter your KOMOJU Webhook Secret Token', 'komoju-woocommerce'),
         'title'       => __('Webhook Secret Token', 'komoju-woocommerce'),
         'type'        => 'text',
         'default'     => WC_Gateway_Komoju::get_legacy_setting('webhookSecretToken'),
@@ -33,7 +33,7 @@ return [
     ],
     [
         'id'          => 'komoju_woocommerce_invoice_prefix',
-        'placeholder' => __('Please enter a prefix for your invoice numbers. If you use your Komoju account for multiple stores ensure this prefix is unique.', 'komoju-woocommerce'),
+        'placeholder' => __('Please enter a prefix for your invoice numbers. If you use your KOMOJU account for multiple stores ensure this prefix is unique.', 'komoju-woocommerce'),
         'title'       => __('Invoice Prefix', 'komoju-woocommerce'),
         'type'        => 'text',
         'default'     => WC_Gateway_Komoju::get_legacy_setting('invoice_prefix', 'WC-'),
@@ -48,7 +48,7 @@ return [
     ],
     [
         'id'          => 'komoju_woocommerce_debug_log',
-        'desc'        => sprintf(__('Log Komoju events inside <code>%s</code>', 'komoju-woocommerce'), wc_get_log_file_path('komoju')),
+        'desc'        => sprintf(__('Log KOMOJU events inside <code>%s</code>', 'komoju-woocommerce'), wc_get_log_file_path('komoju')),
         'desc_tip'    => true,
         'title'       => __('Debug Log', 'komoju-woocommerce'),
         'type'        => 'checkbox',

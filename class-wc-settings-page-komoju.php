@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
  *
  * @version     2.6.2
  *
- * @author      Komoju
+ * @author      KOMOJU
  */
 require_once dirname(__FILE__) . '/komoju-php/komoju-php/lib/komoju.php';
 
@@ -21,7 +21,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     public function __construct()
     {
         $this->id    = 'komoju_settings';
-        $this->label = __('Komoju', 'komoju-woocommerce');
+        $this->label = __('KOMOJU', 'komoju-woocommerce');
 
         add_action(
             'woocommerce_admin_field_komoju_payment_types',
@@ -371,7 +371,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         $global_option = get_option('komoju_woocommerce_secret_key');
         if (!$global_option) {
             // This is for backwards compatibility. We used to have all settings saved under
-            // a single payment gateway called "Komoju". We've sinced moved to having this
+            // a single payment gateway called "KOMOJU". We've sinced moved to having this
             // global settings page, but want to continue supporting old setups.
             return WC_Gateway_Komoju::get_legacy_setting('secretKey');
         }
