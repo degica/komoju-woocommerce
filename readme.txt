@@ -220,3 +220,6 @@ Fix webhooks with currencies that use cents.
 
 = 2.6.2 =
 Swap first/last name order when sending to KOMOJU (KOMOJU expects given before family).
+
+= 2.6.3 =
+Fix problem where komoju payment gateways were not added in some situations.
