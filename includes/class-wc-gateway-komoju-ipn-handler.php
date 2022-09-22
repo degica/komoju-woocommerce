@@ -100,7 +100,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
 
         update_option('komoju_woocommerce_just_connected_merchant_name', $post['merchant_name']);
 
-        wp_redirect(admin_url() . '?page=wc-settings&tab=komoju_settings');
+        wp_redirect(admin_url() . 'admin.php?page=wc-settings&tab=komoju_settings');
     }
 
     /**
