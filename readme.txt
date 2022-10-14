@@ -2,11 +2,11 @@
 Contributors: degica
 Tags: WooCommerce,Payment Gateway,Komoju
 Requires at least: 5.3
-Tested up to: 5.7
+Tested up to: 6.0
 Stable tag: trunk
 Requires PHP: 7.2
 WC requires at least: 3.0.0
-WC tested up to: 5.2.0
+WC tested up to: 6.3.1
 License: MIT
 License URI: https://directory.fsf.org/wiki/License:X11
 
@@ -224,3 +224,6 @@ Swap first/last name order when sending to KOMOJU (KOMOJU expects given before f
 = 2.6.3 =
 Make sure payment gateways are always present when plugins are loaded.
 Fix problem where quick setup failed on sites with a path prefix.
+
+= 2.6.4 =
+Adjust supported versions.
