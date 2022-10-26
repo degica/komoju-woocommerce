@@ -227,3 +227,6 @@ Fix problem where quick setup failed on sites with a path prefix.
 
 = 2.6.4 =
 Adjust supported versions.
+
+= 2.6.5 =
+Remove additional lingering currency check code.
