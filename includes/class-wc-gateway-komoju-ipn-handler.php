@@ -164,24 +164,6 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
     }
 
     /**
-     * Check currency from IPN matches the order
-     *
-     * @param WC_Order $order
-     * @param string $currency
-     */
-    protected function validate_currency($order, $currency)
-    {
-        // Validate currency
-        if ($order->get_currency() != $currency) {
-            WC_Gateway_Komoju::log('Payment error: Currencies do not match (sent "' . $order->get_currency() . '" | returned "' . $currency . '")');
-
-            // Put this order on-hold for manual checking
-            $order->update_status('on-hold', sprintf(__('Validation error: Komoju currencies do not match (code %s).', 'komoju-woocommerce'), $currency));
-            exit;
-        }
-    }
-
-    /**
      * Check payment amount from IPN matches the order
      *
      * @param WC_Order $order
@@ -212,7 +194,6 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             exit;
         }
 
-        $this->validate_currency($order, $webhookEvent->currency());
         $this->validate_amount($order, $webhookEvent->grand_total() - $webhookEvent->payment_method_fee());
         $this->save_komoju_meta_data($order, $webhookEvent);
 
