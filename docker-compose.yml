@@ -34,9 +34,14 @@ services:
        WORDPRESS_CONFIG_EXTRA: |
         define( 'WPLANG', '${WPLANG}');
         define( 'UPLOADS', '/var/www/html/wp-content/uploads' );
-        define( 'WP_DEBUG_LOG', '/tmp/wp-errors.log');
-        define( 'WP_SITEURL', 'http://' . $$_SERVER['HTTP_HOST']);
-        define( 'WP_HOME', 'http://' . $$_SERVER['HTTP_HOST']);
+        define( 'WP_DEBUG', true);
+        define( 'WP_DEBUG_LOG', '/var/www/html/wp-content/wp-errors.log');
+
+        if (getenv('CODESPACES') === 'true') {
+            $$host = trim(file_get_contents("/tmp/codespace-name.txt")) . '-8000.githubpreview.dev';
+            define( 'WP_SITEURL', 'https://' . $$host);
+            define( 'WP_HOME', 'https://' . $$host);
+        }
      volumes:
         - .:/var/www/html/wp-content/plugins/komoju-woocommerce
 volumes:

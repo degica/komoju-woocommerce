@@ -1,9 +1,6 @@
 describe('KOMOJU for WooCommerce: Checkout', () => {
   beforeEach(() => {
-    cy.installWordpress();
-    cy.signinToWordpress();
-    cy.installWooCommerce();
-    cy.installKomoju();
+    cy.fullSetup();
   })
 
   it('lets me make a payment using the KOMOJU gateway', () => {

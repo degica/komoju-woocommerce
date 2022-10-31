@@ -1,9 +1,6 @@
 describe('KOMOJU for WooCommerce: Admin', () => {
   beforeEach(() => {
-    cy.installWordpress();
-    cy.signinToWordpress();
-    cy.installWooCommerce();
-    cy.installKomoju();
+    cy.fullSetup();
 
     cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
     cy.get('.komoju-endpoint-field').contains('Reset').click();
