@@ -233,3 +233,6 @@ Remove additional lingering currency check code.
 
 = 2.7.0 =
 Change credit card icon to show brands.
+
+= 2.7.1 =
+Make DCC payments validate order amount against session instead of payment.
