@@ -22,7 +22,11 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         $this->method_title   = __('Komoju', 'komoju-woocommerce') . ' - ' . $this->default_title();
 
         if ($this->get_option('showIcon') == 'yes') {
-            $this->icon = "https://komoju.com/payment_methods/$slug.svg";
+            if ($slug == 'credit_card') {
+                $this->icon = plugins_url('komoju-woocommerce/assets/cards.svg');
+            } else {
+                $this->icon = "https://komoju.com/payment_methods/$slug.svg";
+            }
         }
 
         // TODO: It would be nice if KOMOJU told us in the payment method object whether or
