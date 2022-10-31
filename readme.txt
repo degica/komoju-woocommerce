@@ -230,3 +230,6 @@ Adjust supported versions.
 
 = 2.6.5 =
 Remove additional lingering currency check code.
+
+= 2.7.0 =
+Change credit card icon to show brands.
