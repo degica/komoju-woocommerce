@@ -29,12 +29,12 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
                 $brands = $payment_method['subtypes'];
 
                 $sort_order = [
-                    'visa' => 0,
-                    'master' => 1,
-                    'jcb' => 2,
+                    'visa'             => 0,
+                    'master'           => 1,
+                    'jcb'              => 2,
                     'american_express' => 3,
-                    'diners_club' => 4,
-                    'discover' => 5
+                    'diners_club'      => 4,
+                    'discover'         => 5,
                 ];
 
                 // Sort by the order defined above.
