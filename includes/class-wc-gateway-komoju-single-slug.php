@@ -22,10 +22,28 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         $this->method_title   = __('Komoju', 'komoju-woocommerce') . ' - ' . $this->default_title();
 
         if ($this->get_option('showIcon') == 'yes') {
+            $this->icon = "https://komoju.com/payment_methods/$slug.svg";
+
             if ($slug == 'credit_card') {
-                $this->icon = plugins_url('komoju-woocommerce/assets/cards.svg');
-            } else {
-                $this->icon = "https://komoju.com/payment_methods/$slug.svg";
+                // Show dynamic icon with supported brands.
+                $brands = $payment_method['subtypes'];
+
+                $sort_order = [
+                    'visa'             => 0,
+                    'master'           => 1,
+                    'jcb'              => 2,
+                    'american_express' => 3,
+                    'diners_club'      => 4,
+                    'discover'         => 5,
+                ];
+
+                // Sort by the order defined above.
+                usort($brands, function ($a, $b) use ($sort_order) {
+                    return $sort_order[$a] - $sort_order[$b];
+                });
+
+                $brands = implode(',', $brands);
+                $this->icon .= "?brands=$brands";
             }
         }
 
