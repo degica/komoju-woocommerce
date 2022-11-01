@@ -194,7 +194,13 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             exit;
         }
 
-        $this->validate_amount($order, $webhookEvent->grand_total() - $webhookEvent->payment_method_fee());
+        if ($webhookEvent->currency() != $order->get_currency()) {
+            $session = $this->get_session($webhookEvent->session_id());
+            $this->validate_amount($order, $session->amount);
+        } else {
+            $this->validate_amount($order, $webhookEvent->grand_total() - $webhookEvent->payment_method_fee());
+        }
+
         $this->save_komoju_meta_data($order, $webhookEvent);
 
         if ('captured' === $webhookEvent->status()) {

@@ -135,6 +135,16 @@ class WC_Gateway_Komoju_Webhook_Event
     }
 
     /**
+     * A getter to retrieve the session ID from the webhook event
+     *
+     * @return string
+     */
+    public function session_id()
+    {
+        return $this->data()['session'];
+    }
+
+    /**
      * A get to retrieve the amount refunded from the webhook event. This will
      * only be sent on payment.refunded events
      *
