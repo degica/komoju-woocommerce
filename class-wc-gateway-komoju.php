@@ -284,6 +284,10 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                   >*
                   </abbr>';
             foreach ($methods as $method) {
+                $subtypes = '';
+                foreach( $method['subtypes'] as $key => $subtype ){
+                    $subtypes .= '<span class="'.$subtype.'"></span>';
+                }
                 $field_data .= '
                   <label>
                     <input
@@ -293,7 +297,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                       value="' . esc_attr($method['type_slug']) . '"
                       name="' . esc_attr($this->id) . '-method"
                     />
-                    ' . ($method[$name_property]) . '
+                    ' . ($method[$name_property]) . '<span class="subtypes">' . $subtypes . '</span>
                     <br/>
                   </label>';
             }
