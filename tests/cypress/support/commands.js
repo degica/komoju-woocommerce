@@ -85,25 +85,33 @@ Cypress.Commands.add('installWooCommerce', () => {
         }
       }
 
-      cy.get('#select2-store_country-container').click();
-      cy.get('.select2-search__field').type('Japan{enter}');
-      cy.get('#store_address').type('1234 abc st');
-      cy.get('#store_city').type('Kichijoji');
-      cy.get('[aria-labelledby="select2-store_state-container"]').click();
-      cy.get('.select2-search__field').type('Tokyo{enter}');
-      cy.get('#store_postcode').type('181-0004');
-      cy.contains("Let's go!").click();
+      // Store Details
+      cy.get('#inspector-text-control-0').type('1234 abc st');
+      cy.get('#woocommerce-select-control-0__control-input').click();
+      cy.get('#woocommerce-select-control-0__control-input').type('Tokyo{enter}');
+      cy.get('#inspector-text-control-2').type('Kichijoji');
+      cy.get('#inspector-text-control-3').type('181-0004');
+      cy.contains('Continue').click();
+      cy.get('div.woocommerce-profile-wizard__usage-wrapper').contains('Continue').click();
+
+      // Industry
+      cy.get('label[for="inspector-checkbox-control-7"]').click();
       cy.contains('Continue').click();
 
-      cy.get('.stripe-logo .wc-wizard-service-toggle').click();
+      // Products Types
       cy.contains('Continue').click();
 
-      cy.get('[name="shipping_zones[domestic][flat_rate][cost]"]').type('100');
-      cy.get('[name="shipping_zones[intl][flat_rate][cost]"]').type('250');
+      // Business Details
+      cy.get('label[for="woocommerce-select-control-1__control-input"]').click();
+      cy.get('#woocommerce-select-control__option-1-1-10').click();
+      cy.get('label[for="woocommerce-select-control-2__control-input"]').click();
+      cy.get('#woocommerce-select-control__option-2-no').click();
+      cy.get('input.components-form-toggle__input').each((toggle) => { toggle.click() });
       cy.contains('Continue').click();
 
-      cy.contains('Skip this step').click();
-      cy.contains('Skip this step').click();
+      // Theme
+      cy.contains('Continue with my active them').click();
+
       cy.visit('/wp-admin/edit.php?post_type=product&page=product_importer');
 
       cy.get('#upload').selectFile({
@@ -168,6 +176,8 @@ Cypress.Commands.add('goToStore', () => {
 Cypress.Commands.add('fillInAddress', () => {
   cy.get('#billing_last_name').type('{selectAll}Johnson');
   cy.get('#billing_first_name').type('{selectAll}Test');
+  cy.get('#select2-billing_country-container').click();
+  cy.get('.select2-search__field').type('Japan{enter}');
   cy.get('#billing_postcode').type('{selectAll}181-0004');
   cy.get('#billing_city').type('{selectAll}Musashino');
   cy.get('#billing_address_1').type('{selectAll}a');
