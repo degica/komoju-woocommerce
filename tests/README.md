@@ -13,12 +13,12 @@ docker-compose down --volumes
 To run tests,
 
 ```bash
-npx cypress run
+npm run cypress:run
 ```
 
 
 To visually debug and inspect the in-progress tests,
 
 ```bash
-npx cypress open
+npm run cypress:open
 ```
