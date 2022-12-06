@@ -197,7 +197,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             ],
             'line_items' => $line_items,
             'metadata'   => [
-                'woocommerce_order_id' => $order->get_id(),
+                'woocommerce_order_id' => strval($order->get_id()),
             ],
         ];
         $remove_nulls = function ($v) { return !is_null($v); };
