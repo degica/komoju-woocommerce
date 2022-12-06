@@ -17,7 +17,7 @@ jobs:
         run: |
           cd tests
           npm install
-          npx cypress run
+          npm run cypress:run
       - name: Upload screenshots
         if: failure()
         uses: actions/upload-artifact@v3
