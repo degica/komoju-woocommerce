@@ -62,6 +62,12 @@ return [
         'default'     => KomojuApi::defaultEndpoint(),
     ],
     [
+        'id'          => 'komoju_woocommerce_fields_url',
+        'title'       => __('KOMOJU Fields script URL', 'komoju-woocommerce'),
+        'type'        => 'komoju_endpoint',
+        'default'     => 'https://multipay.komoju.com/fields.js',
+    ],
+    [
         'id'          => 'komoju_woocommerce_waf_staging_token',
         'desc'        => __('Usually you want this to be empty.', 'komoju-woocommerce'),
         'title'       => __('Staging token', 'komoju-woocommerce'),
