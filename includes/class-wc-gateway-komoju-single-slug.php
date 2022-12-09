@@ -54,6 +54,11 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         }
 
         parent::__construct();
+
+        $this->method_description = sprintf(
+            __('%s payments powered by KOMOJU', 'komoju-woocommerce'),
+            $this->default_title()
+        );
     }
 
     /**

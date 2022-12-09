@@ -35,7 +35,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     {
         $this->id                   = $this->id ? $this->id : 'komoju';
         $this->method_title         = $this->method_title ? $this->method_title : __('Komoju', 'komoju-woocommerce');
-        $this->method_description   = __('Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce');
+        $this->method_description   = __("Includes all Komoju payment methods. Not recommended, since the name 'KOMOJU' is not recognized by most customers and refunds through WooCommerce are not supported.", 'komoju-woocommerce');
         $this->debug                = 'yes' === $this->get_option_compat('debug_log', 'debug');
         $this->invoice_prefix       = $this->get_option_compat('invoice_prefix', 'invoice_prefix');
         $this->secretKey            = $this->get_option_compat('secret_key', 'secretKey');
