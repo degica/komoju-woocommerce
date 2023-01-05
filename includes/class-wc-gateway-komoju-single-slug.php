@@ -16,9 +16,10 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
     {
         $slug = $payment_method['type_slug'];
 
+        $this->publishableKey = $this->get_option_compat('publishable_key', 'publishable_key');
         $this->payment_method = $payment_method;
         $this->id             = 'komoju_' . $slug;
-        $this->has_fields     = false;
+        $this->has_fields     = $this->get_option('inlineFields') === 'yes' && (bool) $this->publishableKey;
         $this->method_title   = __('Komoju', 'komoju-woocommerce') . ' - ' . $this->default_title();
 
         if ($this->get_option('showIcon') == 'yes') {
@@ -115,12 +116,42 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 
     public function payment_fields()
     {
-        // No fields!
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+        $session_id = $_SESSION['komoju_checkout_session_id']; ?>
+        <komoju-fields
+            token name="komoju_payment_token"
+            komoju-api="<?php echo KomojuApi::endpoint(); ?>"
+            publishable-key="<?php echo esc_attr($this->publishableKey); ?>"
+            session-id="<?php echo esc_attr($session_id); ?>"
+            payment-type="<?php echo esc_attr($this->payment_method['type_slug']); ?>"
+        >
+        </komoju-fields>
+    <?php
     }
 
     public function process_payment($order_id, $payment_type = null)
     {
-        return parent::process_payment($order_id, $this->payment_method['type_slug']);
+        // If we have a token from <komoju-fields>, we can process payment immediately.
+        // Otherwise we will redirect to the KOMOJU hosted page.
+        $token = sanitize_text_field($_POST['komoju_payment_token']);
+
+        if (!$token || $token === '') {
+            return parent::process_payment($order_id, $this->payment_method['type_slug']);
+        }
+
+        $session = $this->create_session_for_order($order_id, $payment_type);
+        $result  = $this->komoju_api->paySession($session->id, ['payment_details' => $token]);
+
+        if ($result->redirect_url) {
+            return [
+                'result'   => 'success',
+                'redirect' => $result->redirect_url,
+            ];
+        } else {
+            wc_add_notice(__('Payment error:', 'woothemes') . $result->error, 'error');
+        }
     }
 
     public function default_title()

@@ -95,6 +95,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         }
 
         update_option('komoju_woocommerce_secret_key', $post['secret_key']);
+        update_option('komoju_woocommerce_publishable_key', $post['publishable_key']);
         update_option('komoju_woocommerce_webhook_secret', $post['webhook_secret']);
         delete_option('komoju_woocommerce_nonce');
 
