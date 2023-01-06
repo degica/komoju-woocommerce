@@ -19,7 +19,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         $this->publishableKey = $this->get_option_compat('publishable_key', 'publishable_key');
         $this->payment_method = $payment_method;
         $this->id             = 'komoju_' . $slug;
-        $this->has_fields     = $this->get_option('inlineFields') === 'yes' && (bool) $this->publishableKey;
+        $this->has_fields     = $this->should_use_inline_fields();
         $this->method_title   = __('Komoju', 'komoju-woocommerce') . ' - ' . $this->default_title();
 
         if ($this->get_option('showIcon') == 'yes') {
@@ -109,26 +109,60 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         }
     }
 
+    /**
+     * Create incomplete session for rendering <komoju-fields>
+     */
+    public function create_session_for_fields()
+    {
+        $komoju_api     = $this->komoju_api;
+        $session_params = [
+            'amount'         => $this->get_order_total(),
+            'currency'       => get_woocommerce_currency(),
+            'default_locale' => self::get_locale_or_fallback(),
+            'metadata' => [
+                'woocommerce_note' => 'This session is only for rendering inline fields, and will not be completed.',
+            ],
+        ];
+        return $komoju_api->createSession($session_params);
+    }
+
     public function validate_fields()
     {
         return true;
     }
 
+    public function should_use_inline_fields()
+    {
+        // Merchants can disable inline payment fields via gateway settings.
+        if ($this->get_option('inlineFields') !== 'yes') {
+            return false;
+        }
+        // We can't use the komoju-fields library without a publishable key.
+        if (!$this->publishableKey) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function payment_fields()
     {
-        if (!isset($_SESSION)) {
-            session_start();
+        // We lazily fetch one session to be shared by all payment methods with dynamic fields.
+        static $checkout_session;
+        if (is_null($checkout_session)) {
+            $checkout_session = $this->create_session_for_fields();
         }
-        $session_id = $_SESSION['komoju_checkout_session_id']; ?>
+
+        ?>
         <komoju-fields
             token name="komoju_payment_token"
             komoju-api="<?php echo KomojuApi::endpoint(); ?>"
             publishable-key="<?php echo esc_attr($this->publishableKey); ?>"
-            session-id="<?php echo esc_attr($session_id); ?>"
+            session-id="<?php echo esc_attr($checkout_session->id); ?>"
             payment-type="<?php echo esc_attr($this->payment_method['type_slug']); ?>"
         >
         </komoju-fields>
-    <?php
+        <?php
     }
 
     public function process_payment($order_id, $payment_type = null)

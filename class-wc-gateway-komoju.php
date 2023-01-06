@@ -67,7 +67,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 $this->useOnHold
             );
             add_filter('woocommerce_admin_order_data_after_billing_address', [$this, 'show_komoju_link_on_order_page'], 10, 1);
-            add_filter('woocommerce_before_checkout_form', [$this, 'create_session_for_fields']);
         }
     }
 
@@ -216,25 +215,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $session_params = array_filter($session_params, $remove_nulls);
 
         return $komoju_api->createSession($session_params);
-    }
-
-    /**
-     * Create incomplete session for rendering <komoju-fields>
-     */
-    public function create_session_for_fields()
-    {
-        // TODO: might want to only do this when we know we need it.
-        // Some merchants might have no gateways with fields enabled, in which case
-        // this is a massive waste of time.
-        session_start();
-        $komoju_api     = $this->komoju_api;
-        $session_params = [
-            'amount'         => $this->get_order_total(),
-            'currency'       => get_woocommerce_currency(),
-            'default_locale' => self::get_locale_or_fallback(),
-        ];
-        $komoju_session                         = $komoju_api->createSession($session_params);
-        $_SESSION['komoju_checkout_session_id'] = $komoju_session->id;
     }
 
     /**
