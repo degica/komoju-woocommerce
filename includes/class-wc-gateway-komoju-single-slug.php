@@ -119,10 +119,11 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
             'amount'         => $this->get_order_total(),
             'currency'       => get_woocommerce_currency(),
             'default_locale' => self::get_locale_or_fallback(),
-            'metadata' => [
+            'metadata'       => [
                 'woocommerce_note' => 'This session is only for rendering inline fields, and will not be completed.',
             ],
         ];
+
         return $komoju_api->createSession($session_params);
     }
 
@@ -151,9 +152,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         static $checkout_session;
         if (is_null($checkout_session)) {
             $checkout_session = $this->create_session_for_fields();
-        }
-
-        ?>
+        } ?>
         <komoju-fields
             token name="komoju_payment_token"
             komoju-api="<?php echo KomojuApi::endpoint(); ?>"
