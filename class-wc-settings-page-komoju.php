@@ -116,7 +116,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
 <th class="titledesc" scope="row">
     <label for="<?php echo esc_attr($setting['id']); ?>"><?php echo $setting['title']; ?></label>
 </th>
-<td class="forminp forminp-text komoju-endpoint-field">
+<td class="forminp forminp-text komoju-endpoint-field komoju-endpoint-<?php echo esc_attr($setting['id']); ?>">
     <input id="<?php echo esc_attr($setting['id']); ?>"
            name="<?php echo esc_attr($setting['id']); ?>"
            value="<?php echo esc_attr($value); ?>"
@@ -132,6 +132,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         <?php if ($untainted) { ?>
             <button
                 type="button"
+                class="komoju-endpoint-edit"
                 data-target="<?php echo esc_attr($setting['id']); ?>"
                 onclick="komoju_woocommerce_enable_endpoint_field(event)">
                 <?php echo __('Edit', 'komoju-woocommerce'); ?>
@@ -140,6 +141,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
 
         <button
             type="button"
+            class="komoju-endpoint-reset"
             data-target="<?php echo esc_attr($setting['id']); ?>"
             onclick="komoju_woocommerce_reset_endpoint_field(event)">
             <?php echo __('Reset', 'komoju-woocommerce'); ?>

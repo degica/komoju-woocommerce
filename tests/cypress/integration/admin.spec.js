@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('KOMOJU for WooCommerce: Admin', () => {
   beforeEach(() => {
     cy.installWordpress();
@@ -29,7 +31,7 @@ describe('KOMOJU for WooCommerce: Admin', () => {
   it('lets me change the KOMOJU endpoint', () => {
     cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
-    cy.get('.komoju-endpoint-field').contains('Edit').click();
+    cy.get('.komoju-endpoint-komoju_woocommerce_api_endpoint').contains('Edit').click();
     cy.get('#komoju_woocommerce_api_endpoint').type('{selectAll}https://requestbin.labs.degica.com');
     cy.contains('Save changes').click();
 
@@ -37,7 +39,7 @@ describe('KOMOJU for WooCommerce: Admin', () => {
     cy.get('#mainform').should('include.text', 'Unable to reach KOMOJU. Is your secret key correct?');
     cy.contains('API settings').click();
 
-    cy.get('.komoju-endpoint-field').contains('Reset').click();
+    cy.get('.komoju-endpoint-komoju_woocommerce_api_endpoint').contains('Reset').click();
     cy.contains('Save changes').click();
 
     cy.contains('Payment methods').click();

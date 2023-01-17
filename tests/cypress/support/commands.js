@@ -141,6 +141,10 @@ Cypress.Commands.add('setupKomoju', (
 
   cy.get('#komoju_woocommerce_secret_key').type('{selectAll}').type(secretKey);
   cy.get('#komoju_woocommerce_publishable_key').type('{selectAll}').type(publishableKey);
+  cy.get('.komoju-endpoint-komoju_woocommerce_fields_url').then($element => {
+    const $edit = $element.find('.komoju-endpoint-edit');
+    if ($edit.length > 0) { return cy.wrap($edit).click(); }
+  });
   cy.get('#komoju_woocommerce_fields_url').type('{selectAll}').type('https://multipay-staging.test.komoju.com/fields.js');
   cy.contains('Save changes').click();
 
