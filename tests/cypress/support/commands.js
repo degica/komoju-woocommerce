@@ -132,10 +132,16 @@ Cypress.Commands.add('installKomoju', () => {
   });
 });
 
-Cypress.Commands.add('setupKomoju', (paymentTypes = [], secretKey = 'degica-mart-test') => {
+Cypress.Commands.add('setupKomoju', (
+  paymentTypes = [],
+  secretKey = 'degica-mart-test',
+  publishableKey = 'pk_d6acce1f17e4468c30833b666d9006f100e9fa8c'
+) => {
   cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
   cy.get('#komoju_woocommerce_secret_key').type('{selectAll}').type(secretKey);
+  cy.get('#komoju_woocommerce_publishable_key').type('{selectAll}').type(publishableKey);
+  cy.get('#komoju_woocommerce_fields_url').type('{selectAll}').type('https://multipay-staging.test.komoju.com/fields.js');
   cy.contains('Save changes').click();
 
   cy.contains('Payment methods').click();
@@ -172,4 +178,25 @@ Cypress.Commands.add('fillInAddress', () => {
   cy.get('#billing_city').type('{selectAll}Musashino');
   cy.get('#billing_address_1').type('{selectAll}a');
   cy.get('#billing_phone').type('{selectAll}123123213213213');
+
+  // I cannot for the life of me figure out how to safely wait for WC to finish
+  // re-generating the payment fields. If I do anything at all here, Cypress complains
+  // about elements not being mounted, not existing, etc.
+  cy.wait(2000);
+  cy.get('.blockOverlay').should('not.exist');
+});
+
+// Pulled from https://stackoverflow.com/questions/57605596/cypress-run-test-in-iframe/57609872#57609872
+Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe, selector) => {
+  Cypress.log({
+    name: 'iframe',
+    consoleProps() {
+      return {
+        iframe: $iframe,
+      };
+    },
+  });
+  return new Cypress.Promise(resolve => {
+    resolve($iframe.contents().find(selector));
+  });
 });
