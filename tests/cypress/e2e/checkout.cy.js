@@ -39,7 +39,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
     cy.get('label[for="payment_method_komoju_konbini"]').click();
     cy.get('komoju-fields[payment-type="konbini"]').should('be.visible');
-    cy.wait(500);
+    cy.wait(1000);
 
     cy.get('komoju-fields[payment-type="konbini"] iframe').iframe('#kb-name').type('Test Test');
     cy.get('komoju-fields[payment-type="konbini"] iframe').iframe('#kb-email').type('test@example.com');
@@ -65,7 +65,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
     cy.get('label[for="payment_method_komoju_credit_card"]').click();
     cy.get('komoju-fields[payment-type="credit_card"]').should('be.visible');
-    cy.wait(500);
+    cy.wait(1000);
 
     cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-name').type('Test Test');
     cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-number').type('4111111111111111');
