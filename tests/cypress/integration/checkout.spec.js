@@ -38,11 +38,15 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.fillInAddress();
 
     cy.get('label[for="payment_method_komoju_konbini"]').click();
-    cy.get('komoju-fields:visible iframe').iframe('#kb-name').type('Test Test');
-    cy.get('komoju-fields:visible iframe').iframe('#kb-email').type('test@example.com');
-    cy.get('komoju-fields:visible iframe').iframe('[value="family-mart"]').click();
+    cy.get('komoju-fields[payment-type="konbini"]').should('be.visible');
+    cy.wait(500);
+
+    cy.get('komoju-fields[payment-type="konbini"] iframe').iframe('#kb-name').type('Test Test');
+    cy.get('komoju-fields[payment-type="konbini"] iframe').iframe('#kb-email').type('test@example.com');
+    cy.get('komoju-fields[payment-type="konbini"] iframe').iframe('[value="family-mart"]').click();
 
     cy.get('#place_order').click();
+    cy.wait(2000);
     cy.location('pathname').should('include', '/sessions/');
     cy.contains('How to make a payment at Family Mart').should('be.visible');
     cy.contains('Return to').click();
@@ -59,13 +63,17 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.contains('Proceed to checkout').click();
     cy.fillInAddress();
 
-    cy.contains('Credit Card').click();
-    cy.get('komoju-fields:visible iframe').iframe('#cc-name').type('Test Test');
-    cy.get('komoju-fields:visible iframe').iframe('#cc-number').type('4111111111111111');
-    cy.get('komoju-fields:visible iframe').iframe('#cc-exp').type('1299');
-    cy.get('komoju-fields:visible iframe').iframe('#cc-cvc').type('111');
+    cy.get('label[for="payment_method_komoju_credit_card"]').click();
+    cy.get('komoju-fields[payment-type="credit_card"]').should('be.visible');
+    cy.wait(500);
+
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-name').type('Test Test');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-number').type('4111111111111111');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-exp').type('1299');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-cvc').type('111');
 
     cy.get('#place_order').click();
+    cy.wait(2000);
     cy.contains('Thank you. Your order has been received.').should('be.visible');
   })
 
