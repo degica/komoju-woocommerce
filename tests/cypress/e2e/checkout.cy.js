@@ -68,14 +68,14 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
     cy.get('label[for="payment_method_komoju_credit_card"]').click();
     cy.get('komoju-fields[payment-type="credit_card"]').should('be.visible');
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('komoju-host').should('exist');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe.find()('komoju-host').should('exist');
     cy.wait(2000);
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-name').should('exist');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe.find()('#cc-name').should('exist');
 
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-name').type('Test Test');
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-number').type('4111111111111111');
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-exp').type('1299');
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-cvc').type('111');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe.find()('#cc-name').type('Test Test');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe.find()('#cc-number').type('4111111111111111');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe.find()('#cc-exp').type('1299');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe.find()('#cc-cvc').type('111');
 
     cy.get('#place_order').click();
     cy.wait(2000);
