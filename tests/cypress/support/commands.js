@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -157,8 +159,9 @@ Cypress.Commands.add('fillInAddress', () => {
   cy.get('.blockOverlay').should('not.exist');
 });
 
-// Pulled from https://stackoverflow.com/questions/57605596/cypress-run-test-in-iframe/57609872#57609872
-Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe, selector) => {
+Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
+  // get the iframe > document > body
+  // and retry until the body element is not empty
   Cypress.log({
     name: 'iframe',
     consoleProps() {
@@ -167,7 +170,11 @@ Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe, selector) =
       };
     },
   });
-  return new Cypress.Promise(resolve => {
-    resolve($iframe.contents().find(selector));
-  });
-});
+
+  return cy.wrap($iframe)
+  .its('0.contentDocument.body').should('not.be.empty')
+  // wraps "body" DOM element to allow
+  // chaining more Cypress commands, like ".find(...)"
+  // https://on.cypress.io/wrap
+  .then(cy.wrap)
+})
