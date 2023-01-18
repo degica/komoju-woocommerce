@@ -47,7 +47,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.get('komoju-fields[payment-type="konbini"] iframe').iframe('[value="family-mart"]').click();
 
     cy.get('#place_order').click();
-    cy.wait(2000);
+    cy.wait(1000);
     cy.location('pathname').should('include', '/sessions/');
     cy.contains('How to make a payment at Family Mart').should('be.visible');
     cy.contains('Return to').click();
@@ -66,7 +66,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
     cy.get('label[for="payment_method_komoju_credit_card"]').click();
     cy.get('komoju-fields[payment-type="credit_card"]').should('be.visible');
-    cy.wait(2000);
+    cy.wait(1000);
     cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('komoju-host').should('exist');
 
     cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe('#cc-name').type('Test Test');
