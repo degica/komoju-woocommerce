@@ -19,7 +19,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         $this->publishableKey = $this->get_option_compat('publishable_key', 'publishable_key');
         $this->payment_method = $payment_method;
         $this->id             = 'komoju_' . $slug;
-        $this->has_fields     = $this->should_use_inline_fields();
+        $this->has_fields     = $this->should_use_inline_fields($slug);
         $this->method_title   = __('Komoju', 'komoju-woocommerce') . ' - ' . $this->default_title();
 
         if ($this->get_option('showIcon') == 'yes') {
@@ -132,10 +132,14 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         return true;
     }
 
-    public function should_use_inline_fields()
+    public function should_use_inline_fields($slug)
     {
         // Merchants can disable inline payment fields via gateway settings.
         if ($this->get_option('inlineFields') !== 'yes') {
+            return false;
+        }
+        // Right now only credit card and konbini support inline fields.
+        if ($slug != 'credit_card' && $slug != 'konbini') {
             return false;
         }
         // We can't use the komoju-fields library without a publishable key.
