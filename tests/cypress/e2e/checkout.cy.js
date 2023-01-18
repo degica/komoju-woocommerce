@@ -50,7 +50,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
     cy.get('#place_order').click();
     cy.wait(1000);
-    cy.location('pathname').should('include', '/sessions/');
+    cy.location('pathname').should('include', '/sessions/', { timeout: 10000 });
     cy.contains('How to make a payment at Family Mart').should('be.visible');
     cy.contains('Return to').click();
     cy.contains('Thank you. Your order has been received.').should('be.visible');
@@ -68,14 +68,14 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
     cy.get('label[for="payment_method_komoju_credit_card"]').click();
     cy.get('komoju-fields[payment-type="credit_card"]').should('be.visible');
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find()('komoju-host').should('exist');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find('komoju-host').should('exist');
     cy.wait(2000);
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find()('#cc-name').should('exist');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find('#cc-name').should('exist');
 
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find()('#cc-name').type('Test Test');
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find()('#cc-number').type('4111111111111111');
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find()('#cc-exp').type('1299');
-    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find()('#cc-cvc').type('111');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find('#cc-name').type('Test Test');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find('#cc-number').type('4111111111111111');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find('#cc-exp').type('1299');
+    cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find('#cc-cvc').type('111');
 
     cy.get('#place_order').click();
     cy.wait(2000);
