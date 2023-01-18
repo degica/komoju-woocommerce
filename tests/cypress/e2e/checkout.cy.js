@@ -8,7 +8,6 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.installKomoju();
   })
 
-  /*
   it('lets me make a payment using the KOMOJU gateway', () => {
     cy.setupKomoju();
     cy.contains('Payments').click();
@@ -27,7 +26,6 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.location('pathname').should('include', '/sessions/');
     cy.contains('Select Payment Method').should('exist');
   })
-  */
 
   it('lets me make a payment using the specialized konbini gateway', () => {
     cy.setupKomoju(['konbini', 'credit_card']);
