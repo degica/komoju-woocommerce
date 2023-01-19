@@ -47,7 +47,9 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.get('komoju-fields[payment-type="konbini"] iframe').iframe().find('[value="family-mart"]').click();
 
     cy.get('#place_order').click();
-    cy.contains('How to make a payment at Family Mart', { timeout: 8000 }).should('be.visible');
+
+    // It can take a crazy long time to reach KOMOJU from here...
+    cy.contains('How to make a payment at Family Mart', { timeout: 20000 }).should('be.visible');
     cy.location('pathname').should('include', '/sessions/');
     cy.contains('Return to').click();
     cy.contains('Thank you. Your order has been received.').should('be.visible');
