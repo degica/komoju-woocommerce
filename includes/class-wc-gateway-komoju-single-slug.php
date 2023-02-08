@@ -163,6 +163,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
             publishable-key="<?php echo esc_attr($this->publishableKey); ?>"
             session="<?php echo esc_attr(json_encode($checkout_session)); ?>"
             payment-type="<?php echo esc_attr($this->payment_method['type_slug']); ?>"
+            style="display: block"
         >
         </komoju-fields>
         <?php
