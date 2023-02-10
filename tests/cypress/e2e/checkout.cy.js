@@ -81,6 +81,26 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.contains('Thank you. Your order has been received.').should('be.visible');
   })
 
+  it('lets me use the specialized WebMoney gateway, despite it being unsupported by Fields', () => {
+    cy.setupKomoju(['konbini', 'web_money']);
+    cy.contains('Payments').click();
+    cy.enablePaymentGateway('komoju_web_money');
+    cy.goToStore();
+    cy.contains('Add to cart').click();
+    cy.contains('Cart').click();
+    cy.contains('Proceed to checkout').click();
+    cy.fillInAddress();
+
+    cy.get('label[for="payment_method_komoju_web_money"]').click();
+    cy.get('komoju-fields[payment-type="web_money"]').should('be.visible');
+    cy.get('komoju-fields[payment-type="web_money"] iframe').iframe().find('komoju-host').should('exist');
+    cy.wait(2000);
+    cy.get('#place_order').click();
+    cy.wait(2000);
+    cy.contains('WebMoney Details').should('be.visible');
+    cy.location('pathname').should('include', '/sessions/');
+  });
+
   it('lets me turn checkout icons on and off', () => {
     cy.setupKomoju(['konbini', 'credit_card']);
     cy.contains('Payments').click();

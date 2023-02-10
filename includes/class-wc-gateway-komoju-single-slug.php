@@ -138,10 +138,6 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         if ($this->get_option('inlineFields') !== 'yes') {
             return false;
         }
-        // Right now only credit card and konbini support inline fields.
-        if ($slug != 'credit_card' && $slug != 'konbini') {
-            return false;
-        }
         // We can't use the komoju-fields library without a publishable key.
         if (!$this->publishableKey) {
             return false;
@@ -156,16 +152,29 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         static $checkout_session;
         if (is_null($checkout_session)) {
             $checkout_session = $this->create_session_for_fields();
-        } ?>
+        }
+        $payment_type = $this->payment_method['type_slug']; ?>
         <komoju-fields
             token name="komoju_payment_token"
             komoju-api="<?php echo KomojuApi::endpoint(); ?>"
             publishable-key="<?php echo esc_attr($this->publishableKey); ?>"
             session="<?php echo esc_attr(json_encode($checkout_session)); ?>"
-            payment-type="<?php echo esc_attr($this->payment_method['type_slug']); ?>"
+            payment-type="<?php echo esc_attr($payment_type); ?>"
             style="display: block"
         >
         </komoju-fields>
+        <script>
+            (() => {
+                const fields = document.querySelector('komoju-fields[payment-type="<?php echo esc_attr($payment_type); ?>"]');
+                fields.addEventListener('komoju-error', event => {
+                    // Missing parameter errors likely mean we cannot use tokens for this payment method, so we will just
+                    // submit the form (thus navigating to session page) in such cases.
+                    if (event.detail.error?.code !== 'missing_parameter') return;
+                    event.preventDefault();
+                    fields.submitParentForm();
+                });
+            })();
+        </script>
         <?php
     }
 
