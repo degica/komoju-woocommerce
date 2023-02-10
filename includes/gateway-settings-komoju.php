@@ -35,4 +35,11 @@ return [
         'default'     => 'no',
         'desc_tip'    => true,
     ],
+    'inlineFields' => [
+        'title'       => __('Inline payment fields', 'komoju-woocommerce'),
+        'type'        => 'checkbox',
+        'description' => __('If checked, this payment method will show fields directly in the checkout page (if supported).', 'komoju-woocommerce'),
+        'default'     => 'yes',
+        'desc_tip'    => true,
+    ],
 ];

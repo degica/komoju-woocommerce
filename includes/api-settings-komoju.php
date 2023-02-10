@@ -24,6 +24,14 @@ return [
         'desc_tip'    => true,
     ],
     [
+        'id'          => 'komoju_woocommerce_publishable_key',
+        'placeholder' => 'pk_live_000000000000000000000000',
+        'title'       => __('Publishable Key from Komoju', 'komoju-woocommerce'),
+        'type'        => 'text',
+        'default'     => WC_Gateway_Komoju::get_legacy_setting('publishableKey'),
+        'desc_tip'    => true,
+    ],
+    [
         'id'          => 'komoju_woocommerce_webhook_secret',
         'placeholder' => __('Please enter your Komoju Webhook Secret Token', 'komoju-woocommerce'),
         'title'       => __('Webhook Secret Token', 'komoju-woocommerce'),
@@ -60,6 +68,12 @@ return [
         'title'       => __('KOMOJU Endpoint', 'komoju-woocommerce'),
         'type'        => 'komoju_endpoint',
         'default'     => KomojuApi::defaultEndpoint(),
+    ],
+    [
+        'id'          => 'komoju_woocommerce_fields_url',
+        'title'       => __('KOMOJU Fields script URL', 'komoju-woocommerce'),
+        'type'        => 'komoju_endpoint',
+        'default'     => 'https://multipay.komoju.com/fields.js',
     ],
     [
         'id'          => 'komoju_woocommerce_waf_staging_token',

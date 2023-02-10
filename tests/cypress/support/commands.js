@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -71,51 +73,18 @@ Cypress.Commands.add('installWooCommerce', () => {
     }
 
     cy.get('tr[data-slug="woocommerce"]').contains('Activate').click();
-
-    // Unfortunately it seems that WC has an a/b test baked into their install
-    // wizard that *sometimes* asks if you want to try the new onboarding flow
-    // that automatically adds "jetpack". This unfortunately means we must
-    // branch again to click the 'continue with old wizard' button whenever
-    // the modal pops up.
     cy.wait(1000);
-    cy.window().then(win => {
-      for (const a of win.document.querySelectorAll('a')) {
-        if (a.textContent.includes('Continue with the old setup wizard')) {
-          cy.contains('Continue with the old setup wizard').click();
-        }
-      }
 
-      cy.get('#select2-store_country-container').click();
-      cy.get('.select2-search__field').type('Japan{enter}');
-      cy.get('#store_address').type('1234 abc st');
-      cy.get('#store_city').type('Kichijoji');
-      cy.get('[aria-labelledby="select2-store_state-container"]').click();
-      cy.get('.select2-search__field').type('Tokyo{enter}');
-      cy.get('#store_postcode').type('181-0004');
-      cy.contains("Let's go!").click();
-      cy.contains('Continue').click();
-
-      cy.get('.stripe-logo .wc-wizard-service-toggle').click();
-      cy.contains('Continue').click();
-
-      cy.get('[name="shipping_zones[domestic][flat_rate][cost]"]').type('100');
-      cy.get('[name="shipping_zones[intl][flat_rate][cost]"]').type('250');
-      cy.contains('Continue').click();
-
-      cy.contains('Skip this step').click();
-      cy.contains('Skip this step').click();
-      cy.visit('/wp-admin/edit.php?post_type=product&page=product_importer');
-
-      cy.get('#upload').selectFile({
-        contents: Cypress.Buffer.from('ID,Type,SKU,Name,Published,"Is featured?","Visibility in catalog","Short description",Description,"Date sale price starts","Date sale price ends","Tax status","Tax class","In stock?",Stock,"Low stock amount","Backorders allowed?","Sold individually?","Weight (kg)","Length (cm)","Width (cm)","Height (cm)","Allow customer reviews?","Purchase note","Sale price","Regular price",Categories,Tags,"Shipping class",Images,"Download limit","Download expiry days",Parent,"Grouped products",Upsells,Cross-sells,"External URL","Button text",Position\n10,simple,komoju-sticker,"KOMOJU Sticker",1,0,visible,,"The best sticker around",,,taxable,,1,,,0,0,,,,,1,,,5000,Uncategorized,,,,,,,,,,,,0'
-        ),
-        fileName: 'example-product.csv',
-        mimeType: 'text/csv'
-      });
-      cy.contains('Continue').click();
-      cy.contains('Run the importer').click();
-      cy.contains('Import complete! 1 product imported').should('exist');
+    cy.visit('/wp-admin/edit.php?post_type=product&page=product_importer');
+    cy.get('#upload').selectFile({
+      contents: Cypress.Buffer.from('ID,Type,SKU,Name,Published,"Is featured?","Visibility in catalog","Short description",Description,"Date sale price starts","Date sale price ends","Tax status","Tax class","In stock?",Stock,"Low stock amount","Backorders allowed?","Sold individually?","Weight (kg)","Length (cm)","Width (cm)","Height (cm)","Allow customer reviews?","Purchase note","Sale price","Regular price",Categories,Tags,"Shipping class",Images,"Download limit","Download expiry days",Parent,"Grouped products",Upsells,Cross-sells,"External URL","Button text",Position\n10,simple,komoju-sticker,"KOMOJU Sticker",1,0,visible,,"The best sticker around",,,taxable,,1,,,0,0,,,,,1,,,12,Uncategorized,,,,,,,,,,,,0'
+      ),
+      fileName: 'example-product.csv',
+      mimeType: 'text/csv'
     });
+    cy.contains('Continue').click();
+    cy.contains('Run the importer').click();
+    cy.contains('Import complete! 1 product imported').should('exist');
   });
 });
 
@@ -132,10 +101,20 @@ Cypress.Commands.add('installKomoju', () => {
   });
 });
 
-Cypress.Commands.add('setupKomoju', (paymentTypes = [], secretKey = 'degica-mart-test') => {
+Cypress.Commands.add('setupKomoju', (
+  paymentTypes = [],
+  secretKey = 'degica-mart-test',
+  publishableKey = 'pk_d6acce1f17e4468c30833b666d9006f100e9fa8c'
+) => {
   cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
   cy.get('#komoju_woocommerce_secret_key').type('{selectAll}').type(secretKey);
+  cy.get('#komoju_woocommerce_publishable_key').type('{selectAll}').type(publishableKey);
+  cy.get('.komoju-endpoint-komoju_woocommerce_fields_url').then($element => {
+    const $edit = $element.find('.komoju-endpoint-edit');
+    if ($edit.length > 0) { return cy.wrap($edit).click(); }
+  });
+  cy.get('#komoju_woocommerce_fields_url').type('{selectAll}').type('https://multipay-staging.test.komoju.com/fields.js');
   cy.contains('Save changes').click();
 
   cy.contains('Payment methods').click();
@@ -168,8 +147,34 @@ Cypress.Commands.add('goToStore', () => {
 Cypress.Commands.add('fillInAddress', () => {
   cy.get('#billing_last_name').type('{selectAll}Johnson');
   cy.get('#billing_first_name').type('{selectAll}Test');
-  cy.get('#billing_postcode').type('{selectAll}181-0004');
+  cy.get('#billing_postcode').type('{selectAll}48103');
   cy.get('#billing_city').type('{selectAll}Musashino');
   cy.get('#billing_address_1').type('{selectAll}a');
   cy.get('#billing_phone').type('{selectAll}123123213213213');
+
+  // I cannot for the life of me figure out how to safely wait for WC to finish
+  // re-generating the payment fields. If I do anything at all here, Cypress complains
+  // about elements not being mounted, not existing, etc.
+  cy.wait(2000);
+  cy.get('.blockOverlay').should('not.exist');
 });
+
+Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
+  // get the iframe > document > body
+  // and retry until the body element is not empty
+  Cypress.log({
+    name: 'iframe',
+    consoleProps() {
+      return {
+        iframe: $iframe,
+      };
+    },
+  });
+
+  return cy.wrap($iframe)
+  .its('0.contentDocument.body').should('not.be.empty')
+  // wraps "body" DOM element to allow
+  // chaining more Cypress commands, like ".find(...)"
+  // https://on.cypress.io/wrap
+  .then(cy.wrap)
+})

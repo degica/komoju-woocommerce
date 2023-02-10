@@ -80,7 +80,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             do_action('valid-komoju-standard-ipn-request', $webhookEvent);
             exit;
         }
-        wp_die('Komoju IPN Request Failure', 'Komoju IPN', ['response' => 500]);
+        wp_die('Failed to verify KOMOJU authenticity', 'Komoju IPN', ['response' => 401]);
     }
 
     public function quick_setup($post)
@@ -95,6 +95,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         }
 
         update_option('komoju_woocommerce_secret_key', $post['secret_key']);
+        update_option('komoju_woocommerce_publishable_key', $post['publishable_key']);
         update_option('komoju_woocommerce_webhook_secret', $post['webhook_secret']);
         delete_option('komoju_woocommerce_nonce');
 

@@ -48,6 +48,34 @@ function woocommerce_komoju_init()
         return $settings;
     }
 
+    /**
+     * Add the KOMOJU Fields JS
+     **/
+    function woocommerce_komoju_load_scripts()
+    {
+        if (!is_checkout()) {
+            return;
+        }
+
+        $komoju_fields_js = get_option('komoju_woocommerce_fields_url');
+        if (!$komoju_fields_js) {
+            $komoju_fields_js = 'https://multipay.komoju.com/fields.js';
+        }
+
+        wp_enqueue_script('komoju-fields', $komoju_fields_js);
+    }
+    function woocommerce_komoju_load_script_as_module($tag, $handle, $src)
+    {
+        if ($handle !== 'komoju-fields') {
+            return $tag;
+        }
+
+        return '<script type="module" src="' . esc_attr($src) . '"></script>';
+    }
+
     add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
     add_filter('woocommerce_get_settings_pages', 'woocommerce_add_komoju_settings_page');
+
+    add_action('wp_enqueue_scripts', 'woocommerce_komoju_load_scripts');
+    add_filter('script_loader_tag', 'woocommerce_komoju_load_script_as_module', 10, 3);
 }

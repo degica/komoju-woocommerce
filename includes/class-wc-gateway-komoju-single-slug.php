@@ -16,9 +16,10 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
     {
         $slug = $payment_method['type_slug'];
 
+        $this->publishableKey = $this->get_option_compat('publishable_key', 'publishable_key');
         $this->payment_method = $payment_method;
         $this->id             = 'komoju_' . $slug;
-        $this->has_fields     = false;
+        $this->has_fields     = $this->should_use_inline_fields($slug);
         $this->method_title   = __('Komoju', 'komoju-woocommerce') . ' - ' . $this->default_title();
 
         if ($this->get_option('showIcon') == 'yes') {
@@ -54,6 +55,11 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         }
 
         parent::__construct();
+
+        $this->method_description = sprintf(
+            __('%s payments powered by KOMOJU', 'komoju-woocommerce'),
+            $this->default_title()
+        );
     }
 
     /**
@@ -103,19 +109,96 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         }
     }
 
+    /**
+     * Create incomplete session for rendering <komoju-fields>
+     */
+    public function create_session_for_fields()
+    {
+        $komoju_api     = $this->komoju_api;
+        $session_params = [
+            'amount'         => $this->get_order_total(),
+            'currency'       => get_woocommerce_currency(),
+            'default_locale' => self::get_locale_or_fallback(),
+            'metadata'       => [
+                'woocommerce_note' => 'This session is only for rendering inline fields, and will not be completed.',
+            ],
+        ];
+
+        return $komoju_api->createSession($session_params);
+    }
+
     public function validate_fields()
     {
         return true;
     }
 
+    public function should_use_inline_fields($slug)
+    {
+        // Merchants can disable inline payment fields via gateway settings.
+        if ($this->get_option('inlineFields') !== 'yes') {
+            return false;
+        }
+        // We can't use the komoju-fields library without a publishable key.
+        if (!$this->publishableKey) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function payment_fields()
     {
-        // No fields!
+        // We lazily fetch one session to be shared by all payment methods with dynamic fields.
+        static $checkout_session;
+        if (is_null($checkout_session)) {
+            $checkout_session = $this->create_session_for_fields();
+        }
+        $payment_type = $this->payment_method['type_slug']; ?>
+        <komoju-fields
+            token name="komoju_payment_token"
+            komoju-api="<?php echo KomojuApi::endpoint(); ?>"
+            publishable-key="<?php echo esc_attr($this->publishableKey); ?>"
+            session="<?php echo esc_attr(json_encode($checkout_session)); ?>"
+            payment-type="<?php echo esc_attr($payment_type); ?>"
+            style="display: block"
+        >
+        </komoju-fields>
+        <script>
+            (() => {
+                const fields = document.querySelector('komoju-fields[payment-type="<?php echo esc_attr($payment_type); ?>"]');
+                fields.addEventListener('komoju-error', event => {
+                    // Missing parameter errors likely mean we cannot use tokens for this payment method, so we will just
+                    // submit the form (thus navigating to session page) in such cases.
+                    if (event.detail.error?.code !== 'missing_parameter') return;
+                    event.preventDefault();
+                    fields.submitParentForm();
+                });
+            })();
+        </script>
+        <?php
     }
 
     public function process_payment($order_id, $payment_type = null)
     {
-        return parent::process_payment($order_id, $this->payment_method['type_slug']);
+        // If we have a token from <komoju-fields>, we can process payment immediately.
+        // Otherwise we will redirect to the KOMOJU hosted page.
+        $token = sanitize_text_field($_POST['komoju_payment_token']);
+
+        if (!$token || $token === '') {
+            return parent::process_payment($order_id, $this->payment_method['type_slug']);
+        }
+
+        $session = $this->create_session_for_order($order_id, $payment_type);
+        $result  = $this->komoju_api->paySession($session->id, ['payment_details' => $token]);
+
+        if ($result->redirect_url) {
+            return [
+                'result'   => 'success',
+                'redirect' => $result->redirect_url,
+            ];
+        } else {
+            wc_add_notice(__('Payment error:', 'woothemes') . $result->error, 'error');
+        }
     }
 
     public function default_title()

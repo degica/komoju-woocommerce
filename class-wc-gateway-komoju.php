@@ -34,9 +34,8 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     public function __construct()
     {
         $this->id                   = $this->id ? $this->id : 'komoju';
-        $this->has_fields           = gettype($this->has_fields) == 'boolean' ? $this->has_fields : true;
         $this->method_title         = $this->method_title ? $this->method_title : __('Komoju', 'komoju-woocommerce');
-        $this->method_description   = __('Allows payments by Komoju, dedicated to Japanese online and offline payment gateways.', 'komoju-woocommerce');
+        $this->method_description   = __("Includes all Komoju payment methods. Not recommended, since the name 'KOMOJU' is not recognized by most customers and refunds through WooCommerce are not supported.", 'komoju-woocommerce');
         $this->debug                = 'yes' === $this->get_option_compat('debug_log', 'debug');
         $this->invoice_prefix       = $this->get_option_compat('invoice_prefix', 'invoice_prefix');
         $this->secretKey            = $this->get_option_compat('secret_key', 'secretKey');
@@ -123,6 +122,16 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
      */
     public function process_payment($order_id, $payment_type = null)
     {
+        $session = $this->create_session_for_order($order_id, $payment_type);
+
+        return [
+            'result'   => 'success',
+            'redirect' => $session->session_url,
+        ];
+    }
+
+    public function create_session_for_order($order_id, $payment_type = null)
+    {
         include_once 'includes/class-wc-gateway-komoju-request.php';
         $order      = wc_get_order($order_id);
         $return_url = apply_filters(
@@ -131,10 +140,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             $order_id,
             $payment_type
         );
-
-        if ($payment_type === null) {
-            $payment_type = sanitize_text_field($_POST['komoju-method']);
-        }
 
         // construct line items
         $line_items = [];
@@ -188,7 +193,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
             'return_url'     => $return_url,
             'default_locale' => self::get_locale_or_fallback(),
             'email'          => $email,
-            'payment_types'  => [$payment_type],
             'payment_data'   => [
                 'external_order_num' => $this->external_order_num($order),
                 'billing_address'    => $billing_address,
@@ -200,26 +204,17 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 'woocommerce_order_id' => $order->get_order_number(),
             ],
         ];
+        if ($payment_type) {
+            $session_params['payment_types'] = [$payment_type];
+        }
         $remove_nulls = function ($v) { return !is_null($v); };
         $session_params['payment_data'] = array_filter(
             $session_params['payment_data'],
             $remove_nulls
         );
         $session_params = array_filter($session_params, $remove_nulls);
-        $komoju_request = $komoju_api->createSession($session_params);
 
-        return [
-            'result'   => 'success',
-            'redirect' => $komoju_request->session_url,
-        ];
-    }
-
-    /**
-     * Payment form on checkout page
-     */
-    public function payment_fields()
-    {
-        $this->komoju_method_form();
+        return $komoju_api->createSession($session_params);
     }
 
     /**
@@ -234,80 +229,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         return $this->invoice_prefix . $order->get_order_number() . '-' . $suffix;
     }
 
-    /**
-     * Form to choose the payment method
-     */
-    private function komoju_method_form($args = [], $fields = [])
-    {
-        $default_args = [
-            'fields_have_names' => true,
-        ];
-
-        $args = wp_parse_args($args, apply_filters('woocommerce_komoju_method_form_args', $default_args, $this->id));
-
-        $data          = $this->get_input_field_data();
-        $method_fields = ['method-field' => $data];
-        $fields        = wp_parse_args($fields, apply_filters('woocommerce_komoju_method_form_fields', $method_fields, $this->id)); ?>
-        <fieldset id="<?php echo $this->id; ?>-cc-form">
-          <?php do_action('woocommerce_komoju_method_form_start', $this->id); ?>
-          <?php
-            foreach ($fields as $field) {
-                echo $field;
-            } ?>
-          <?php do_action('woocommerce_komoju_method_form_end', $this->id); ?>
-          <div class="clear"></div>
-        </fieldset>
-        <?php
-    }
-
-    private function get_input_field_data()
-    {
-        $komoju_client = $this->komoju_api;
-
-        try {
-            $methods       = apply_filters('woocommerce_komoju_payment_methods', $komoju_client->paymentMethods());
-            $page_locale   = $this->get_locale_or_fallback();
-            $name_property = "name_{$page_locale}";
-
-            $field_data = '
-                <p
-                  class="
-                    form-row
-                    form-row-wide
-                    validate-required
-                    woocommerce-validated"
-                >
-                ' . __('Method of payment:', 'komoju-woocommerce') . '
-                  <abbr
-                    class="required"
-                    title="required"
-                  >*
-                  </abbr>';
-            foreach ($methods as $method) {
-                $field_data .= '
-                  <label>
-                    <input
-                      id="' . esc_attr($this->id) . '-method"
-                      class="input-radio"
-                      type="radio"
-                      value="' . esc_attr($method['type_slug']) . '"
-                      name="' . esc_attr($this->id) . '-method"
-                    />
-                    ' . ($method[$name_property]) . '
-                    <br/>
-                  </label>';
-            }
-            $field_data .= '</p>';
-        } catch (KomojuExceptionBadServer | KomojuExceptionBadJson $e) {
-            $message = $e->getMessage();
-            $this->log($message);
-
-            $field_data = '<p>' . __('Encountered an issue communicating with KOMOJU. Please wait a moment and try again.', 'komoju-woocommerce') . '</p>';
-        }
-
-        return $field_data;
-    }
-
     public static function get_locale_or_fallback()
     {
         $fallback_lang   = 'en';
@@ -320,20 +241,6 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         } else {
             return $fallback_lang;
         }
-    }
-
-    /**
-     * Validate the payment form (for custom fields added)
-     */
-    public function validate_fields()
-    {
-        if (!isset($_POST['komoju-method'])) {
-            wc_add_notice(__('Please select a payment method (how you want to pay)', 'komoju-woocommerce'), 'error');
-
-            return false;
-        }
-
-        return true;
     }
 
     /**

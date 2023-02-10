@@ -1,4 +1,4 @@
-FROM wordpress:latest
+FROM wordpress:6.1.1
 
 ARG woocommerce_version
 

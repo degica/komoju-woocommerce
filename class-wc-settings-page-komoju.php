@@ -112,13 +112,15 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     {
         $value     = isset($setting['value']) ? $setting['value'] : $setting['default'];
         $untainted = $value === $setting['default']; ?>
+<tr valign="top">
 <th class="titledesc" scope="row">
     <label for="<?php echo esc_attr($setting['id']); ?>"><?php echo $setting['title']; ?></label>
 </th>
-<td class="forminp forminp-text komoju-endpoint-field">
+<td class="forminp forminp-text komoju-endpoint-field komoju-endpoint-<?php echo esc_attr($setting['id']); ?>">
     <input id="<?php echo esc_attr($setting['id']); ?>"
            name="<?php echo esc_attr($setting['id']); ?>"
            value="<?php echo esc_attr($value); ?>"
+           data-default="<?php echo esc_attr($setting['default']); ?>"
            type="text"
            <?php if ($untainted) {
             echo 'disabled';
@@ -128,25 +130,35 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     </p>
     <div>
         <?php if ($untainted) { ?>
-            <button type="button" onclick="komoju_woocommerce_enable_endpoint_field(event)">
+            <button
+                type="button"
+                class="komoju-endpoint-edit"
+                data-target="<?php echo esc_attr($setting['id']); ?>"
+                onclick="komoju_woocommerce_enable_endpoint_field(event)">
                 <?php echo __('Edit', 'komoju-woocommerce'); ?>
             </button>
         <?php } ?>
 
-        <button type="button" onclick="komoju_woocommerce_reset_endpoint_field(event)">
+        <button
+            type="button"
+            class="komoju-endpoint-reset"
+            data-target="<?php echo esc_attr($setting['id']); ?>"
+            onclick="komoju_woocommerce_reset_endpoint_field(event)">
             <?php echo __('Reset', 'komoju-woocommerce'); ?>
         </button>
     </div>
 
     <script>
         function komoju_woocommerce_enable_endpoint_field(event) {
-            const input = document.getElementById("<?php echo esc_js($setting['id']); ?>");
+            const button = event.target;
+            const input = document.getElementById(button.dataset.target);
             input.disabled = false;
             event.target.remove();
         }
         function komoju_woocommerce_reset_endpoint_field(event) {
-            const input = document.getElementById("<?php echo esc_js($setting['id']); ?>");
-            input.value = "<?php echo esc_js($setting['default']); ?>";
+            const button = event.target;
+            const input = document.getElementById(button.dataset.target);
+            input.value = input.dataset.default;
         }
     </script>
 
@@ -165,6 +177,7 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         }
     </style>
 </td>
+</tr>
 <?php
     }
 
