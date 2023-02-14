@@ -237,3 +237,7 @@ Change credit card icon to show brands.
 = 2.7.1 =
 Make DCC payments validate order amount against session instead of payment.
 Request dynamic credit card icon from KOMOJU so that only supported brands are shown.
+
+= 3.0.0 =
+New inline fields support. Common payment methods like credit card and konbini no longer redirect offsite for input.
+The catch-all "KOMOJU" gateway now instead of radio buttons just relies on KOMOJU's own payment method selector.
