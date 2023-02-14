@@ -116,7 +116,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
     {
         $komoju_api     = $this->komoju_api;
         $session_params = [
-            'amount'         => $this->get_order_total(),
+            'amount'         => self::to_cents($this->get_order_total(), $currency),
             'currency'       => get_woocommerce_currency(),
             'default_locale' => self::get_locale_or_fallback(),
             'metadata'       => [
