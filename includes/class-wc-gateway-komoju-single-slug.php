@@ -115,9 +115,10 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
     public function create_session_for_fields()
     {
         $komoju_api     = $this->komoju_api;
+        $currency       = get_woocommerce_currency();
         $session_params = [
             'amount'         => self::to_cents($this->get_order_total(), $currency),
-            'currency'       => get_woocommerce_currency(),
+            'currency'       => $currency,
             'default_locale' => self::get_locale_or_fallback(),
             'metadata'       => [
                 'woocommerce_note' => 'This session is only for rendering inline fields, and will not be completed.',
