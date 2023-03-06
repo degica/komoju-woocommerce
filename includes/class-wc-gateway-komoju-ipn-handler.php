@@ -224,6 +224,13 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
      */
     protected function payment_status_cancelled($order, $webhookEvent)
     {
+        $transaction_id     = $order->get_transaction_id();
+        $external_order_num = $webhookEvent->external_order_num();
+        if (!empty($transaction_id) && $transaction_id != $webhookEvent->external_order_num()) {
+            WC_Gateway_Komoju::log('Aborting, transaction_id: ' . $transaction_id . ' and external_order_num: ' . $external_order_num . ' do not match.');
+            exit;
+        }
+
         $order->update_status('cancelled', sprintf(__('Payment %s via IPN.', 'komoju-woocommerce'), wc_clean($webhookEvent->status())));
     }
 
