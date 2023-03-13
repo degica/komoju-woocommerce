@@ -241,3 +241,6 @@ Request dynamic credit card icon from KOMOJU so that only supported brands are s
 = 3.0.0 =
 New inline fields support. Common payment methods like credit card and konbini no longer redirect offsite for input.
 The catch-all "KOMOJU" gateway now instead of radio buttons just relies on KOMOJU's own payment method selector.
+
+= 3.0.1 =
+Fix bug with multiple payments per order where even completed orders would be cancelled on payment cancel.
