@@ -244,3 +244,6 @@ The catch-all "KOMOJU" gateway now instead of radio buttons just relies on KOMOJ
 
 = 3.0.1 =
 Fix bug with multiple payments per order where even completed orders would be cancelled on payment cancel.
+
+= 3.0.2 =
+Fix a bug that redirected users to the wrong page when clicking on the KOMOJU payment link.
