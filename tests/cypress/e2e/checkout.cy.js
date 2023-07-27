@@ -24,7 +24,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.wait(1500);
     cy.get('#place_order').click();
     cy.location('pathname').should('include', '/sessions/');
-    cy.contains('Select Payment Method').should('exist');
+    cy.contains('Select Payment Method', {matchCase: false }).should('exist');
   })
 
   it('lets me make a payment using the specialized konbini gateway', () => {
@@ -49,7 +49,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.get('#place_order').click();
 
     // It can take a crazy long time to reach KOMOJU from here...
-    cy.contains('How to make a payment at Family Mart', { timeout: 20000 }).should('be.visible');
+    cy.contains('How to make a payment at Family Mart', { matchCase: false, timeout: 20000 }).should('be.visible');
     cy.location('pathname').should('include', '/sessions/');
     cy.contains('Return to').click();
     cy.contains('Thank you. Your order has been received.').should('be.visible');
@@ -97,7 +97,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.wait(2000);
     cy.get('#place_order').click();
     cy.wait(2000);
-    cy.contains('WebMoney Details').should('be.visible');
+    cy.contains('WebMoney Details', { matchCase: false }).should('be.visible');
     cy.location('pathname').should('include', '/sessions/');
   });
 

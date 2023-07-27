@@ -103,8 +103,9 @@ Cypress.Commands.add('installKomoju', () => {
 
 Cypress.Commands.add('setupKomoju', (
   paymentTypes = [],
-  secretKey = 'degica-mart-test',
-  publishableKey = 'pk_d6acce1f17e4468c30833b666d9006f100e9fa8c'
+  // fake-mart
+  secretKey = 'sk_27dbcf7af57ad9088b8c95792c6f24d2398e771c',
+  publishableKey = 'pk_c05e982fa446efa4ff740d1f055a45a4e0c21d5f'
 ) => {
   cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
@@ -147,8 +148,10 @@ Cypress.Commands.add('goToStore', () => {
 Cypress.Commands.add('fillInAddress', () => {
   cy.get('#billing_last_name').type('{selectAll}Johnson');
   cy.get('#billing_first_name').type('{selectAll}Test');
-  cy.get('#billing_postcode').type('{selectAll}48103');
+  cy.get('#billing_country').select('JP', {force: true});
+  cy.get('#billing_state').select('JP13', {force: true});
   cy.get('#billing_city').type('{selectAll}Musashino');
+  cy.get('#billing_postcode').type('{selectAll}180-0004');
   cy.get('#billing_address_1').type('{selectAll}a');
   cy.get('#billing_phone').type('{selectAll}123123213213213');
 
