@@ -205,7 +205,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         $this->save_komoju_meta_data($order, $webhookEvent);
 
         if ('captured' === $webhookEvent->status()) {
-            $this->payment_complete($order, (!empty($webhookEvent->external_order_num()) ? wc_clean($webhookEvent->external_order_num()) : ''), __('IPN payment captured', 'komoju-woocommerce'));
+            $this->payment_complete($order, (!empty($webhookEvent->uuid()) ? wc_clean($webhookEvent->uuid()) : ''), __('IPN payment captured', 'komoju-woocommerce'));
 
             if (!empty($webhookEvent->payment_method_fee())) {
                 // log komoju transaction fee
@@ -224,14 +224,40 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
      */
     protected function payment_status_cancelled($order, $webhookEvent)
     {
-        $transaction_id     = $order->get_transaction_id();
-        $external_order_num = $webhookEvent->external_order_num();
-        if (!empty($transaction_id) && $transaction_id != $webhookEvent->external_order_num()) {
+        if (!$this->is_order_cancellable($order)) {
+            $transaction_id     = $order->get_transaction_id();
+            $external_order_num = $webhookEvent->external_order_num();
             WC_Gateway_Komoju::log('Aborting, transaction_id: ' . $transaction_id . ' and external_order_num: ' . $external_order_num . ' do not match.');
             exit;
         }
 
         $order->update_status('cancelled', sprintf(__('Payment %s via IPN.', 'komoju-woocommerce'), wc_clean($webhookEvent->status())));
+    }
+
+    /**
+     * @param WC_Order $order
+     *
+     * @return bool return true if the order is cancellable
+     */
+    protected function is_order_cancellable($order)
+    {
+        $transaction_id = $order->get_transaction_id();
+        if (empty($transaction_id)) {
+            return false;
+        }
+        if ($transaction_id == $webhookEvent->uuid()) {
+            return true;
+        }
+
+        // for backward compatibility
+        // Order Statuses
+        //   - processing: Payment received (paid) and stock has been reduced;
+        //   - Completed — Order fulfilled and complete – requires no further action.
+        //   - Refunded — Refunded by an admin – no further action required.
+        // @see https://woocommerce.com/document/managing-orders/
+        $skippable_statuses = ['completed', 'processing', 'refunded'];
+
+        return $transaction_id == $webhookEvent->external_order_num() && !$order->has_status($skippable_statuses);
     }
 
     /**
