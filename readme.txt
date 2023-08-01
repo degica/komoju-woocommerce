@@ -247,3 +247,7 @@ Fix bug with multiple payments per order where even completed orders would be ca
 
 = 3.0.2 =
 Fix a bug that redirected users to the wrong page when clicking on the KOMOJU payment link.
+
+= 3.0.3 =
+
+Fix bug with multiple payments per order where even completed orders would be cancelled on payment cancel.
