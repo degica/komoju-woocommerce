@@ -251,3 +251,7 @@ Fix a bug that redirected users to the wrong page when clicking on the KOMOJU pa
 = 3.0.3 =
 
 Fix bug with multiple payments per order where even completed orders would be cancelled on payment cancel.
+
+= 3.0.4 =
+
+Update docs for supported WC and WooCommerce versions.

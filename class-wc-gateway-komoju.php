@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
  * @class       WC_Gateway_Komoju
  * @extends     WC_Payment_Gateway
  *
- * @version     3.0.3
+ * @version     3.0.4
  *
  * @author      Komoju
  */
