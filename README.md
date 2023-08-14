@@ -145,7 +145,7 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 ### What versions of WooCommerce is this compatible with?
 
 At the moment, this plugin has been tested and is known to work up to version
-4.0.1. If you are using a later version, please contact us regarding this.
+6.3.1. If you are using a later version, please contact us regarding this.
 
 ### Where can I get more information?
 
