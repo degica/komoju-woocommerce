@@ -181,3 +181,16 @@ Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
   // https://on.cypress.io/wrap
   .then(cy.wrap)
 })
+
+Cypress.Commands.add('createOrder', () => {
+  cy.visit('/wp-admin/post-new.php?post_type=shop_order');
+  cy.get('.button.add-line-item').click();
+  cy.get('.button.add-order-item').click();
+  cy.get('.wc-backbone-modal-main .select2-selection.select2-selection--single').click();
+  cy.get('.select2-search--dropdown .select2-search__field').type('komoju');
+  cy.get('.select2-results__option--highlighted').click();
+  cy.get('#btn-ok').click();
+  cy.get('.calculate-action').click();
+  cy.get('.save_order').click();
+  return cy.get('#post_ID').invoke('val');
+});
