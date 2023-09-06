@@ -152,6 +152,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         $isDevEnv = getenv('WORDPRESS_DEV_ENV');
         if ($isDevEnv) {
             WC_Gateway_Komoju::log('Skipping IPN check in dev env');
+
             return true;
         }
 
@@ -305,7 +306,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         // Only handle full refunds, not partial
         WC_Gateway_Komoju::log('Only handling full refund. Controlling that order total equals amount refunded. Does ' . $amount_in_cents . ' equals ' . $webhookEvent->grand_total() . ' ?');
         if ($amount_in_cents == $webhookEvent->amount_refunded()) {
-            WC_Gateway_Komoju::log('Refunding order: '. $order->get_id());
+            WC_Gateway_Komoju::log('Refunding order: ' . $order->get_id());
             $order->update_status('refunded', sprintf(__('Payment %s via IPN.', 'komoju-woocommerce'), strtolower($webhookEvent->status())));
         }
     }
