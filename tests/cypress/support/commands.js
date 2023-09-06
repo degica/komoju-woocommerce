@@ -77,7 +77,7 @@ Cypress.Commands.add('installWooCommerce', () => {
 
     cy.visit('/wp-admin/edit.php?post_type=product&page=product_importer');
     cy.get('#upload').selectFile({
-      contents: Cypress.Buffer.from('ID,Type,SKU,Name,Published,"Is featured?","Visibility in catalog","Short description",Description,"Date sale price starts","Date sale price ends","Tax status","Tax class","In stock?",Stock,"Low stock amount","Backorders allowed?","Sold individually?","Weight (kg)","Length (cm)","Width (cm)","Height (cm)","Allow customer reviews?","Purchase note","Sale price","Regular price",Categories,Tags,"Shipping class",Images,"Download limit","Download expiry days",Parent,"Grouped products",Upsells,Cross-sells,"External URL","Button text",Position\n10,simple,komoju-sticker,"KOMOJU Sticker",1,0,visible,,"The best sticker around",,,taxable,,1,,,0,0,,,,,1,,,12,Uncategorized,,,,,,,,,,,,0'
+      contents: Cypress.Buffer.from('ID,Type,SKU,Name,Published,"Is featured?","Visibility in catalog","Short description",Description,"Date sale price starts","Date sale price ends","Tax status","Tax class","In stock?",Stock,"Low stock amount","Backorders allowed?","Sold individually?","Weight (kg)","Length (cm)","Width (cm)","Height (cm)","Allow customer reviews?","Purchase note","Sale price","Regular price",Categories,Tags,"Shipping class",Images,"Download limit","Download expiry days",Parent,"Grouped products",Upsells,Cross-sells,"External URL","Button text",Position\n10,simple,komoju-sticker,"KOMOJU Sticker",1,0,visible,,"The best sticker around",,,taxable,,1,,,0,0,,,,,1,,,3338,Uncategorized,,,,,,,,,,,,0'
       ),
       fileName: 'example-product.csv',
       mimeType: 'text/csv'
@@ -181,3 +181,16 @@ Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
   // https://on.cypress.io/wrap
   .then(cy.wrap)
 })
+
+Cypress.Commands.add('createOrder', () => {
+  cy.visit('/wp-admin/post-new.php?post_type=shop_order');
+  cy.get('.button.add-line-item').click();
+  cy.get('.button.add-order-item').click();
+  cy.get('.wc-backbone-modal-main .select2-selection.select2-selection--single').click();
+  cy.get('.select2-search--dropdown .select2-search__field').type('komoju');
+  cy.get('.select2-results__option--highlighted').click();
+  cy.get('#btn-ok').click();
+  cy.get('.calculate-action').click();
+  cy.get('.save_order').click();
+  return cy.get('#post_ID').invoke('val');
+});
