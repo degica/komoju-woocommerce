@@ -149,6 +149,12 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
      */
     public function validate_hmac($requestBody)
     {
+        $isDevEnv = getenv('WORDPRESS_DEV_ENV');
+        if ($isDevEnv) {
+            WC_Gateway_Komoju::log('Skipping IPN check in dev env');
+            return true;
+        }
+
         WC_Gateway_Komoju::log('Checking if IPN response is valid');
 
         $hmacHeader = $_SERVER['HTTP_X_KOMOJU_SIGNATURE'];
