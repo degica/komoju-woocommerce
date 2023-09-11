@@ -151,14 +151,22 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
     {
         WC_Gateway_Komoju::log('Checking if IPN response is valid');
 
+        $isDevEnv = getenv('WORDPRESS_DEV_ENV');
+
         $hmacHeader = $_SERVER['HTTP_X_KOMOJU_SIGNATURE'];
 
         $calcHmac = hash_hmac('sha256', $requestBody, $this->webhookSecretToken);
 
         if ($hmacHeader != $calcHmac) {
-            WC_Gateway_Komoju::log('hmac codes (sent by Komoju / recalculated) don\'t match. Exiting the process...');
+            if ($isDevEnv) {
+                WC_Gateway_Komoju::log('hmac codes (sent by Komoju / recalculated) don\'t match. Continuing the process because it\'s running in dev mode....');
 
-            return false;
+                return true;
+            } else {
+                WC_Gateway_Komoju::log('hmac codes (sent by Komoju / recalculated) don\'t match. Exiting the process...');
+
+                return false;
+            }
         }
 
         return true;
@@ -295,10 +303,11 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
      */
     protected function payment_status_refunded($order, $webhookEvent)
     {
+        $amount_in_cents = WC_Gateway_Komoju::to_cents($order->get_total(), $order->get_currency());
         // Only handle full refunds, not partial
-        WC_Gateway_Komoju::log('Only handling full refund. Controlling that order total equals amount refunded. Does ' . $order->get_total() . ' equals ' . $webhookEvent->grand_total() . ' ?');
-        if ($order->get_total() == ($webhookEvent->amount_refunded())) {
-            // Mark order as refunded
+        WC_Gateway_Komoju::log('Only handling full refund. Controlling that order total equals amount refunded. Does ' . $amount_in_cents . ' equals ' . $webhookEvent->grand_total() . ' ?');
+        if ($amount_in_cents == $webhookEvent->amount_refunded()) {
+            WC_Gateway_Komoju::log('Refunding order: ' . $order->get_id());
             $order->update_status('refunded', sprintf(__('Payment %s via IPN.', 'komoju-woocommerce'), strtolower($webhookEvent->status())));
         }
     }
