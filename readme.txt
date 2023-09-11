@@ -153,52 +153,53 @@ the installation of the module.
 
 == Changelog ==
 
-= 1.0 =
-Initial release for the Wordpress store.
+= 3.0.4 =
+Update docs for supported WC and WooCommerce versions.
 
-= 1.0.1 =
-Fix issue preventing coupon discounts from being applied at checkout.
+= 3.0.3 =
+Fix bug with multiple payments per order where even completed orders would be cancelled on payment cancel.
 
-= 1.1.0 =
-Available payment methods on checkout will now match those available on the user's KOMOJU account.
-Removed settings related to payment methods. Payment Methods should now be managed directly through KOMOJU.
-Removed payment method icons on checkout (To be re-added at a later date)
+= 3.0.2 =
+Fix a bug that redirected users to the wrong page when clicking on the KOMOJU payment link.
 
-= 2.0 =
-Introduced new hosted checkout design
-Added option to use 'on-hold' status for authorized payments
+= 3.0.1 =
+Fix bug with multiple payments per order where even completed orders would be cancelled on payment cancel.
 
-= 2.1.0 =
-Added filter 'woocommerce_komoju_payment_methods' to allow users to change the list of offered payment methods to their users.
+= 3.0.0 =
+New inline fields support. Common payment methods like credit card and konbini no longer redirect offsite for input.
+The catch-all "KOMOJU" gateway now instead of radio buttons just relies on KOMOJU's own payment method selector.
 
-= 2.1.1 =
-Update Plugin Name
+= 2.7.1 =
+Make DCC payments validate order amount against session instead of payment.
+Request dynamic credit card icon from KOMOJU so that only supported brands are shown.
 
-= 2.2.0 =
-Users can now select individual payment methods to be exposed as WooCommerce payment gateways.
-This should provide better compatibility with other plugins that filter or otherwise interact with payment gateways.
+= 2.7.0 =
+Change credit card icon to show brands.
 
-= 2.2.3 =
-Fixed issue with orders that don't have an email address.
+= 2.6.5 =
+Remove additional lingering currency check code.
 
-= 2.2.4 =
-Fixed issue where some stores saw errors on the settings page after filling in their secret key.
+= 2.6.4 =
+Adjust supported versions.
 
-= 2.2.5 =
-Fixed problem where some installs were not generating order IDs correctly.
+= 2.6.3 =
+Make sure payment gateways are always present when plugins are loaded.
+Fix problem where quick setup failed on sites with a path prefix.
 
-= 2.2.6 =
-Fixed issue where new versions were not being registered automatically.
+= 2.6.2 =
+Swap first/last name order when sending to KOMOJU (KOMOJU expects given before family).
 
-= 2.2.7 =
-Fixed issue with stores that don't produce a customer name.
+= 2.6.1 =
+Fix webhooks with currencies that use cents.
 
-= 2.3.0 =
-Introduced quick-setup, removing the need to copy/paste values from KOMOJU.
-Removed currency restriction, allowing the plugin to be used with any store currency.
+= 2.6.0 =
+Optionally perform order completion in the background.
 
-= 2.3.1 =
-Fixed cents conversion problem with currencies that use decimal points.
+= 2.5.0 =
+Add 'komoju_session_return_url' filter.
+
+= 2.4.1 =
+Fixed bug where plugin would ignore locale strings that include a country code.
 
 = 2.4.0 =
 Refunding KOMOJU payments through the WooCommerce dashboard is now supported.
@@ -206,52 +207,49 @@ Added a link to the KOMOJU admin page for orders paid with KOMOJU.
 Clicking "back to merchant" on KOMOJU will now take you to the pay-order page instead of checkout.
 Can now toggle whether or not KOMOJU payment method icons appear.
 
-= 2.4.1 =
-Fixed bug where plugin would ignore locale strings that include a country code.
+= 2.3.1 =
+Fixed cents conversion problem with currencies that use decimal points.
 
-= 2.5.0 =
-Add 'komoju_session_return_url' filter.
+= 2.3.0 =
+Introduced quick-setup, removing the need to copy/paste values from KOMOJU.
+Removed currency restriction, allowing the plugin to be used with any store currency.
 
-= 2.6.0 =
-Optionally perform order completion in the background.
+= 2.2.7 =
+Fixed issue with stores that don't produce a customer name.
 
-= 2.6.1 =
-Fix webhooks with currencies that use cents.
+= 2.2.6 =
+Fixed issue where new versions were not being registered automatically.
 
-= 2.6.2 =
-Swap first/last name order when sending to KOMOJU (KOMOJU expects given before family).
+= 2.2.5 =
+Fixed problem where some installs were not generating order IDs correctly.
 
-= 2.6.3 =
-Make sure payment gateways are always present when plugins are loaded.
-Fix problem where quick setup failed on sites with a path prefix.
+= 2.2.4 =
+Fixed issue where some stores saw errors on the settings page after filling in their secret key.
 
-= 2.6.4 =
-Adjust supported versions.
+= 2.2.3 =
+Fixed issue with orders that don't have an email address.
 
-= 2.6.5 =
-Remove additional lingering currency check code.
+= 2.2.0 =
+Users can now select individual payment methods to be exposed as WooCommerce payment gateways.
+This should provide better compatibility with other plugins that filter or otherwise interact with payment gateways.
 
-= 2.7.0 =
-Change credit card icon to show brands.
+= 2.1.1 =
+Update Plugin Name
 
-= 2.7.1 =
-Make DCC payments validate order amount against session instead of payment.
-Request dynamic credit card icon from KOMOJU so that only supported brands are shown.
+= 2.1.0 =
+Added filter 'woocommerce_komoju_payment_methods' to allow users to change the list of offered payment methods to their users.
 
-= 3.0.0 =
-New inline fields support. Common payment methods like credit card and konbini no longer redirect offsite for input.
-The catch-all "KOMOJU" gateway now instead of radio buttons just relies on KOMOJU's own payment method selector.
+= 2.0 =
+Introduced new hosted checkout design
+Added option to use 'on-hold' status for authorized payments.
 
-= 3.0.1 =
-Fix bug with multiple payments per order where even completed orders would be cancelled on payment cancel.
+= 1.1.0 =
+Available payment methods on checkout will now match those available on the user's KOMOJU account.
+Removed settings related to payment methods. Payment Methods should now be managed directly through KOMOJU.
+Removed payment method icons on checkout (To be re-added at a later date)
 
-= 3.0.2 =
-Fix a bug that redirected users to the wrong page when clicking on the KOMOJU payment link.
+= 1.0.1 =
+Fix issue preventing coupon discounts from being applied at checkout.
 
-= 3.0.3 =
-
-Fix bug with multiple payments per order where even completed orders would be cancelled on payment cancel.
-
-= 3.0.4 =
-
-Update docs for supported WC and WooCommerce versions.
+= 1.0 =
+Initial release for the Wordpress store.
