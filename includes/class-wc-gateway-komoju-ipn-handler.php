@@ -149,23 +149,24 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
      */
     public function validate_hmac($requestBody)
     {
-        $isDevEnv = getenv('WORDPRESS_DEV_ENV');
-        if ($isDevEnv) {
-            WC_Gateway_Komoju::log('Skipping IPN check in dev env');
-
-            return true;
-        }
-
         WC_Gateway_Komoju::log('Checking if IPN response is valid');
+
+        $isDevEnv = getenv('WORDPRESS_DEV_ENV');
 
         $hmacHeader = $_SERVER['HTTP_X_KOMOJU_SIGNATURE'];
 
         $calcHmac = hash_hmac('sha256', $requestBody, $this->webhookSecretToken);
 
         if ($hmacHeader != $calcHmac) {
-            WC_Gateway_Komoju::log('hmac codes (sent by Komoju / recalculated) don\'t match. Exiting the process...');
+            if ($isDevEnv) {
+                WC_Gateway_Komoju::log('hmac codes (sent by Komoju / recalculated) don\'t match. Continuing the process because it\'s running in dev mode....');
 
-            return false;
+                return true;
+            } else {
+                WC_Gateway_Komoju::log('hmac codes (sent by Komoju / recalculated) don\'t match. Exiting the process...');
+
+                return false;
+            }
         }
 
         return true;
