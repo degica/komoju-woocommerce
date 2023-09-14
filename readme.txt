@@ -153,6 +153,9 @@ the installation of the module.
 
 == Changelog ==
 
+= 3.0.5 =
+Fix occasional instances of not correctly marking an order as refunded.
+
 = 3.0.4 =
 Update docs for supported WC and WooCommerce versions.
 
