@@ -64,14 +64,12 @@ We currently accept the following payment methods:
 
 - Doku
 - OVO
-- eNETS
 - GrabPay
 - Dragonpay
 - FPX
 
 **Europe**
 
-- iDEAL
 - Bancontact
 - Multibanco
 - EPS
