@@ -173,7 +173,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         }
 
         $shipping_address = null;
-        $ship_to_billing = get_option('woocommerce_ship_to_destination') === 'billing';
+        $ship_to_billing  = get_option('woocommerce_ship_to_destination') === 'billing';
 
         if ($order->has_shipping_address()) {
             $shipping_address = [
