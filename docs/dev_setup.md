@@ -17,7 +17,7 @@ This will download the docker images and WordPress plugins. Once the initial set
 Because the Komoju plugin uses webhooks to receive notifications once the payment is complete the wordpress instance will need to be accessible to the internet. This can be done with [ngrok](https://ngrok.com/):
 
 ```
-ngrok http -host-header=rewrite http://127.0.0.1:8000
+ngrok http --host-header=rewrite http://127.0.0.1:8000
 ```
 
 **Note:** Accessing the website using the ngrok endpoint doesn't work particularly well, so you're better off using 127.0.0.1 to go through the checkout flow and just use ngrok for the webhook integration.
