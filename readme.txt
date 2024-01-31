@@ -156,6 +156,9 @@ the installation of the module.
 
 == Changelog ==
 
+= 3.0.6 =
+Update docs for supported WordPress and WooCommerce versions.
+
 = 3.0.5 =
 Fix occasional instances of not correctly marking an order as refunded.
 Update available payment method list.
