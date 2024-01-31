@@ -2,7 +2,7 @@
 Contributors: degica
 Tags: WooCommerce,Payment Gateway,Komoju
 Requires at least: 5.3
-Tested up to: 6.0
+Tested up to: 6.1.1
 Stable tag: trunk
 Requires PHP: 7.2
 WC requires at least: 3.0.0
@@ -135,10 +135,11 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 
 == Frequently Asked Questions ==
 
-= What versions of WooCommerce is this compatible with? =
+= What versions of WordPress and WooCommerce is this compatible with? =
 
-At the moment, this plugin has been tested and is known to work up to version
-6.3.1. If you are using a later version, please contact us regarding this.
+At the moment, this plugin has been tested and is known to work up to WordPress
+6.1.1 and WooCommerce 6.3.1. If you are using a later version, please contact
+us regarding this.
 
 = Where can I get more information? =
 
