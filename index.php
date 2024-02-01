@@ -73,8 +73,18 @@ function woocommerce_komoju_init()
         return '<script type="module" src="' . esc_attr($src) . '"></script>';
     }
 
+    function woocommerce_komoju_handle_http_request()
+    {
+        // Force WC to load our gateway, causing WC_Gateway_Komoju_IPN_Handler to get instantiated.
+        WC()->payment_gateways()->payment_gateways();
+
+        // This action is registered when WC_Gateway_Komoju_IPN_Handler is instantiated.
+        do_action('invoke_komoju_ipn_handler');
+    }
+
     add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
     add_filter('woocommerce_get_settings_pages', 'woocommerce_add_komoju_settings_page');
+    add_action('woocommerce_api_wc_gateway_komoju', 'woocommerce_komoju_handle_http_request');
 
     add_action('wp_enqueue_scripts', 'woocommerce_komoju_load_scripts');
     add_filter('script_loader_tag', 'woocommerce_komoju_load_script_as_module', 10, 3);

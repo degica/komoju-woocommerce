@@ -23,8 +23,8 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
      */
     public function __construct($gateway, $webhookSecretToken = '', $secret_key = '', $invoice_prefix = '', $useOnHold = false)
     {
-        add_action('woocommerce_api_wc_gateway_komoju', [$this, 'check_response']);
-        add_action('valid-komoju-standard-ipn-request', [$this, 'valid_response']);
+        add_action('invoke_komoju_ipn_handler', [$this, 'check_response']);
+        add_action('valid_komoju_standard_ipn_request', [$this, 'valid_response']);
         add_action('komoju_capture_payment_async', [$this, 'payment_complete_async'], 10, 3);
 
         $this->gateway                = $gateway;
@@ -77,7 +77,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             $webhookEvent = new WC_Gateway_Komoju_Webhook_Event($entityBody);
 
             // NOTE: direct function call doesn't work
-            do_action('valid-komoju-standard-ipn-request', $webhookEvent);
+            do_action('valid_komoju_standard_ipn_request', $webhookEvent);
             exit;
         }
         wp_die('Failed to verify KOMOJU authenticity', 'Komoju IPN', ['response' => 401]);
