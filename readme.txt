@@ -171,6 +171,9 @@ KOMOJUの接続方法についてご不明な点がありましたら、弊社�
 
 == Changelog ==
 
+= 3.0.7 =
+Add JA translations for plugin store page FAQ.
+
 = 3.0.6 =
 Update docs for supported WordPress and WooCommerce versions.
 
