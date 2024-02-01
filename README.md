@@ -203,3 +203,11 @@ You need to execute it every time after updating po files.
 #### Updating the existing po files
 
 Rather than having to copy and paste the existing translations across to the new pot file, you can use [poedit](https://poedit.net/download). After generating the POT file as above, open the `komoju-woocommerce-ja.po` file in Poedit, then go to Catalogue->Update from POT File, to automatically update the existing Japanese translations with the new schema.
+
+#### Updating plugin store page content
+
+WordPress provides a [readme template](https://wordpress.org/plugins/readme.txt)
+used to generate the plugin's page on the WordPress Store. We are using a third party
+Github action](https://github.com/10up/action-wordpress-plugin-deploy) to do this.
+See our [docs](https://github.com/degica/komoju-woocommerce/blob/master/docs/uploading_to_wordpress_store.md)
+for uploading newer versions of the plugin to the WordPress store.
