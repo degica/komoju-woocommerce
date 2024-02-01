@@ -138,16 +138,19 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 = What versions of WordPress and WooCommerce is this compatible with? =
 
 At the moment, this plugin has been tested and is known to work up to WordPress
-6.1.1 and WooCommerce 6.3.1. If you are using a later version, please contact
-us regarding this.
+6.1.1 and WooCommerce 6.3.1. If you are using a later version, please check the
+next section or contact us regarding this.
 
 = What should I do if I am using newer versions of WordPress and WooCommerce? =
 
 2024/01/31
 
 We recommend performing a fresh install of WordPress 6.1.1 and WooCommerce
-6.3.1 before proceeding to install this plugin. Downgrading from newer versions
-of WordPress and WooCommerce may result in issues with installing this plugin.
+6.3.1 before proceeding to install this plugin. You can temporarily downgrade
+from a newer version of WordPress and WooCommerce before continuing installation.
+However, downgrading from newer versions of WordPress and WooCommerce may result in
+issues with installing this plugin. If you are experiencing problems, please
+contact our support team (contact@komoju.com).
 
 = Where can I get more information? =
 
