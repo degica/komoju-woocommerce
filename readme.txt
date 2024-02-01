@@ -157,6 +157,18 @@ contact our support team (contact@komoju.com).
 Please contact contact@komoju.com if you have any questions about
 the installation of the module.
 
+= どのWordPress・WooCommerceのバージョンに対応していますか？=
+現時点でこのプラグインは、WordPress 6.1.1およびWooCommerce 6.3.1まで動作することが確認されています。
+それ以降のバージョンをお使いの場合は、以下をお試し頂くか、contact@komoju.comまでご連絡ください。
+
+= 新しいバージョンのWordPressとWooCommerceを使用している場合はどうすればよいですか？ =
+このプラグインをインストールする前に、まずWordPress 6.1.1とWooCommerce 6.3.1を新規インストールすることをお勧めします。
+新しいバージョンから旧バージョンへ一時的にダウングレードし、接続頂くことも可能ですが、新しいバージョンからダウングレードすると、このプラグインのインストールに問題が生じる可能性がございます。
+問題が発生した場合は、サポートチーム（contact@komoju.com）までご連絡ください。
+
+= 詳細はどこで入手できますか？=
+KOMOJUの接続方法についてご不明な点がありましたら、弊社のサポートチーム（contact@komoju.com） までお問合せください。
+
 == Changelog ==
 
 = 3.0.6 =
