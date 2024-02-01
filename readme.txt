@@ -93,6 +93,42 @@ We currently accept the following payment methods:
 - MyBank
 - Sofort
 
+== Frequently Asked Questions ==
+
+= What versions of WordPress and WooCommerce is this compatible with? =
+
+At the moment, this plugin has been tested and is known to work up to WordPress
+6.1.1 and WooCommerce 6.3.1. If you are using a later version, please check the
+next section or contact us regarding this.
+
+= What should I do if I am using newer versions of WordPress and WooCommerce? =
+
+2024/01/31
+
+We recommend performing a fresh install of WordPress 6.1.1 and WooCommerce
+6.3.1 before proceeding to install this plugin. You can temporarily downgrade
+from a newer version of WordPress and WooCommerce before continuing installation.
+However, downgrading from newer versions of WordPress and WooCommerce may result in
+issues with installing this plugin. If you are experiencing problems, please
+contact our support team (contact@komoju.com).
+
+= Where can I get more information? =
+
+Please contact contact@komoju.com if you have any questions about
+the installation of the module.
+
+= どのWordPress・WooCommerceのバージョンに対応していますか？=
+現時点でこのプラグインは、WordPress 6.1.1およびWooCommerce 6.3.1まで動作することが確認されています。
+それ以降のバージョンをお使いの場合は、以下をお試し頂くか、contact@komoju.comまでご連絡ください。
+
+= 新しいバージョンのWordPressとWooCommerceを使用している場合はどうすればよいですか？ =
+このプラグインをインストールする前に、まずWordPress 6.1.1とWooCommerce 6.3.1を新規インストールすることをお勧めします。
+新しいバージョンから旧バージョンへ一時的にダウングレードし、接続頂くことも可能ですが、新しいバージョンからダウングレードすると、このプラグインのインストールに問題が生じる可能性がございます。
+問題が発生した場合は、サポートチーム（contact@komoju.com）までご連絡ください。
+
+= 詳細はどこで入手できますか？=
+KOMOJUの接続方法についてご不明な点がありましたら、弊社のサポートチーム（contact@komoju.com） までお問合せください。
+
 == Installation ==
 
 1. Upload the plugin to your server where wordpress and WooCommerce are installed via FTP or other file transfer method to the wordpress/wp-content/plugins directory
@@ -132,42 +168,6 @@ To ensure that the WooCommerce plugin works correctly you will need to set up a 
 Ensure that the "Active" checkbox is also ticked and then click "Create Webhook".
 
 Go back to your Wordpress instance and set the "Webhook Secret Token" value on the Komoju Woocommerce plugin to be the same as the secret set for the webhook.
-
-== Frequently Asked Questions ==
-
-= What versions of WordPress and WooCommerce is this compatible with? =
-
-At the moment, this plugin has been tested and is known to work up to WordPress
-6.1.1 and WooCommerce 6.3.1. If you are using a later version, please check the
-next section or contact us regarding this.
-
-= What should I do if I am using newer versions of WordPress and WooCommerce? =
-
-2024/01/31
-
-We recommend performing a fresh install of WordPress 6.1.1 and WooCommerce
-6.3.1 before proceeding to install this plugin. You can temporarily downgrade
-from a newer version of WordPress and WooCommerce before continuing installation.
-However, downgrading from newer versions of WordPress and WooCommerce may result in
-issues with installing this plugin. If you are experiencing problems, please
-contact our support team (contact@komoju.com).
-
-= Where can I get more information? =
-
-Please contact contact@komoju.com if you have any questions about
-the installation of the module.
-
-= どのWordPress・WooCommerceのバージョンに対応していますか？=
-現時点でこのプラグインは、WordPress 6.1.1およびWooCommerce 6.3.1まで動作することが確認されています。
-それ以降のバージョンをお使いの場合は、以下をお試し頂くか、contact@komoju.comまでご連絡ください。
-
-= 新しいバージョンのWordPressとWooCommerceを使用している場合はどうすればよいですか？ =
-このプラグインをインストールする前に、まずWordPress 6.1.1とWooCommerce 6.3.1を新規インストールすることをお勧めします。
-新しいバージョンから旧バージョンへ一時的にダウングレードし、接続頂くことも可能ですが、新しいバージョンからダウングレードすると、このプラグインのインストールに問題が生じる可能性がございます。
-問題が発生した場合は、サポートチーム（contact@komoju.com）までご連絡ください。
-
-= 詳細はどこで入手できますか？=
-KOMOJUの接続方法についてご不明な点がありましたら、弊社のサポートチーム（contact@komoju.com） までお問合せください。
 
 == Changelog ==
 
