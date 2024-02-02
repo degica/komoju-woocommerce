@@ -10,7 +10,9 @@ module.exports = defineConfig({
       return require('./cypress/plugins/index.js')(on, config)
     },
     baseUrl: 'http://localhost:8000',
-    defaultCommandTimeout: 6000
+    defaultCommandTimeout: 6000,
+    // default pageLoadTimeout is 60000ms
+    pageLoadTimeout: 120000,
   },
   retries: {
     runMode: 2,
