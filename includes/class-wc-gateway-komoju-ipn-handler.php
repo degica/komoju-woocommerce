@@ -62,12 +62,14 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
                 $payment_url = $order->get_checkout_payment_url(false);
                 wp_redirect($payment_url);
             }
+
             return true;
         }
 
         // Quick setup POST from KOMOJU
         if (isset($_POST['secret_key'])) {
             $this->quick_setup($_POST);
+
             return true;
         }
 
@@ -78,6 +80,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
 
             // NOTE: direct function call doesn't work
             do_action('valid_komoju_standard_ipn_request', $webhookEvent);
+
             return true;
         }
 
