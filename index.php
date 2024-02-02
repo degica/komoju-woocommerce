@@ -78,8 +78,18 @@ function woocommerce_komoju_init()
         // Force WC to load our gateway, causing WC_Gateway_Komoju_IPN_Handler to get instantiated.
         WC()->payment_gateways()->payment_gateways();
 
-        // This action is registered when WC_Gateway_Komoju_IPN_Handler is instantiated.
-        do_action('invoke_komoju_ipn_handler');
+        // When WC_Gateway_Komoju_IPN_Handler is instantiated, this filter should be registered.
+        $handled = apply_filters('invoke_komoju_ipn_handler', false);
+
+        // Catch unexpected case where the filter is NOT registered
+        if (!$handled) {
+            header('X-Komoju-Error: komoju gateway not loaded');
+            wp_die(
+                'gateway (and thus IPN handler) not loaded',
+                'KOMOJU WooCommerce plugin',
+                ['status' => 500]
+            );
+        }
     }
 
     add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
