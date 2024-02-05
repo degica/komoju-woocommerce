@@ -32,7 +32,7 @@ describe('KOMOJU for WooCommerce: Admin', () => {
     cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
     cy.get('.komoju-endpoint-komoju_woocommerce_api_endpoint').contains('Edit').click();
-    cy.get('#komoju_woocommerce_api_endpoint').type('{selectAll}https://requestbin.labs.degica.com');
+    cy.get('#komoju_woocommerce_api_endpoint').type('{selectAll}https://example.com');
     cy.contains('Save changes').click();
 
     cy.contains('Payment methods').click();
