@@ -12,12 +12,24 @@ This will download the docker images and WordPress plugins. Once the initial set
 
 **Note:** It _has_ to be `127.0.0.1`, not `localhost`
 
+If you've made changes to your Docker configuration, you can do a fresh build:
+
+```
+docker-compose build (--no-cache)
+```
+
+If you want to completely start fresh, including removing any data stored in Docker volumes (such as your MySQL database data), you can use the -v option:
+
+```
+docker-compose down -v
+```
+
 ## Configuring Ngrok
 
 Because the Komoju plugin uses webhooks to receive notifications once the payment is complete the wordpress instance will need to be accessible to the internet. This can be done with [ngrok](https://ngrok.com/):
 
 ```
-ngrok http -host-header=rewrite http://127.0.0.1:8000
+ngrok http --host-header=rewrite http://127.0.0.1:8000
 ```
 
 **Note:** Accessing the website using the ngrok endpoint doesn't work particularly well, so you're better off using 127.0.0.1 to go through the checkout flow and just use ngrok for the webhook integration.
