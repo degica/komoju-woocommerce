@@ -12,7 +12,7 @@ This will download the docker images and WordPress plugins. Once the initial set
 
 **Note:** It _has_ to be `127.0.0.1`, not `localhost`
 
-If you've made changes to your Docker configuration, you can do a fresh build:
+If you've made changes to your files, you can rebuild using build. If you've made changes to your Docker configuration, you can do a fresh build with --no-cache option.
 
 ```
 docker-compose build (--no-cache)

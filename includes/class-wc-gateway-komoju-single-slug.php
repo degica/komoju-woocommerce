@@ -32,27 +32,30 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         $this->has_fields     = $this->should_use_inline_fields($slug);
         $this->method_title   = __('Komoju', 'komoju-woocommerce') . ' - ' . $this->default_title();
 
-        // if ($slug == 'credit_card') {
-        //     // Show dynamic icon with supported brands.
-        //     $brands = isset($payment_method['subtypes']) ? $payment_method['subtypes'] : [];
-        
-        //     $sort_order = [
-        //         'visa'             => 0,
-        //         'master'           => 1,
-        //         'jcb'              => 2,
-        //         'american_express' => 3,
-        //         'diners_club'      => 4,
-        //         'discover'         => 5,
-        //     ];
-        
-        //     // Sort by the order defined above.
-        //     usort($brands, function ($a, $b) use ($sort_order) {
-        //         return $sort_order[$a] - $sort_order[$b];
-        //     });
-        
-        //     $brands = implode(',', $brands);
-        //     $this->icon .= "?brands=$brands";
-        // }        
+        if ($slug == 'credit_card') {
+            // Show dynamic icon with supported brands.
+            $brands = isset($payment_method['subtypes']) ? $payment_method['subtypes'] : [];
+            $sort_order = [
+                'visa'             => 0,
+                'master'           => 1,
+                'jcb'              => 2,
+                'american_express' => 3,
+                'diners_club'      => 4,
+                'discover'         => 5,
+            ];
+
+            // Sort by the order defined above.
+            usort($brands, function ($a, $b) use ($sort_order) {
+                // Get the sort order for $a and $b, providing a default value if the key doesn't exist
+                $sort_a = isset($sort_order[$a]) ? $sort_order[$a] : count($sort_order);
+                $sort_b = isset($sort_order[$b]) ? $sort_order[$b] : count($sort_order);
+
+                return $sort_a - $sort_b;
+            });
+
+            $brands = implode(',', $brands);
+            $this->icon .= "?brands=$brands";
+        }
 
         // TODO: It would be nice if KOMOJU told us in the payment method object whether or
         // not it supports refunds. For now, we'll just wing it.
