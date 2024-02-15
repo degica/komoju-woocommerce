@@ -6,8 +6,14 @@ Description: Extends WooCommerce with KOMOJU gateway.
 Version: 3.0.8
 Author: KOMOJU
 Author URI: https://komoju.com
+WC tested up to: 8.5
 */
 
+add_action('before_woocommerce_init', function() {
+    if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, false);
+    }
+});
 add_action('plugins_loaded', 'woocommerce_komoju_init', 0);
 
 function woocommerce_komoju_init()
