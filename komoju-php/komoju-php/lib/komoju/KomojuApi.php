@@ -2,6 +2,10 @@
 
 class KomojuApi
 {
+    private $endpoint;
+    private $via;
+    private $secretKey;
+
     public static function defaultEndpoint()
     {
         return 'https://komoju.com';

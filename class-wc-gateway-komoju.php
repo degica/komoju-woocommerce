@@ -28,6 +28,14 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     /** @var WC_Logger Logger instance */
     public static $log;
 
+    protected $debug;
+    protected $invoice_prefix;
+    protected $secretKey;
+    protected $webhookSecretToken;
+    protected $komoju_api;
+    protected $instructions;
+    protected $useOnHold;
+
     /**
      * Constructor for the gateway.
      */
