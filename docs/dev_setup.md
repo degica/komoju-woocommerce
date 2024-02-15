@@ -2,20 +2,20 @@
 
 This document provides a detailed setup guide for the development environment, including instructions for WordPress and WooCommerce. This was written on WordPress version 6.1.1 and WooCommerce 6.3.1.
 
-To begin, start the docker containers:
+To begin, start the docker containers, using the --build option to watch for changes:
 
 ```
-$ docker-compose up
+docker-compose up --build
 ```
 
 This will download the docker images and WordPress plugins. Once the initial setup is done (docker is no longer constantly writing text to screen), you can navigate to `127.0.0.1:8000` to setup WordPress.
 
 **Note:** It _has_ to be `127.0.0.1`, not `localhost`
 
-If you've made changes to your files, you can rebuild using build. If you've made changes to your Docker configuration, you can do a fresh build with --no-cache option.
+If you've made changes to your files, you can manually rebuild using build. If you've made changes to your Docker configuration, you can do a fresh build with --no-cache option.
 
 ```
-docker-compose build (--no-cache)
+docker-compose build --no-cache
 ```
 
 If you want to completely start fresh, including removing any data stored in Docker volumes (such as your MySQL database data), you can use the -v option:
