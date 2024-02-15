@@ -32,6 +32,10 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         $this->has_fields     = $this->should_use_inline_fields($slug);
         $this->method_title   = __('Komoju', 'komoju-woocommerce') . ' - ' . $this->default_title();
 
+        if ($this->get_option('showIcon') == 'yes') {
+            $this->icon = "https://komoju.com/payment_methods/$slug.svg";
+        }
+
         if ($slug == 'credit_card') {
             // Show dynamic icon with supported brands.
             $brands = isset($payment_method['subtypes']) ? $payment_method['subtypes'] : [];

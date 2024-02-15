@@ -32,6 +32,7 @@ function woocommerce_komoju_init()
                 $methods[] = new WC_Gateway_Komoju_Single_Slug($payment_method);
             }
         }
+
         return $methods;
     }
 
