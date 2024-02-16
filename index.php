@@ -9,10 +9,12 @@ Author URI: https://komoju.com
 WC tested up to: 8.5
 */
 
-add_action('before_woocommerce_init', function() {
+add_action('before_woocommerce_init', function () {
     if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
-        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
-            'cart_checkout_blocks', __FILE__, false
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declareCompatibility(
+            'cart_checkout_blocks',
+            __FILE__,
+            false
         );
     }
 });
