@@ -6,6 +6,7 @@ Description: Extends WooCommerce with KOMOJU gateway.
 Version: 3.0.8
 Author: KOMOJU
 Author URI: https://komoju.com
+WC tested up to: 8.5
 */
 
 add_action('plugins_loaded', 'woocommerce_komoju_init', 0);
@@ -92,7 +93,50 @@ function woocommerce_komoju_init()
         }
     }
 
+    /**
+     * Custom function to declare compatibility with cart_checkout_blocks feature 
+    */
+    function woocommerce_komoju_declare_checkout_blocks_compatibility() {
+        error_log('in woocommerce_komoju_declare_checkout_blocks_compatibility 2');
+        // Check if the required class exists
+        if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+            // Declare compatibility for 'cart_checkout_blocks'
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, true);
+        }
+    }
+
+    /**
+     * Custom function to register a payment method type
+
+    */
+    function woocommerce_komoju_register_order_approval_payment_method_type() {
+        error_log('in woocommerce_komoju_register_order_approval_payment_method_type 2');
+
+        // Check if the required class exists
+        if (!class_exists('Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType')) {
+            return;
+        }
+
+        // Include the custom Blocks Checkout class
+        require_once 'includes/class-wc-gateway-komoju-block.php';
+
+        // Hook the registration function to the 'woocommerce_blocks_payment_method_type_registration' action
+        add_action(
+            'woocommerce_blocks_payment_method_type_registration',
+            function(Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) {
+                // Register an instance of My_Custom_Gateway_Blocks
+                $payment_method_registry->register(new WC_Gateway_Komoju_Blocks);
+            }
+        );
+    }
+
+
     add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
+
+    // Block setup actions
+    add_action('before_woocommerce_init', 'woocommerce_komoju_declare_checkout_blocks_compatibility');
+    add_action('woocommerce_blocks_loaded', 'woocommerce_komoju_register_order_approval_payment_method_type');
+
     add_filter('woocommerce_get_settings_pages', 'woocommerce_add_komoju_settings_page');
     add_action('woocommerce_api_wc_gateway_komoju', 'woocommerce_komoju_handle_http_request');
 
