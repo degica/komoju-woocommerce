@@ -236,7 +236,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
      */
     protected function payment_status_cancelled($order, $webhookEvent)
     {
-        if (!$this->is_order_cancellable($order)) {
+        if (!$this->is_order_cancellable($order, $webhookEvent)) {
             $transaction_id     = $order->get_transaction_id();
             $external_order_num = $webhookEvent->external_order_num();
             WC_Gateway_Komoju::log('Aborting, transaction_id: ' . $transaction_id . ' and external_order_num: ' . $external_order_num . ' do not match.');
@@ -251,7 +251,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
      *
      * @return bool return true if the order is cancellable
      */
-    protected function is_order_cancellable($order)
+    protected function is_order_cancellable($order, $webhookEvent)
     {
         $transaction_id = $order->get_transaction_id();
         if (empty($transaction_id)) {
