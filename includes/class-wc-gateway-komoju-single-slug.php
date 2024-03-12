@@ -12,6 +12,16 @@ include_once 'class-wc-gateway-komoju-webhook-event.php';
  */
 class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 {
+    protected $publishableKey;
+    protected $payment_method;
+    protected $debug;
+    protected $invoice_prefix;
+    protected $secretKey;
+    protected $webhookSecretToken;
+    protected $komoju_api;
+    protected $instructions;
+    protected $useOnHold;
+
     public function __construct($payment_method)
     {
         $slug = $payment_method['type_slug'];

@@ -3,7 +3,7 @@
 Plugin Name: KOMOJU Payments
 Plugin URI: https://github.com/komoju/komoju-woocommerce
 Description: Extends WooCommerce with KOMOJU gateway.
-Version: 3.0.8
+Version: 3.1.0
 Author: KOMOJU
 Author URI: https://komoju.com
 WC tested up to: 8.5
@@ -97,7 +97,6 @@ function woocommerce_komoju_init()
      * Custom function to declare compatibility with cart_checkout_blocks feature 
     */
     function woocommerce_komoju_declare_checkout_blocks_compatibility() {
-        error_log('in woocommerce_komoju_declare_checkout_blocks_compatibility 2');
         // Check if the required class exists
         if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
             // Declare compatibility for 'cart_checkout_blocks'
@@ -110,8 +109,6 @@ function woocommerce_komoju_init()
 
     */
     function woocommerce_komoju_register_order_approval_payment_method_type() {
-        error_log('in woocommerce_komoju_register_order_approval_payment_method_type 2');
-
         // Check if the required class exists
         if (!class_exists('Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType')) {
             return;
@@ -124,12 +121,11 @@ function woocommerce_komoju_init()
         add_action(
             'woocommerce_blocks_payment_method_type_registration',
             function(Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) {
-                // Register an instance of My_Custom_Gateway_Blocks
+                // Register an instance of WC_Gateway_Komoju_Blocks
                 $payment_method_registry->register(new WC_Gateway_Komoju_Blocks);
             }
         );
     }
-
 
     add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
 
