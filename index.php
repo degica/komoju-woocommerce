@@ -97,9 +97,7 @@ function woocommerce_komoju_init()
      * Custom function to declare compatibility with cart_checkout_blocks feature 
     */
     function woocommerce_komoju_declare_checkout_blocks_compatibility() {
-        // Check if the required class exists
         if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
-            // Declare compatibility for 'cart_checkout_blocks'
             \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, true);
         }
     }
@@ -109,7 +107,6 @@ function woocommerce_komoju_init()
 
     */
     function woocommerce_komoju_register_order_approval_payment_method_type() {
-        // Check if the required class exists
         if (!class_exists('Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType')) {
             return;
         }
@@ -121,8 +118,24 @@ function woocommerce_komoju_init()
         add_action(
             'woocommerce_blocks_payment_method_type_registration',
             function(Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) {
-                // Register an instance of WC_Gateway_Komoju_Blocks
-                $payment_method_registry->register(new WC_Gateway_Komoju_Blocks);
+                // This is how we register WC_Gateway_Komoju, but I think we need to register each payment method
+                // instead. See the uncommented code below.
+                // // Register an instance of WC_Gateway_Komoju_Blocks
+                // $payment_method_registry->register(new WC_Gateway_Komoju_Blocks);
+
+                // Register each payment method separately.
+                require_once 'class-wc-gateway-komoju.php';
+                require_once 'includes/class-wc-gateway-komoju-single-slug.php';
+                $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
+                if (gettype($komoju_payment_methods) == 'array') {
+                    foreach ($komoju_payment_methods as $payment_method) {
+                        $method = new WC_Gateway_Komoju_Single_Slug($payment_method);
+                        $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($method));
+                    }
+                } else {
+                    $payment_method = new WC_Gateway_Komoju();
+                    $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($payment_method));
+                }
             }
         );
     }
