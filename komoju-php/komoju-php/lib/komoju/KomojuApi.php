@@ -2,9 +2,9 @@
 
 class KomojuApi
 {
-    // protected $endpoint;
-    // protected $via;
-    // protected $secretKey;
+    protected $endpoint;
+    protected $via;
+    protected $secretKey;
 
     public static function defaultEndpoint()
     {
@@ -19,6 +19,11 @@ class KomojuApi
         }
 
         return $endpoint;
+    }
+
+    public function getSecretKey()
+    {
+        return $this->secretKey;
     }
 
     public function __construct($secretKey)
