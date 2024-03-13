@@ -19,6 +19,10 @@ require_once dirname(__FILE__) . '/komoju-php/komoju-php/lib/komoju.php';
 
 class WC_Gateway_Komoju extends WC_Payment_Gateway
 {
+
+    /** Singleton instance */
+    private static $instance = null;
+
     /** @var array Array of locales */
     public $locale;
 
@@ -35,6 +39,17 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     protected $komoju_api;
     protected $instructions;
     protected $useOnHold;
+
+    /**
+     * Constructor for the gateway.
+     */
+    public static function getInstance() {
+        if (self::$instance == null) {
+            self::$instance = new WC_Gateway_Komoju();
+        }
+
+        return self::$instance;
+    }
 
     /**
      * Constructor for the gateway.

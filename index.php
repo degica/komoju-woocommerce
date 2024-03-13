@@ -25,7 +25,7 @@ function woocommerce_komoju_init()
     {
         require_once 'class-wc-gateway-komoju.php';
         require_once 'includes/class-wc-gateway-komoju-single-slug.php';
-        $methods[] = new WC_Gateway_Komoju();
+        $methods[] = WC_Gateway_Komoju::getInstance();
 
         $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
         if (gettype($komoju_payment_methods) == 'array') {
@@ -133,7 +133,7 @@ function woocommerce_komoju_init()
                         $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($method));
                     }
                 } else {
-                    $payment_method = new WC_Gateway_Komoju();
+                    $payment_method = WC_Gateway_Komoju::getInstance();
                     $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($payment_method));
                 }
             }
