@@ -12,6 +12,7 @@ include_once 'class-wc-gateway-komoju-webhook-event.php';
  */
 class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 {
+    public static $instances = [];
     protected $publishableKey;
     protected $payment_method;
     protected $debug;

@@ -21,20 +21,33 @@ function woocommerce_komoju_init()
     /**
      * Add the Gateway to WooCommerce
      **/
-    function woocommerce_add_komoju_gateway($methods)
-    {
+    function get_komoju_payment_methods() {
         require_once 'class-wc-gateway-komoju.php';
         require_once 'includes/class-wc-gateway-komoju-single-slug.php';
+
         $methods[] = WC_Gateway_Komoju::getInstance();
 
-        $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
-        if (gettype($komoju_payment_methods) == 'array') {
-            foreach ($komoju_payment_methods as $payment_method) {
-                $methods[] = new WC_Gateway_Komoju_Single_Slug($payment_method);
+        // If single slug instances don't exist, instantiate them
+        if (empty(WC_Gateway_Komoju_Single_Slug::$instances)) {
+            $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
+
+            if (gettype($komoju_payment_methods) == 'array') {
+                foreach ($komoju_payment_methods as $payment_method) {
+                    $method = new WC_Gateway_Komoju_Single_Slug($payment_method);
+                    WC_Gateway_Komoju_Single_Slug::$instances[] = $method;
+                }
             }
         }
 
+        if (!empty(WC_Gateway_Komoju_Single_Slug::$instances)) {
+            $methods = array_merge($methods, WC_Gateway_Komoju_Single_Slug::$instances);
+        }
+
         return $methods;
+    }
+
+    function woocommerce_add_komoju_gateway($methods) {
+        return get_komoju_payment_methods();
     }
 
     /**
@@ -65,6 +78,7 @@ function woocommerce_komoju_init()
 
         wp_enqueue_script('komoju-fields', $komoju_fields_js);
     }
+
     function woocommerce_komoju_load_script_as_module($tag, $handle, $src)
     {
         if ($handle !== 'komoju-fields') {
@@ -114,30 +128,41 @@ function woocommerce_komoju_init()
         // Include the custom Blocks Checkout class
         require_once 'includes/class-wc-gateway-komoju-block.php';
 
-        // Hook the registration function to the 'woocommerce_blocks_payment_method_type_registration' action
+        // // Hook the registration function to the 'woocommerce_blocks_payment_method_type_registration' action
+        // add_action(
+        //     'woocommerce_blocks_payment_method_type_registration',
+        //     function(Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) {
+        //         // This is how we register WC_Gateway_Komoju, but I think we need to register each payment method
+        //         // instead. See the uncommented code below.
+        //         // // Register an instance of WC_Gateway_Komoju_Blocks
+        //         // $payment_method_registry->register(new WC_Gateway_Komoju_Blocks);
+
+        //         // Register each payment method separately.
+        //         require_once 'class-wc-gateway-komoju.php';
+        //         require_once 'includes/class-wc-gateway-komoju-single-slug.php';
+        //         $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
+        //         if (gettype($komoju_payment_methods) == 'array') {
+        //             foreach ($komoju_payment_methods as $payment_method) {
+        //                 $method = new WC_Gateway_Komoju_Single_Slug($payment_method);
+        //                 $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($method));
+        //             }
+        //         } else {
+        //             $payment_method = WC_Gateway_Komoju::getInstance();
+        //             $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($payment_method));
+        //         }
+        //     }
+        // );
+
         add_action(
             'woocommerce_blocks_payment_method_type_registration',
             function(Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) {
-                // This is how we register WC_Gateway_Komoju, but I think we need to register each payment method
-                // instead. See the uncommented code below.
-                // // Register an instance of WC_Gateway_Komoju_Blocks
-                // $payment_method_registry->register(new WC_Gateway_Komoju_Blocks);
+                $komoju_payment_methods = get_komoju_payment_methods();
 
-                // Register each payment method separately.
-                require_once 'class-wc-gateway-komoju.php';
-                require_once 'includes/class-wc-gateway-komoju-single-slug.php';
-                $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
-                if (gettype($komoju_payment_methods) == 'array') {
-                    foreach ($komoju_payment_methods as $payment_method) {
-                        $method = new WC_Gateway_Komoju_Single_Slug($payment_method);
-                        $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($method));
-                    }
-                } else {
-                    $payment_method = WC_Gateway_Komoju::getInstance();
+                foreach ($komoju_payment_methods as $payment_method) {
                     $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($payment_method));
                 }
             }
-        );
+        );  
     }
 
     add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
