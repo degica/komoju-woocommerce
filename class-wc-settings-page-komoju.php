@@ -357,8 +357,8 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
     {
         $api = new KomojuApi($this->secret_key());
 
-        if (!$api->secretKey || strlen($api->secretKey) === 0) {
-            return null;
+        if (!$api->getSecretKey() || strlen($api->getSecretKey()) === 0) {
+          return null;
         }
 
         try {

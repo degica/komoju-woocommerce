@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
  * @class       WC_Gateway_Komoju
  * @extends     WC_Payment_Gateway
  *
- * @version     3.0.8
+ * @version     3.1.0
  *
  * @author      Komoju
  */
@@ -19,6 +19,10 @@ require_once dirname(__FILE__) . '/komoju-php/komoju-php/lib/komoju.php';
 
 class WC_Gateway_Komoju extends WC_Payment_Gateway
 {
+
+    /** Singleton instance */
+    private static $instance = null;
+
     /** @var array Array of locales */
     public $locale;
 
@@ -27,6 +31,25 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
     /** @var WC_Logger Logger instance */
     public static $log;
+
+    protected $debug;
+    protected $invoice_prefix;
+    protected $secretKey;
+    protected $webhookSecretToken;
+    protected $komoju_api;
+    protected $instructions;
+    protected $useOnHold;
+
+    /**
+     * Constructor for the gateway.
+     */
+    public static function getInstance() {
+        if (self::$instance == null) {
+            self::$instance = new WC_Gateway_Komoju();
+        }
+
+        return self::$instance;
+    }
 
     /**
      * Constructor for the gateway.
@@ -52,10 +75,12 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $this->description          = $this->get_option('description');
         $this->instructions         = $this->get_option('instructions', $this->description);
         $this->useOnHold            = $this->get_option('useOnHold');
+        $this->supports[]           = 'blocks';
 
         // Filters
         // Actions
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
+        add_action('init', [$this, 'woocommerce_komoju_declare_checkout_blocks_compatibility']);
 
         if ($this->id === 'komoju') {
             include_once 'includes/class-wc-gateway-komoju-ipn-handler.php';
@@ -67,6 +92,12 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
                 $this->useOnHold
             );
             add_filter('woocommerce_admin_order_data_after_billing_address', [$this, 'show_komoju_link_on_order_page'], 10, 1);
+        }
+    }
+
+    function woocommerce_komoju_declare_checkout_blocks_compatibility() {
+        if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, true);
         }
     }
 

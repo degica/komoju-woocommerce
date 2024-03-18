@@ -3,9 +3,10 @@
 Plugin Name: KOMOJU Payments
 Plugin URI: https://github.com/komoju/komoju-woocommerce
 Description: Extends WooCommerce with KOMOJU gateway.
-Version: 3.0.8
+Version: 3.1.0
 Author: KOMOJU
 Author URI: https://komoju.com
+WC tested up to: 8.5
 */
 
 add_action('plugins_loaded', 'woocommerce_komoju_init', 0);
@@ -20,20 +21,33 @@ function woocommerce_komoju_init()
     /**
      * Add the Gateway to WooCommerce
      **/
-    function woocommerce_add_komoju_gateway($methods)
-    {
+    function get_komoju_payment_methods() {
         require_once 'class-wc-gateway-komoju.php';
         require_once 'includes/class-wc-gateway-komoju-single-slug.php';
-        $methods[] = new WC_Gateway_Komoju();
 
-        $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
-        if (gettype($komoju_payment_methods) == 'array') {
-            foreach ($komoju_payment_methods as $payment_method) {
-                $methods[] = new WC_Gateway_Komoju_Single_Slug($payment_method);
+        $methods[] = WC_Gateway_Komoju::getInstance();
+
+        // If single slug instances don't exist, instantiate them
+        if (empty(WC_Gateway_Komoju_Single_Slug::$instances)) {
+            $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
+
+            if (gettype($komoju_payment_methods) == 'array') {
+                foreach ($komoju_payment_methods as $payment_method) {
+                    $method = new WC_Gateway_Komoju_Single_Slug($payment_method);
+                    WC_Gateway_Komoju_Single_Slug::$instances[] = $method;
+                }
             }
         }
 
+        if (!empty(WC_Gateway_Komoju_Single_Slug::$instances)) {
+            $methods = array_merge($methods, WC_Gateway_Komoju_Single_Slug::$instances);
+        }
+
         return $methods;
+    }
+
+    function woocommerce_add_komoju_gateway($methods) {
+        return get_komoju_payment_methods();
     }
 
     /**
@@ -64,6 +78,7 @@ function woocommerce_komoju_init()
 
         wp_enqueue_script('komoju-fields', $komoju_fields_js);
     }
+
     function woocommerce_komoju_load_script_as_module($tag, $handle, $src)
     {
         if ($handle !== 'komoju-fields') {
@@ -92,7 +107,44 @@ function woocommerce_komoju_init()
         }
     }
 
+    /**
+     * Custom function to declare compatibility with cart_checkout_blocks feature 
+    */
+    function woocommerce_komoju_declare_checkout_blocks_compatibility() {
+        if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, true);
+        }
+    }
+
+    /**
+     * Custom function to register a payment method type
+    */
+    function woocommerce_komoju_register_order_approval_payment_method_type() {
+        if (!class_exists('Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType')) {
+            return;
+        }
+
+        // Include the custom Blocks Checkout class
+        require_once 'includes/class-wc-gateway-komoju-block.php';
+
+        add_action(
+            'woocommerce_blocks_payment_method_type_registration',
+            function(Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) {
+                $komoju_payment_methods = get_komoju_payment_methods();
+
+                foreach ($komoju_payment_methods as $payment_method) {
+                    $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($payment_method));
+                }
+            }
+        );
+    }
+
     add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
+
+    // Block setup actions
+    add_action('before_woocommerce_init', 'woocommerce_komoju_declare_checkout_blocks_compatibility');
+    add_action('woocommerce_blocks_loaded', 'woocommerce_komoju_register_order_approval_payment_method_type');
+
     add_filter('woocommerce_get_settings_pages', 'woocommerce_add_komoju_settings_page');
     add_action('woocommerce_api_wc_gateway_komoju', 'woocommerce_komoju_handle_http_request');
 
