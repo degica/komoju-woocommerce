@@ -118,7 +118,6 @@ function woocommerce_komoju_init()
 
     /**
      * Custom function to register a payment method type
-
     */
     function woocommerce_komoju_register_order_approval_payment_method_type() {
         if (!class_exists('Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType')) {
@@ -127,31 +126,6 @@ function woocommerce_komoju_init()
 
         // Include the custom Blocks Checkout class
         require_once 'includes/class-wc-gateway-komoju-block.php';
-
-        // // Hook the registration function to the 'woocommerce_blocks_payment_method_type_registration' action
-        // add_action(
-        //     'woocommerce_blocks_payment_method_type_registration',
-        //     function(Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) {
-        //         // This is how we register WC_Gateway_Komoju, but I think we need to register each payment method
-        //         // instead. See the uncommented code below.
-        //         // // Register an instance of WC_Gateway_Komoju_Blocks
-        //         // $payment_method_registry->register(new WC_Gateway_Komoju_Blocks);
-
-        //         // Register each payment method separately.
-        //         require_once 'class-wc-gateway-komoju.php';
-        //         require_once 'includes/class-wc-gateway-komoju-single-slug.php';
-        //         $komoju_payment_methods = get_option('komoju_woocommerce_payment_methods');
-        //         if (gettype($komoju_payment_methods) == 'array') {
-        //             foreach ($komoju_payment_methods as $payment_method) {
-        //                 $method = new WC_Gateway_Komoju_Single_Slug($payment_method);
-        //                 $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($method));
-        //             }
-        //         } else {
-        //             $payment_method = WC_Gateway_Komoju::getInstance();
-        //             $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($payment_method));
-        //         }
-        //     }
-        // );
 
         add_action(
             'woocommerce_blocks_payment_method_type_registration',
@@ -162,7 +136,7 @@ function woocommerce_komoju_init()
                     $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($payment_method));
                 }
             }
-        );  
+        );
     }
 
     add_filter('woocommerce_payment_gateways', 'woocommerce_add_komoju_gateway');
