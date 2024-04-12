@@ -171,6 +171,9 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 
 == Changelog ==
 
+= 3.0.9 =
+Fix bug with order cancel webhook.
+
 = 3.0.8 =
 Register IPN handler outside of gateway initializer.
 Hopefully fixes an issue where automatic updates cause webhooks to stop working.
