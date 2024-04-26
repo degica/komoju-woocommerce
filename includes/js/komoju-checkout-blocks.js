@@ -1,6 +1,5 @@
 function registerPaymentMethod(paymentMethod) {
     let name = `${paymentMethod.id}`
-    let testSetting = window.wc.wcSettings.getSetting(`${name}_data`, {});
 
     const settings = window.wc.wcSettings.getSetting(`${name}_data`, {});
     const label = window.wp.htmlEntities.decodeEntities(settings.title) || window.wp.i18n.__('NULL GATEWAY', 'test_komoju_gateway');
