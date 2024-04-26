@@ -21,13 +21,13 @@ services:
        context: .
        dockerfile: Dockerfile
        args:
-         woocommerce_version: 6.3.1
+         woocommerce_version: 8.8.2
      ports:
        - "8000:80"
      restart: always
      environment:
        WORDPRESS_DEV_ENV: 1
-       WORDPRESS_DEBUG: 1
+       WORDPRESS_DEBUG: 0
        WORDPRESS_DB_HOST: db:3306
        WORDPRESS_DB_NAME: wordpress
        WORDPRESS_DB_USER: wordpress

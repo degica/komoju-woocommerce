@@ -3,7 +3,7 @@
 Plugin Name: KOMOJU Payments
 Plugin URI: https://github.com/komoju/komoju-woocommerce
 Description: Extends WooCommerce with KOMOJU gateway.
-Version: 3.0.9
+Version: 3.1.0
 Author: KOMOJU
 Author URI: https://komoju.com
 */
@@ -98,4 +98,39 @@ function woocommerce_komoju_init()
 
     add_action('wp_enqueue_scripts', 'woocommerce_komoju_load_scripts');
     add_filter('script_loader_tag', 'woocommerce_komoju_load_script_as_module', 10, 3);
+
+    add_action('plugins_loaded', 'woocommerce_komoju_blocks');
+
+    function woocommerce_komoju_blocks()
+    {
+        if (!class_exists('WC_Payment_Gateway'))
+            return;
+
+        require_once 'includes/class-wc-gateway-komoju-block.php';
+        require_once 'includes/test-komoju-gateway.php';
+    }
+
+    add_action('woocommerce_blocks_loaded', 'register_komoju_payment_method_type');
+
+    function register_komoju_payment_method_type()
+    {
+        if (!class_exists('Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType')) {
+            return;
+        }
+
+        $gateways = WC()->payment_gateways->payment_gateways();
+
+        if ($gateways) {
+            foreach ($gateways as $gateway) {
+                if ($gateway->enabled == 'yes' && $gateway instanceof WC_Gateway_Komoju_Single_Slug) {
+                    add_action(
+                        'woocommerce_blocks_payment_method_type_registration',
+                        function (Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) use ($gateway) {
+                            $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($gateway));
+                        }
+                    );
+                }
+            }
+        }
+    }
 }

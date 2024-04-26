@@ -1,11 +1,11 @@
-FROM wordpress:6.1.1
+FROM wordpress:6.5.2
 
 ARG woocommerce_version
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends unzip wget gettext vim bash-completion ssh git xvfb chromium sudo \
     && wget https://downloads.wordpress.org/plugin/woocommerce.${woocommerce_version}.zip -O /tmp/woocommerce.zip \
-    && wget https://downloads.wordpress.org/plugin/relative-url.0.1.7.zip -O /tmp/relative-url.zip \
+    && wget https://downloads.wordpress.org/plugin/relative-url.0.1.8.zip -O /tmp/relative-url.zip \
     && cd /usr/src/wordpress/wp-content/plugins \
     && unzip /tmp/woocommerce.zip \
     && unzip /tmp/relative-url.zip \
