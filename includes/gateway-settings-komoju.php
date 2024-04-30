@@ -28,6 +28,13 @@ return [
         'default'     => $this->default_title(),
         'desc_tip'    => true,
     ],
+    'description' => [
+        'title'       => __('Description', 'komoju-woocommerce'),
+        'type'        => 'textarea',
+        'description' => __('This controls the description which the user sees during checkout.', 'komoju-woocommerce'),
+        'default'     => $this->default_description(),
+        'desc_tip'    => true,
+    ],
     'useOnHold' => [
         'title'       => __('Use on-hold status for pending payments', 'komoju-woocommerce'),
         'type'        => 'checkbox',

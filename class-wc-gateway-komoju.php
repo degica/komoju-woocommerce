@@ -71,7 +71,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
         // Define user set variables
         $this->title                = $this->get_option('title');
-        $this->description          = $this->get_option('description');
+        $this->description          = $this->get_option('description') ?: $this->default_description();
         $this->instructions         = $this->get_option('instructions', $this->description);
         $this->useOnHold            = $this->get_option('useOnHold');
 
@@ -311,6 +311,14 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     protected function default_title()
     {
         return __('Komoju', 'komoju-woocommerce');
+    }
+
+    protected function default_description()
+    {
+        return sprintf(
+            __('%s payments powered by KOMOJU', 'komoju-woocommerce'),
+            $this->default_title()
+        );
     }
 
     public static function to_cents($total, $currency = '')

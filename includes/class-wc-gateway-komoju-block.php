@@ -8,7 +8,7 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
 	protected $name;
 	protected $settings;
 
-	public function __construct(WC_Gateway_Komoju_Single_Slug $gateway)
+	public function __construct(WC_Gateway_Komoju $gateway)
 	{
 		$this->gateway = $gateway;
 		$this->name = $gateway->id;
@@ -48,7 +48,7 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
 		return [
 			'id' => $this->name,
 			'title' => $this->gateway->title,
-			'description' => $this->gateway->method_description,
+			'description' => $this->gateway->description,
 			'supports' => array_filter($this->gateway->supports, array($this->gateway, 'supports')),
 			// 'paymentFields' => $this->gateway->payment_fields()
 		];
