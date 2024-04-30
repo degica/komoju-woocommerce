@@ -12,11 +12,11 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
 	{
 		$this->gateway = $gateway;
 		$this->name = $gateway->id;
-		$this->settings = $gateway->payment_method->settings;
 	}
 
 	public function initialize()
 	{
+		$this->settings = $this->gateway->payment_method['settings'] ?? [];
 		$this->settings = get_option('woocommerce_test_komoju_settings', []);
 	}
 

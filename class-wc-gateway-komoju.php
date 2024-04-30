@@ -28,6 +28,28 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     /** @var WC_Logger Logger instance */
     public static $log;
 
+    /* Fix for Deprecated: Creation of dynamic property */
+    /** @var bool Debugging enabled */
+    public $debug;
+
+    /** @var string Invoice prefix */
+    public $invoice_prefix;
+    
+    /** @var string Secret key */
+    public $secretKey;
+
+    /** @var string Webhook secret token */
+    public $webhookSecretToken;
+
+    /** @var KomojuApi */
+    public $komoju_api;
+
+    /** @var string Instructions */
+    public $instructions;
+
+    /** @var bool Use on hold */
+    public $useOnHold;
+
     /**
      * Constructor for the gateway.
      */

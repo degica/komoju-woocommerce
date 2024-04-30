@@ -27,7 +27,7 @@ services:
      restart: always
      environment:
        WORDPRESS_DEV_ENV: 1
-       WORDPRESS_DEBUG: 0
+       WORDPRESS_DEBUG: 1
        WORDPRESS_DB_HOST: db:3306
        WORDPRESS_DB_NAME: wordpress
        WORDPRESS_DB_USER: wordpress

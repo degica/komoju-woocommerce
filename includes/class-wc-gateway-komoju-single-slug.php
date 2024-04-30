@@ -12,6 +12,13 @@ include_once 'class-wc-gateway-komoju-webhook-event.php';
  */
 class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 {
+    /* Fix for Deprecated: Creation of dynamic property */
+    /** @var string $publishableKey */
+    public $publishableKey;
+
+    /** @var array $payment_method */
+    public $payment_method;
+
     public function __construct($payment_method)
     {
         $slug = $payment_method['type_slug'];

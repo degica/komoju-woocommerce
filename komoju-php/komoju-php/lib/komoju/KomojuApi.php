@@ -2,6 +2,11 @@
 
 class KomojuApi
 {
+    /* Fix for Deprecated: Creation of dynamic property */
+    public $endpoint;
+    public $via;
+    public $secretKey;
+
     public static function defaultEndpoint()
     {
         return 'https://komoju.com';
