@@ -8,7 +8,7 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
 	protected $name;
 	protected $settings;
 
-	public function __construct(WC_Gateway_Komoju $gateway)
+	public function __construct(WC_Gateway_Komoju_Single_Slug $gateway)
 	{
 		$this->gateway = $gateway;
 		$this->name = $gateway->id;

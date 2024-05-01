@@ -122,7 +122,7 @@ function woocommerce_komoju_init()
 
         if ($gateways) {
             foreach ($gateways as $gateway) {
-                if ($gateway->enabled == 'yes' && $gateway instanceof WC_Gateway_Komoju) {
+                if ($gateway->enabled == 'yes' && $gateway instanceof WC_Gateway_Komoju_Single_Slug) {
                     add_action(
                         'woocommerce_blocks_payment_method_type_registration',
                         function (Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) use ($gateway) {
