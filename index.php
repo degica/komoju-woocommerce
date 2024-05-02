@@ -64,6 +64,7 @@ function woocommerce_komoju_init()
 
         wp_enqueue_script('komoju-fields', $komoju_fields_js);
     }
+
     function woocommerce_komoju_load_script_as_module($tag, $handle, $src)
     {
         if ($handle !== 'komoju-fields') {
@@ -107,7 +108,6 @@ function woocommerce_komoju_init()
             return;
 
         require_once 'includes/class-wc-gateway-komoju-block.php';
-        require_once 'includes/test-komoju-gateway.php';
     }
 
     add_action('woocommerce_blocks_loaded', 'register_komoju_payment_method_type');

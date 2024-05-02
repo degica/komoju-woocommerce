@@ -45,12 +45,28 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
 
 	public function get_payment_method_data()
 	{
+		if (!is_checkout()) {
+			return;
+		}
+
+		// We lazily fetch one session to be shared by all payment methods with dynamic fields.
+		static $checkout_session;
+		if (is_null($checkout_session)) {
+			$checkout_session = $this->gateway->create_session_for_fields();
+		}
+
 		return [
 			'id' => $this->name,
 			'title' => $this->gateway->title,
 			'description' => $this->gateway->description,
 			'supports' => array_filter($this->gateway->supports, array($this->gateway, 'supports')),
-			// 'paymentFields' => $this->gateway->payment_fields()
+			// 'paymentFields' => $this->gateway->payment_fields(),
+			'icon' => $this->gateway->icon,
+			'tokenName' => "komoju_payment_token",
+			'komojuApi' => KomojuApi::endpoint(),
+			'publishableKey' => $this->gateway->publishableKey,
+			'session' => json_encode($checkout_session),
+			'paymentType' => $this->gateway->payment_method['type_slug'],
 		];
 	}
 }
