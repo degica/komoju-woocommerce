@@ -188,6 +188,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 
     public function process_payment($order_id, $payment_type = null)
     {
+        $order = wc_get_order($order_id);
         // If we have a token from <komoju-fields>, we can process payment immediately.
         // Otherwise we will redirect to the KOMOJU hosted page.
         $token = sanitize_text_field($_POST['komoju_payment_token']);
@@ -197,7 +198,10 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         }
 
         $session = $this->create_session_for_order($order_id, $payment_type);
-        $result  = $this->komoju_api->paySession($session->id, ['payment_details' => $token]);
+        $result  = $this->komoju_api->paySession($session->id, [
+            'customer_email' =>  $order->get_billing_email(),
+            'payment_details' => $token
+        ]);
 
         if ($result->redirect_url) {
             return [
