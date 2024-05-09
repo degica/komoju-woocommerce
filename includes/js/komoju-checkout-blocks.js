@@ -11,6 +11,7 @@ function registerPaymentMethod(paymentMethod) {
         'publishable-key': settings.publishableKey,
         'session': settings.session,
         'payment-type': settings.paymentType,
+        'locale': settings.locale,
         style: { display: 'none' },
     });
 
