@@ -29,6 +29,7 @@ function registerPaymentMethod(paymentMethod) {
 
     const KomojuComponent = ({ activePaymentMethod, emitResponse, eventRegistration }) => {
         const { onPaymentSetup } = eventRegistration;
+        const komojuFieldEnabledMethods = ['komoju_credit_card', 'komoju_konbini', 'komoju_bank_transfer']
 
         useEffect(() => {
             const komojuField = document.querySelector(`komoju-fields[payment-type='${paymentMethod.paymentType}']`);
@@ -37,12 +38,7 @@ function registerPaymentMethod(paymentMethod) {
             const unsubscribe = onPaymentSetup(async () => {
                 console.log('onPaymentSetup', paymentMethod.id, activePaymentMethod)
                 if (paymentMethod.id != activePaymentMethod) return;
-                // Exceptions
-                if (paymentMethod.id === 'komoju_paidy') return;
-                if (paymentMethod.id === 'komoju_net_cash') return;
-                if (paymentMethod.id === 'komoju_bit_cash') return;
-                if (paymentMethod.id === 'komoju_web_money') return;
-                if (paymentMethod.id === 'komoju_pay_easy') return;
+                if (!komojuFieldEnabledMethods.includes(paymentMethod.id)) return;
 
                 if (komojuField && typeof komojuField.submit === 'function') {
                     var submitResult = await komojuField.broker.send({ type: 'submit' });
