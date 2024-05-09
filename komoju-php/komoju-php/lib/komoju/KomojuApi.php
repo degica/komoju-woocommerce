@@ -94,6 +94,7 @@ class KomojuApi
     // );
     private function post($uri, $payload)
     {
+        $payload['fraud_details'] = array('customer_ip' => $_SERVER['REMOTE_ADDR']);
         $ch        = curl_init($this->endpoint . $uri);
         $data_json = json_encode($payload);
         curl_setopt($ch, CURLOPT_POST, true);
