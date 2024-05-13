@@ -36,36 +36,41 @@ function registerPaymentMethod(paymentMethod) {
             komojuField.style.display = 'block';
 
             const unsubscribe = onPaymentSetup(async () => {
-                console.log('onPaymentSetup', paymentMethod.id, activePaymentMethod)
                 if (paymentMethod.id != activePaymentMethod) return;
                 if (!komojuFieldEnabledMethods.includes(paymentMethod.id)) return;
 
-                if (komojuField && typeof komojuField.submit === 'function') {
-                    var submitResult = await komojuField.broker.send({ type: 'submit' });
+                if (!(komojuField || typeof komojuField.submit === 'function')) {
+                    return {
+                        type: emitResponse.responseTypes.ERROR,
+                        message: 'There was an error',
+                    };
+                }
 
-                    if (submitResult.errors && submitResult.errors.length > 0) {
-                        return {
-                            type: emitResponse.responseTypes.ERROR,
-                            message: submitResult.errors[0].message,
-                        };
-                    }
+                function submitFields(fields) {
+                    return new Promise(async (resolve, reject) => {
+                        fields.addEventListener("komoju-invalid", reject);
+                        const token = await fields.submit();
+                        fields.removeEventListener("komoju-invalid", reject);
+                        if (token) resolve(token);
+                    });
+                }
 
-                    const komoju_payment_token = submitResult.token.id;
-
+                try {
+                    const token = await submitFields(komojuField);
                     return {
                         type: emitResponse.responseTypes.SUCCESS,
                         meta: {
                             paymentMethodData: {
-                                komoju_payment_token
+                                komoju_payment_token: token.id
                             },
                         },
                     };
+                } catch (e) {
+                    return {
+                        type: emitResponse.responseTypes.ERROR,
+                        message: e.detail.errors[0].message,
+                    };
                 }
-
-                return {
-                    type: emitResponse.responseTypes.ERROR,
-                    message: 'There was an error',
-                };
             });
 
             return () => {
