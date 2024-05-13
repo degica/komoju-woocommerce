@@ -16,7 +16,7 @@ function registerPaymentMethod(paymentMethod) {
     });
 
     const label = createElement('div', {
-        style: { display: 'block', alignItems: 'center', justifyContent: 'center' }
+        style: { display: 'block', alignItems: 'center', justifyContent: 'center', width: '100%' }
     },
         window.wp.htmlEntities.decodeEntities(settings.title || window.wp.i18n.__('NULL GATEWAY', 'test_komoju_gateway')),
         createElement('img', {
