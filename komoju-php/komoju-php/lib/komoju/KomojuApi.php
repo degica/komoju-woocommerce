@@ -96,7 +96,7 @@ class KomojuApi
     {
         $payload['fraud_details'] = array(
             'customer_ip' => $_SERVER['REMOTE_ADDR'],
-            'customer_email' => $payload['customer_email'],
+            'customer_email' => $payload['customer_email'] ?? '',
             'browser_language' => $_SERVER['HTTP_ACCEPT_LANGUAGE'],
             'browser_user_agent' => $_SERVER['HTTP_USER_AGENT'],
         );
