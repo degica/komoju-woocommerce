@@ -2,6 +2,11 @@
 
 class KomojuApi
 {
+    /* Fix for Deprecated: Creation of dynamic property */
+    public $endpoint;
+    public $via;
+    public $secretKey;
+
     public static function defaultEndpoint()
     {
         return 'https://komoju.com';
@@ -89,6 +94,13 @@ class KomojuApi
     // );
     private function post($uri, $payload)
     {
+        $payload['fraud_details'] = array(
+            'customer_ip' => $_SERVER['REMOTE_ADDR'],
+            'customer_email' => $payload['customer_email'] ?? '',
+            'browser_language' => $_SERVER['HTTP_ACCEPT_LANGUAGE'],
+            'browser_user_agent' => $_SERVER['HTTP_USER_AGENT'],
+        );
+
         $ch        = curl_init($this->endpoint . $uri);
         $data_json = json_encode($payload);
         curl_setopt($ch, CURLOPT_POST, true);

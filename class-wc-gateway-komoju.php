@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
  * @class       WC_Gateway_Komoju
  * @extends     WC_Payment_Gateway
  *
- * @version     3.0.9
+ * @version     3.1.0
  *
  * @author      Komoju
  */
@@ -27,6 +27,28 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
     /** @var WC_Logger Logger instance */
     public static $log;
+
+    /* Fix for Deprecated: Creation of dynamic property */
+    /** @var bool Debugging enabled */
+    public $debug;
+
+    /** @var string Invoice prefix */
+    public $invoice_prefix;
+    
+    /** @var string Secret key */
+    public $secretKey;
+
+    /** @var string Webhook secret token */
+    public $webhookSecretToken;
+
+    /** @var KomojuApi */
+    public $komoju_api;
+
+    /** @var string Instructions */
+    public $instructions;
+
+    /** @var bool Use on hold */
+    public $useOnHold;
 
     /**
      * Constructor for the gateway.
@@ -49,7 +71,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
         // Define user set variables
         $this->title                = $this->get_option('title');
-        $this->description          = $this->get_option('description');
+        $this->description          = $this->get_option('description') ?: $this->default_description();
         $this->instructions         = $this->get_option('instructions', $this->description);
         $this->useOnHold            = $this->get_option('useOnHold');
 
@@ -289,6 +311,14 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
     protected function default_title()
     {
         return __('Komoju', 'komoju-woocommerce');
+    }
+
+    protected function default_description()
+    {
+        return sprintf(
+            __('%s payments powered by KOMOJU', 'komoju-woocommerce'),
+            $this->default_title()
+        );
     }
 
     public static function to_cents($total, $currency = '')
