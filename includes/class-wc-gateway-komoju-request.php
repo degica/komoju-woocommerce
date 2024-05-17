@@ -46,7 +46,7 @@ class WC_Gateway_Komoju_Request
     {
         $komoju_args = $this->get_komoju_args($order, $method);
 
-        return 'https://komoju.com' . $this->Komoju_endpoint . $method . '/new' . '?' . $komoju_args;
+        return 'https://komoju.com' . $this->Komoju_endpoint . $method . '/new?' . $komoju_args;
     }
 
     /**
@@ -84,7 +84,7 @@ class WC_Gateway_Komoju_Request
         sort($qs_params);
         $query_string = implode('&', $qs_params);
 
-        $url  = $this->Komoju_endpoint . $method . '/new' . '?' . $query_string;
+        $url  = $this->Komoju_endpoint . $method . '/new?' . $query_string;
         $hmac = hash_hmac('sha256', $url, $this->gateway->secretKey);
         $query_string .= '&hmac=' . $hmac;
 

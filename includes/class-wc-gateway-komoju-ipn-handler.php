@@ -217,7 +217,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         $this->save_komoju_meta_data($order, $webhookEvent);
 
         if ('captured' === $webhookEvent->status()) {
-            $this->payment_complete($order, (!empty($webhookEvent->uuid()) ? wc_clean($webhookEvent->uuid()) : ''), __('IPN payment captured', 'komoju-woocommerce'));
+            $this->payment_complete($order, !empty($webhookEvent->uuid()) ? wc_clean($webhookEvent->uuid()) : '', __('IPN payment captured', 'komoju-woocommerce'));
 
             if (!empty($webhookEvent->payment_method_fee())) {
                 // log komoju transaction fee
@@ -329,7 +329,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
             $session = $client->session($session_id);
 
             return $session;
-        } catch (KomojuExceptionBadServer | KomojuExceptionBadJson $e) {
+        } catch (KomojuExceptionBadServer|KomojuExceptionBadJson $e) {
             return null;
         }
     }

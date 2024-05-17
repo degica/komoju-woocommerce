@@ -11,7 +11,7 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
     public function __construct(WC_Gateway_Komoju_Single_Slug $gateway)
     {
         $this->gateway = $gateway;
-        $this->name = $gateway->id;
+        $this->name    = $gateway->id;
     }
 
     public function initialize()
@@ -56,18 +56,18 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
         }
 
         return [
-            'id' => $this->name,
-            'title' => $this->gateway->title,
+            'id'          => $this->name,
+            'title'       => $this->gateway->title,
             'description' => $this->gateway->description,
-            'supports' => array_filter($this->gateway->supports, array($this->gateway, 'supports')),
+            'supports'    => array_filter($this->gateway->supports, [$this->gateway, 'supports']),
             // 'paymentFields' => $this->gateway->payment_fields(),
-            'icon' => $this->gateway->icon,
-            'tokenName' => "komoju_payment_token",
-            'komojuApi' => KomojuApi::endpoint(),
+            'icon'           => $this->gateway->icon,
+            'tokenName'      => 'komoju_payment_token',
+            'komojuApi'      => KomojuApi::endpoint(),
             'publishableKey' => $this->gateway->publishableKey,
-            'session' => json_encode($checkout_session),
-            'paymentType' => $this->gateway->payment_method['type_slug'],
-            'locale' => $this->gateway->locale
+            'session'        => json_encode($checkout_session),
+            'paymentType'    => $this->gateway->payment_method['type_slug'],
+            'locale'         => $this->gateway->locale,
         ];
     }
 }

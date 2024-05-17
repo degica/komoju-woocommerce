@@ -7,7 +7,7 @@
  *
  **/
 if (!defined('WP_UNINSTALL_PLUGIN')) {
-    exit();
+    exit;
 }
 
 delete_option('woocommerce_komoju_settings');

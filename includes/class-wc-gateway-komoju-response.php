@@ -20,7 +20,7 @@ abstract class WC_Gateway_Komoju_Response
         if (is_string($webhookEvent->external_order_num())) {
             $order_id = $webhookEvent->external_order_num();
 
-            // Nothing was found
+        // Nothing was found
         } else {
             WC_Gateway_Komoju::log('Error: Order ID (external_order_num) was not found in "webhookEvent".');
 

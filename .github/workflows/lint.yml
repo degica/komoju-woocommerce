@@ -20,4 +20,4 @@ jobs:
           composer
           composer install
       - name: Run lint
-        run: ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist --dry-run --verbose --format=json
+        run: ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist --dry-run
