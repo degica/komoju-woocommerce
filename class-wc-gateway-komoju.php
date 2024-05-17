@@ -34,7 +34,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
     /** @var string Invoice prefix */
     public $invoice_prefix;
-    
+
     /** @var string Secret key */
     public $secretKey;
 

@@ -58,9 +58,12 @@ Cypress.Commands.add('signinToWordpress', () => {
     cy.log('Logging in');
 
     cy.get('#user_login').type('degica').type('{selectAll}degica');
+    cy.wait(100);
     cy.get('#user_pass').type('deg1kaX7reme!');
+    cy.wait(100);
     cy.get('#wp-submit').click();
   });
+  cy.wait(1000);
 });
 
 Cypress.Commands.add('installWooCommerce', () => {
@@ -119,9 +122,10 @@ Cypress.Commands.add('setupKomoju', (
   cy.contains('Save changes').click();
 
   cy.contains('Payment methods').click();
+  cy.wait(1000);
 
   cy.get('input[type="checkbox"]').each($match => {
-    $match.each(function() {
+    $match.each(function () {
       if (this.checked) cy.wrap($match).click();
     });
   });
@@ -142,24 +146,18 @@ Cypress.Commands.add('enablePaymentGateway', (slug) => {
 });
 
 Cypress.Commands.add('goToStore', () => {
-  cy.get('#wp-admin-bar-view-store a').click({ force: true });
+  cy.visit('/?page_id=6');
 });
 
 Cypress.Commands.add('fillInAddress', () => {
-  cy.get('#billing_last_name').type('{selectAll}Johnson');
-  cy.get('#billing_first_name').type('{selectAll}Test');
-  cy.get('#billing_country').select('JP', {force: true});
-  cy.get('#billing_state').select('JP13', {force: true});
-  cy.get('#billing_city').type('{selectAll}Musashino');
-  cy.get('#billing_postcode').type('{selectAll}180-0004');
-  cy.get('#billing_address_1').type('{selectAll}a');
-  cy.get('#billing_phone').type('{selectAll}123123213213213');
-
-  // I cannot for the life of me figure out how to safely wait for WC to finish
-  // re-generating the payment fields. If I do anything at all here, Cypress complains
-  // about elements not being mounted, not existing, etc.
-  cy.wait(2000);
-  cy.get('.blockOverlay').should('not.exist');
+  cy.get('#billing-last_name').type('{selectAll}Johnson');
+  cy.get('#billing-first_name').type('{selectAll}Test');
+  cy.get('#billing-country').find('#components-form-token-input-0').type('Japan').first().click();
+  cy.get('#billing-state').find('input').type('Tokyo').first().click();
+  cy.get('#billing-postcode').type('{selectAll}180-0004');
+  cy.get('#billing-city').type('Musashino');
+  cy.get('#billing-address_1').type('address');
+  cy.get('#billing-phone').type('{selectAll}123123213213213');
 });
 
 Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
@@ -175,11 +173,11 @@ Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
   });
 
   return cy.wrap($iframe)
-  .its('0.contentDocument.body').should('not.be.empty')
-  // wraps "body" DOM element to allow
-  // chaining more Cypress commands, like ".find(...)"
-  // https://on.cypress.io/wrap
-  .then(cy.wrap)
+    .its('0.contentDocument.body').should('not.be.empty')
+    // wraps "body" DOM element to allow
+    // chaining more Cypress commands, like ".find(...)"
+    // https://on.cypress.io/wrap
+    .then(cy.wrap)
 })
 
 Cypress.Commands.add('createOrder', () => {
@@ -193,4 +191,17 @@ Cypress.Commands.add('createOrder', () => {
   cy.get('.calculate-action').click();
   cy.get('.save_order').click();
   return cy.get('#post_ID').invoke('val');
+});
+
+Cypress.Commands.add('addItemAndProceedToCheckout', () => {
+  cy.get('body').then(($body) => {
+    if ($body.find('button:contains("Add to cart")').length > 0) {
+      cy.contains('button', 'Add to cart').click();
+    }
+  });
+
+  cy.get('.wc-block-mini-cart__button').click();
+  cy.wait(100);
+  cy.contains('Go to checkout').click();
+  cy.wait(100);
 });

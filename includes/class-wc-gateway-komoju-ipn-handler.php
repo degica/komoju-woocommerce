@@ -52,8 +52,8 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
                 $checkout_url = wc_get_checkout_url();
                 wp_redirect($checkout_url);
                 wp_add_notice(
-                  __('Encountered an issue communicating with KOMOJU. Please wait a moment and try again.'),
-                  'error'
+                    __('Encountered an issue communicating with KOMOJU. Please wait a moment and try again.'),
+                    'error'
                 );
             } elseif (is_null($order)) {
                 $checkout_url = wc_get_checkout_url();

@@ -104,8 +104,9 @@ function woocommerce_komoju_init()
 
     function woocommerce_komoju_blocks()
     {
-        if (!class_exists('WC_Payment_Gateway'))
+        if (!class_exists('WC_Payment_Gateway')) {
             return;
+        }
 
         require_once 'includes/class-wc-gateway-komoju-block.php';
     }

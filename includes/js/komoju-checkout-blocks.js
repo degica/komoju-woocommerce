@@ -19,11 +19,12 @@ function registerPaymentMethod(paymentMethod) {
         style: { display: 'block', alignItems: 'center', justifyContent: 'center', width: '100%' }
     },
         window.wp.htmlEntities.decodeEntities(settings.title || window.wp.i18n.__('NULL GATEWAY', 'test_komoju_gateway')),
+        settings.icon ?
         createElement('img', {
             src: settings.icon,
             alt: settings.title || 'Payment Method Icon',
             style: { display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '10px' }
-        }),
+        }) : null,
         komojuFields
     );
 
