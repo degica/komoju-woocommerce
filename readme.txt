@@ -171,6 +171,13 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 
 == Changelog ==
 
+= 3.1.0 =
+Updated to use WooCommerce version 8.8.2.
+Adds a user editable description field.
+Fix missing/inconsistent payment icons display.
+Fixes warning about missing `fraud_details` data.
+Code maintainability improvements.
+
 = 3.0.9 =
 Fix bug with order cancel webhook.
 
