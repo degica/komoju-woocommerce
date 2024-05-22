@@ -8,6 +8,7 @@ if (!defined('ABSPATH')) {
  *KOMOJU settings.
  *
  * @class       WC_Settings_Page_Komoju
+ *
  * @extends     WC_Settings_Page
  *
  * @version     3.1.0
@@ -123,8 +124,8 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
            data-default="<?php echo esc_attr($setting['default']); ?>"
            type="text"
            <?php if ($untainted) {
-            echo 'disabled';
-        } ?>>
+               echo 'disabled';
+           } ?>>
     <p class="description">
         <?php echo __("Only modify this if you know what you're doing.", 'komoju-woocommerce'); ?>
     </p>
@@ -274,8 +275,8 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
                   name="<?php echo esc_attr($setting['id']); ?>[]"
                   value="<?php echo esc_attr($slug); ?>"
                   <?php if (in_array($slug, $value)) {
-                    echo 'checked';
-                } ?>
+                      echo 'checked';
+                  } ?>
                 >
                 <img
                   width="38"

@@ -27,11 +27,11 @@ class KomojuHostedPage
         $queryString = implode('&', $qsParams);
 
         $komojuEndpoint = '/en/api/' . $this->uuid . '/transactions/';
-        $url            = $komojuEndpoint . $paymentMethod . '/new' . '?' . $queryString;
+        $url            = $komojuEndpoint . $paymentMethod . '/new?' . $queryString;
         $hmac           = hash_hmac('sha256', $url, $this->secretKey);
         $queryString .= '&hmac=' . $hmac;
 
-        return $this->endpoint . $komojuEndpoint . $paymentMethod . '/new' . '?' . $queryString;
+        return $this->endpoint . $komojuEndpoint . $paymentMethod . '/new?' . $queryString;
     }
 
     public function validate($requestUri, $incomingHmac)

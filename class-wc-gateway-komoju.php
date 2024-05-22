@@ -9,6 +9,7 @@ if (!defined('ABSPATH')) {
  * Provides access to Japanese local payment methods.
  *
  * @class       WC_Gateway_Komoju
+ *
  * @extends     WC_Payment_Gateway
  *
  * @version     3.1.0
@@ -34,7 +35,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
     /** @var string Invoice prefix */
     public $invoice_prefix;
-    
+
     /** @var string Secret key */
     public $secretKey;
 
@@ -166,7 +167,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         // construct line items
         $line_items = [];
         foreach ($order->get_items() as $item) {
-            $image_parser = new DomDocument();
+            $image_parser = new DOMDocument();
             $image_parser->loadHTML($item->get_product()->get_image());
             $img = $image_parser->getElementsByTagName('img')->item(0);
 
@@ -233,7 +234,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         if ($payment_type) {
             $session_params['payment_types'] = [$payment_type];
         }
-        $remove_nulls = function ($v) { return !is_null($v); };
+        $remove_nulls                   = function ($v) { return !is_null($v); };
         $session_params['payment_data'] = array_filter(
             $session_params['payment_data'],
             $remove_nulls
@@ -330,7 +331,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         if (in_array(strtolower($currency), self::no_decimal_currencies())) {
             return absint($total);
         } else {
-            return absint(wc_format_decimal(((float) $total * 100), wc_get_price_decimals())); // In cents.
+            return absint(wc_format_decimal((float) $total * 100, wc_get_price_decimals())); // In cents.
         }
     }
 

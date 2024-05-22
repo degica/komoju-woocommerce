@@ -13,10 +13,10 @@ include_once 'class-wc-gateway-komoju-webhook-event.php';
 class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 {
     /* Fix for Deprecated: Creation of dynamic property */
-    /** @var string $publishableKey */
+    /** @var string */
     public $publishableKey;
 
-    /** @var array $payment_method */
+    /** @var array */
     public $payment_method;
 
     public function __construct($payment_method)
@@ -100,7 +100,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 
         try {
             $payment = $this->komoju_api->refund($payment_id, $payload);
-        } catch (KomojuExceptionBadServer | KomojuExceptionBadJson $e) {
+        } catch (KomojuExceptionBadServer|KomojuExceptionBadJson $e) {
             $error_message = $e->getMessage();
             $this->log($error_message);
 
@@ -199,8 +199,8 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 
         $session = $this->create_session_for_order($order_id, $payment_type);
         $result  = $this->komoju_api->paySession($session->id, [
-            'customer_email' =>  $order->get_billing_email(),
-            'payment_details' => $token
+            'customer_email'  => $order->get_billing_email(),
+            'payment_details' => $token,
         ]);
 
         if ($result->redirect_url) {

@@ -1,7 +1,11 @@
 name: lint
 
 on:
-  - push
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   php-cs-fixer:
@@ -20,4 +24,4 @@ jobs:
           composer
           composer install
       - name: Run lint
-        run: ./vendor/bin/php-cs-fixer fix --dry-run
+        run: ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist --dry-run

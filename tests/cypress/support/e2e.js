@@ -18,3 +18,9 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+	// Ignore the error if it's from a specific source
+	if (err.message.includes('@wordpress/interactivity')) return false;
+	return true;
+})
