@@ -122,15 +122,15 @@ function woocommerce_komoju_init()
         add_action(
             'woocommerce_blocks_payment_method_type_registration',
             function ($payment_method_registry) {
-            $gateways = WC()->payment_gateways()->payment_gateways();
+                $gateways = WC()->payment_gateways()->payment_gateways();
 
-            if ($gateways) {
-                foreach ($gateways as $gateway) {
-                    if ($gateway->enabled == 'yes' && $gateway instanceof WC_Gateway_Komoju_Single_Slug) {
-                        $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($gateway));
+                if ($gateways) {
+                    foreach ($gateways as $gateway) {
+                        if ($gateway->enabled == 'yes' && $gateway instanceof WC_Gateway_Komoju_Single_Slug) {
+                            $payment_method_registry->register(new WC_Gateway_Komoju_Blocks($gateway));
+                        }
                     }
                 }
-            }
-        });
+            });
     }
 }
