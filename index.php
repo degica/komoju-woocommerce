@@ -119,7 +119,9 @@ function woocommerce_komoju_init()
             return;
         }
 
-        add_action('woocommerce_blocks_payment_method_type_registration', function ($payment_method_registry) {
+        add_action(
+            'woocommerce_blocks_payment_method_type_registration',
+            function ($payment_method_registry) {
             $gateways = WC()->payment_gateways()->payment_gateways();
 
             if ($gateways) {
