@@ -171,6 +171,9 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 
 == Changelog ==
 
+= 3.1.1
+Hotfix released to resolve issue with other payment plugins.
+
 = 3.0.9 =
 Fix bug with order cancel webhook.
 
