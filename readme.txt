@@ -171,6 +171,10 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 
 == Changelog ==
 
+= 3.1.2 =
+
+Fix plugin conflicts
+
 = 3.1.0 =
 Updated to use WooCommerce version 8.8.3.
 Adds a user editable description field.
