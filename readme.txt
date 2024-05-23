@@ -171,6 +171,10 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 
 == Changelog ==
 
+= 3.1.3 =
+
+Fix UI Issues in checkout blocks
+
 = 3.1.2 =
 
 Fix plugin conflicts

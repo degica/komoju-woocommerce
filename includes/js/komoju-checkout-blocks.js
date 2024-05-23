@@ -2,7 +2,7 @@ const KomojuPaymentModule = (() => {
     const { useEffect, useCallback, useRef, createElement } = window.wp.element;
 
     function registerPaymentMethod(paymentMethod) {
-        let name = `${paymentMethod.id}`
+        const name = `${paymentMethod.id}`
         const settings = window.wc.wcSettings.getSetting(`${name}_data`, {});
 
         const komojuFields = createElement('komoju-fields', {
@@ -16,17 +16,26 @@ const KomojuPaymentModule = (() => {
             style: { display: 'none' },
         });
 
+        const description = window.wp.htmlEntities.decodeEntities(settings.description || window.wp.i18n.__('title', 'komoju_woocommerce'));
+        const descriptionDiv = createElement('div',
+            {
+                id: `${name}_description`,
+                style: { display: 'none', alignItems: 'center', justifyContent: 'center', width: '100%' }
+            },
+            description
+        );
+
         const label = createElement('div', {
-            style: { display: 'block', alignItems: 'center', justifyContent: 'center', width: '100%' }
+            style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '95%', flexWrap: 'wrap'}
         },
-            window.wp.htmlEntities.decodeEntities(settings.title || window.wp.i18n.__('NULL GATEWAY', 'test_komoju_gateway')),
+        createElement('span', { style: { width: '80%' } }, window.wp.htmlEntities.decodeEntities(settings.title || window.wp.i18n.__('title', 'komoju_woocommerce'))),
             settings.icon ?
                 createElement('img', {
                     src: settings.icon,
                     alt: settings.title || 'Payment Method Icon',
                     style: { display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '10px' }
                 }) : null,
-            komojuFields
+            descriptionDiv
         );
 
         const KomojuComponent = ({ activePaymentMethod, emitResponse, eventRegistration }) => {
@@ -34,8 +43,12 @@ const KomojuPaymentModule = (() => {
             const komojuFieldEnabledMethods = ['komoju_credit_card', 'komoju_konbini', 'komoju_bank_transfer']
 
             useEffect(() => {
+                if (paymentMethod.id != activePaymentMethod) return;
+
                 const komojuField = document.querySelector(`komoju-fields[payment-type='${paymentMethod.paymentType}']`);
                 komojuField.style.display = 'block';
+                const descriptionElement = document.getElementById(`${name}_description`);
+                descriptionElement.style.display = 'block';
 
                 const unsubscribe = onPaymentSetup(async () => {
                     if (paymentMethod.id != activePaymentMethod) return;
@@ -77,6 +90,7 @@ const KomojuPaymentModule = (() => {
 
                 return () => {
                     komojuField.style.display = 'none';
+                    descriptionElement.style.display = 'none';
                     unsubscribe();
                 };
             }, [
@@ -84,6 +98,8 @@ const KomojuPaymentModule = (() => {
                 emitResponse.responseTypes.ERROR,
                 emitResponse.responseTypes.SUCCESS
             ]);
+
+            return komojuFields;
         };
 
         const Block_Gateway = {
