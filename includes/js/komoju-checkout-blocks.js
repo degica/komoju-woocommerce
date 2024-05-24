@@ -28,7 +28,7 @@ const KomojuPaymentModule = (() => {
         const label = createElement('div', {
             style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '95%', flexWrap: 'wrap'}
         },
-        createElement('span', { style: { width: '80%' } }, window.wp.htmlEntities.decodeEntities(settings.title || window.wp.i18n.__('title', 'komoju_woocommerce'))),
+        createElement('span', { style: { width: 'auto' } }, window.wp.htmlEntities.decodeEntities(settings.title || window.wp.i18n.__('title', 'komoju_woocommerce'))),
             settings.icon ?
                 createElement('img', {
                     src: settings.icon,
