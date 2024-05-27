@@ -4,18 +4,6 @@ const KomojuPaymentModule = (() => {
     function registerPaymentMethod(paymentMethod) {
         const name = `${paymentMethod.id}`
         const settings = window.wc.wcSettings.getSetting(`${name}_data`, {});
-
-        const komojuFields = createElement('komoju-fields', {
-            'token': '',
-            'name': 'komoju_payment_token',
-            'komoju-api': settings.komojuApi,
-            'publishable-key': settings.publishableKey,
-            'session': settings.session,
-            'payment-type': settings.paymentType,
-            'locale': settings.locale,
-            style: { display: 'none' },
-        });
-
         const description = window.wp.htmlEntities.decodeEntities(settings.description || window.wp.i18n.__('title', 'komoju_woocommerce'));
         const descriptionDiv = createElement('div',
             {
@@ -26,9 +14,9 @@ const KomojuPaymentModule = (() => {
         );
 
         const label = createElement('div', {
-            style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '95%', flexWrap: 'wrap'}
+            style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '95%', flexWrap: 'wrap' }
         },
-        createElement('span', { style: { width: 'auto' } }, window.wp.htmlEntities.decodeEntities(settings.title || window.wp.i18n.__('title', 'komoju_woocommerce'))),
+            createElement('span', { style: { width: 'auto' } }, window.wp.htmlEntities.decodeEntities(settings.title || window.wp.i18n.__('title', 'komoju_woocommerce'))),
             settings.icon ?
                 createElement('img', {
                     src: settings.icon,
@@ -61,7 +49,7 @@ const KomojuPaymentModule = (() => {
                         };
                     }
 
-                    function submitFields(fields) {
+                    async function submitFields(fields) {
                         return new Promise(async (resolve, reject) => {
                             fields.addEventListener("komoju-invalid", reject);
                             const token = await fields.submit();
@@ -99,6 +87,17 @@ const KomojuPaymentModule = (() => {
                 emitResponse.responseTypes.SUCCESS
             ]);
 
+            const komojuFields = createElement('komoju-fields', {
+                'token': '',
+                'name': 'komoju_payment_token',
+                'komoju-api': settings.komojuApi,
+                'publishable-key': settings.publishableKey,
+                'session': settings.session,
+                'payment-type': settings.paymentType,
+                'locale': settings.locale,
+                style: { display: 'none' },
+            });
+
             return komojuFields;
         };
 
@@ -119,9 +118,7 @@ const KomojuPaymentModule = (() => {
     return {
         init: () => {
             const paymentMethodData = window.wc.wcSettings.getSetting('paymentMethodData', {});
-            Object.values(paymentMethodData).forEach((value) => {
-                registerPaymentMethod(value);
-            });
+            Object.values(paymentMethodData).forEach(registerPaymentMethod);
         }
     };
 })();
