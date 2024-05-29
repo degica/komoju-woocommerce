@@ -34,7 +34,7 @@ const KomojuPaymentModule = (() => {
                 if (paymentMethod.id != activePaymentMethod) return;
 
                 const komojuField = document.querySelector(`komoju-fields[payment-type='${paymentMethod.paymentType}']`);
-                komojuField.style.display = 'block';
+                if (komojuFieldEnabledMethods.includes(paymentMethod.id)) komojuField.style.display = 'block';
                 const descriptionElement = document.getElementById(`${name}_description`);
                 descriptionElement.style.display = 'block';
 

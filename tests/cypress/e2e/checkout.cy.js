@@ -71,7 +71,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.fillInAddress();
 
     cy.get('label[for="radio-control-wc-payment-method-options-komoju_web_money"]').click();
-    cy.get('komoju-fields[payment-type="web_money"]').should('be.visible');
+    // cy.get('komoju-fields[payment-type="web_money"]').should('be.visible');
     cy.get('komoju-fields[payment-type="web_money"] iframe').iframe().find('komoju-host').should('exist');
 
     cy.contains('Place Order').click();
