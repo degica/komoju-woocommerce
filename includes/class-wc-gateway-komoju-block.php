@@ -68,6 +68,7 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
             'session'        => json_encode($checkout_session),
             'paymentType'    => $this->gateway->payment_method['type_slug'],
             'locale'         => $this->gateway->locale,
+            'inlineFields'   => $this->gateway->has_fields,
         ];
     }
 }
