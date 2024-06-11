@@ -5,16 +5,19 @@ const KomojuPaymentModule = (() => {
         let name = `${paymentMethod.id}`
         const settings = window.wc.wcSettings.getSetting(`${name}_data`, {});
 
-        const komojuFields = createElement('komoju-fields', {
-            'token': '',
-            'name': 'komoju_payment_token',
-            'komoju-api': settings.komojuApi,
-            'publishable-key': settings.publishableKey,
-            'session': settings.session,
-            'payment-type': settings.paymentType,
-            'locale': settings.locale,
-            style: { display: 'none' },
-        });
+        const komojuFields =
+            settings.inlineFields
+                ? createElement('komoju-fields', {
+                    'token': '',
+                    'name': 'komoju_payment_token',
+                    'komoju-api': settings.komojuApi,
+                    'publishable-key': settings.publishableKey,
+                    'session': settings.session,
+                    'payment-type': settings.paymentType,
+                    'locale': settings.locale,
+                    style: { display: 'none' },
+                })
+                : null;
 
         const label = createElement('div', {
             style: { display: 'block', alignItems: 'center', justifyContent: 'center', width: '100%' }

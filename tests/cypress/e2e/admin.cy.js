@@ -14,13 +14,13 @@ describe('KOMOJU for WooCommerce: Admin', () => {
 
   it('lets me add and remove specialized payment gateways', () => {
     cy.setupKomoju(['konbini', 'credit_card']);
-    cy.contains('Payments').click();
+    cy.clickPaymentTab();
 
     cy.get('.form-table').should('include.text', 'Komoju - Konbini');
     cy.get('.form-table').should('include.text', 'Komoju - Credit Card');
 
     cy.setupKomoju(['paypay', 'linepay']);
-    cy.contains('Payments').click();
+    cy.clickPaymentTab();
 
     cy.get('.form-table').should('not.include.text', 'Komoju - Konbini');
     cy.get('.form-table').should('not.include.text', 'Komoju - Credit Card');
