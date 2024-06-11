@@ -10,7 +10,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
   it('lets me make a payment using the specialized konbini gateway', () => {
     cy.setupKomoju(['konbini', 'credit_card']);
-    cy.contains('Payments').click();
+    cy.clickPaymentTab();
     cy.enablePaymentGateway('komoju_konbini');
     cy.goToStore();
     cy.addItemAndProceedToCheckout();
@@ -38,7 +38,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
   it('lets me make a payment using the specialized credit card gateway', () => {
     cy.setupKomoju(['credit_card']);
-    cy.contains('Payments').click();
+    cy.clickPaymentTab();
     cy.enablePaymentGateway('komoju_credit_card');
     cy.contains('Save changes').click();
     cy.goToStore();
@@ -62,7 +62,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
   it('lets me use the specialized WebMoney gateway, despite it being unsupported by Fields', () => {
     cy.setupKomoju(['credit_card', 'konbini', 'web_money']);
-    cy.contains('Payments').click();
+    cy.clickPaymentTab();
     cy.enablePaymentGateway('komoju_web_money');
     cy.contains('Save changes').click();
     cy.goToStore();
@@ -83,7 +83,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
   it('lets me turn checkout icons on and off', () => {
     cy.setupKomoju(['konbini', 'credit_card']);
-    cy.contains('Payments').click();
+    cy.clickPaymentTab();
     cy.enablePaymentGateway('komoju_credit_card');
 
     cy.get('[data-gateway_id="komoju_credit_card"] a.button')

@@ -205,3 +205,7 @@ Cypress.Commands.add('addItemAndProceedToCheckout', () => {
   cy.contains('Go to checkout').click();
   cy.wait(100);
 });
+
+Cypress.Commands.add('clickPaymentTab', () => {
+  cy.visit('/wp-admin/admin.php?page=wc-settings&tab=checkout');
+});

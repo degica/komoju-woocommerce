@@ -63,6 +63,14 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 
         parent::__construct();
 
+        // Gimmick -
+        // If fields should not be rendered honour user-defined descriptions only
+        // This prevents fields to be rendered if 1) the description of the corresponding payment method is empty, and either 2a) publishable key is unavailable or 2b) inline fields are opted out in payment method settings
+        // This counters a non-intuitive behaviour in WC (https://github.com/woocommerce/woocommerce/blob/5dd7713346786c5874615b34a1d56f81a29b673f/plugins/woocommerce/templates/checkout/payment-method.php#L28)
+        if (!$this->has_fields) {
+            $this->description = $this->get_option('description');
+        }
+
         $this->method_description = sprintf(
             __('%s payments powered by KOMOJU', 'komoju-woocommerce'),
             $this->default_title()

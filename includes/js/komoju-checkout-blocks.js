@@ -87,16 +87,19 @@ const KomojuPaymentModule = (() => {
                 emitResponse.responseTypes.SUCCESS
             ]);
 
-            const komojuFields = createElement('komoju-fields', {
-                'token': '',
-                'name': 'komoju_payment_token',
-                'komoju-api': settings.komojuApi,
-                'publishable-key': settings.publishableKey,
-                'session': settings.session,
-                'payment-type': settings.paymentType,
-                'locale': settings.locale,
-                style: { display: 'none' },
-            });
+            const komojuFields = 
+                settings.inlineFields
+                    ? createElement('komoju-fields', {
+                    'token': '',
+                    'name': 'komoju_payment_token',
+                    'komoju-api': settings.komojuApi,
+                    'publishable-key': settings.publishableKey,
+                    'session': settings.session,
+                    'payment-type': settings.paymentType,
+                    'locale': settings.locale,
+                    style: { display: 'none' },
+                })
+                : null;
 
             return komojuFields;
         };
