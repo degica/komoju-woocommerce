@@ -46,6 +46,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.addItemAndProceedToCheckout();
     cy.fillInAddress();
 
+    cy.get('label[for="radio-control-wc-payment-method-options-komoju_credit_card"]').click();
     cy.get('komoju-fields[payment-type="credit_card"]').should('be.visible');
     cy.get('komoju-fields[payment-type="credit_card"] iframe').iframe().find('komoju-host').should('exist');
     cy.wait(2000);
