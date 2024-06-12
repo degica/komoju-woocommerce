@@ -4,14 +4,17 @@ const KomojuPaymentModule = (() => {
     function registerPaymentMethod(paymentMethod) {
         const name = `${paymentMethod.id}`
         const settings = window.wc.wcSettings.getSetting(`${name}_data`, {});
-        const description = window.wp.htmlEntities.decodeEntities(settings.description || window.wp.i18n.__('title', 'komoju_woocommerce'));
-        const descriptionDiv = createElement('div',
-            {
-                id: `${name}_description`,
-                style: { display: 'none', alignItems: 'center', justifyContent: 'center', width: '100%' }
-            },
-            description
-        );
+        const description = window.wp.htmlEntities.decodeEntities(window.wp.i18n.__(settings.description, 'komoju_woocommerce'));
+        let descriptionDiv = null;
+        if (description) {
+            descriptionDiv = createElement('div',
+                {
+                    id: `${name}_description`,
+                    style: { display: 'none', alignItems: 'center', justifyContent: 'center', width: '100%' }
+                },
+                description
+            );
+        }
 
         const label = createElement('div', {
             style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '95%', flexWrap: 'wrap' }
@@ -34,13 +37,14 @@ const KomojuPaymentModule = (() => {
                 if (paymentMethod.id != activePaymentMethod) return;
 
                 const komojuField = document.querySelector(`komoju-fields[payment-type='${paymentMethod.paymentType}']`);
-                if (komojuFieldEnabledMethods.includes(paymentMethod.id)) komojuField.style.display = 'block';
+                if (komojuFieldEnabledMethods.includes(paymentMethod.id) && komojuField) komojuField.style.display = 'block';
                 const descriptionElement = document.getElementById(`${name}_description`);
-                descriptionElement.style.display = 'block';
+                if (descriptionElement) descriptionElement.style.display = 'block';
 
                 const unsubscribe = onPaymentSetup(async () => {
                     if (paymentMethod.id != activePaymentMethod) return;
                     if (!komojuFieldEnabledMethods.includes(paymentMethod.id)) return;
+                    if (!settings.inlineFields) return;
 
                     if (!(komojuField || typeof komojuField.submit === 'function')) {
                         return {
@@ -49,12 +53,26 @@ const KomojuPaymentModule = (() => {
                         };
                     }
 
-                    async function submitFields(fields) {
-                        return new Promise(async (resolve, reject) => {
+                    function submitFields(fields) {
+                        return new Promise((resolve, reject) => {
                             fields.addEventListener("komoju-invalid", reject);
-                            const token = await fields.submit();
-                            fields.removeEventListener("komoju-invalid", reject);
-                            if (token) resolve(token);
+                            fields.submit().then(token => {
+                                fields.removeEventListener("komoju-invalid", reject);
+                                if (token) {
+                                    resolve(token);
+                                } else {
+                                    reject({
+                                        detail: {
+                                            errors: [
+                                                { message: "Token not found" }
+                                            ]
+                                        }
+                                    });
+                                }
+                            }).catch(error => {
+                                fields.removeEventListener("komoju-invalid", reject);
+                                reject(error);
+                            });
                         });
                     }
 
@@ -69,16 +87,19 @@ const KomojuPaymentModule = (() => {
                             },
                         };
                     } catch (e) {
+                        const errorMessage = e.detail && e.detail.errors && e.detail.errors.length > 0
+                            ? e.detail.errors[0].message
+                            : "Unknown error occurred";
                         return {
                             type: emitResponse.responseTypes.ERROR,
-                            message: e.detail.errors[0].message,
+                            message: errorMessage
                         };
                     }
                 });
 
                 return () => {
-                    komojuField.style.display = 'none';
-                    descriptionElement.style.display = 'none';
+                    if (komojuField) komojuField.style.display = 'none';
+                    if (descriptionElement) descriptionElement.style.display = 'none';
                     unsubscribe();
                 };
             }, [
