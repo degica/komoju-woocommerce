@@ -72,7 +72,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
 
         // Define user set variables
         $this->title                = $this->get_option('title');
-        $this->description          = $this->get_option('description') ?: $this->default_description();
+        $this->description          = $this->get_option('description');
         $this->instructions         = $this->get_option('instructions', $this->description);
         $this->useOnHold            = $this->get_option('useOnHold');
 

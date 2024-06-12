@@ -2,34 +2,31 @@ const KomojuPaymentModule = (() => {
     const { useEffect, useCallback, useRef, createElement } = window.wp.element;
 
     function registerPaymentMethod(paymentMethod) {
-        let name = `${paymentMethod.id}`
+        const name = `${paymentMethod.id}`
         const settings = window.wc.wcSettings.getSetting(`${name}_data`, {});
-
-        const komojuFields =
-            settings.inlineFields
-                ? createElement('komoju-fields', {
-                    'token': '',
-                    'name': 'komoju_payment_token',
-                    'komoju-api': settings.komojuApi,
-                    'publishable-key': settings.publishableKey,
-                    'session': settings.session,
-                    'payment-type': settings.paymentType,
-                    'locale': settings.locale,
-                    style: { display: 'none' },
-                })
-                : null;
+        const description = window.wp.htmlEntities.decodeEntities(window.wp.i18n.__(settings.description, 'komoju_woocommerce'));
+        let descriptionDiv = null;
+        if (description) {
+            descriptionDiv = createElement('div',
+                {
+                    id: `${name}_description`,
+                    style: { display: 'none', alignItems: 'center', justifyContent: 'center', width: '100%' }
+                },
+                description
+            );
+        }
 
         const label = createElement('div', {
-            style: { display: 'block', alignItems: 'center', justifyContent: 'center', width: '100%' }
+            style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '95%', flexWrap: 'wrap' }
         },
-            window.wp.htmlEntities.decodeEntities(settings.title || window.wp.i18n.__('NULL GATEWAY', 'test_komoju_gateway')),
+            createElement('span', { style: { width: 'auto' } }, window.wp.htmlEntities.decodeEntities(settings.title || window.wp.i18n.__('title', 'komoju_woocommerce'))),
             settings.icon ?
                 createElement('img', {
                     src: settings.icon,
                     alt: settings.title || 'Payment Method Icon',
                     style: { display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '10px' }
                 }) : null,
-            komojuFields
+            descriptionDiv
         );
 
         const KomojuComponent = ({ activePaymentMethod, emitResponse, eventRegistration }) => {
@@ -37,12 +34,17 @@ const KomojuPaymentModule = (() => {
             const komojuFieldEnabledMethods = ['komoju_credit_card', 'komoju_konbini', 'komoju_bank_transfer']
 
             useEffect(() => {
+                if (paymentMethod.id != activePaymentMethod) return;
+
                 const komojuField = document.querySelector(`komoju-fields[payment-type='${paymentMethod.paymentType}']`);
-                komojuField.style.display = 'block';
+                if (komojuFieldEnabledMethods.includes(paymentMethod.id) && komojuField) komojuField.style.display = 'block';
+                const descriptionElement = document.getElementById(`${name}_description`);
+                if (descriptionElement) descriptionElement.style.display = 'block';
 
                 const unsubscribe = onPaymentSetup(async () => {
                     if (paymentMethod.id != activePaymentMethod) return;
                     if (!komojuFieldEnabledMethods.includes(paymentMethod.id)) return;
+                    if (!settings.inlineFields) return;
 
                     if (!(komojuField || typeof komojuField.submit === 'function')) {
                         return {
@@ -52,11 +54,25 @@ const KomojuPaymentModule = (() => {
                     }
 
                     function submitFields(fields) {
-                        return new Promise(async (resolve, reject) => {
+                        return new Promise((resolve, reject) => {
                             fields.addEventListener("komoju-invalid", reject);
-                            const token = await fields.submit();
-                            fields.removeEventListener("komoju-invalid", reject);
-                            if (token) resolve(token);
+                            fields.submit().then(token => {
+                                fields.removeEventListener("komoju-invalid", reject);
+                                if (token) {
+                                    resolve(token);
+                                } else {
+                                    reject({
+                                        detail: {
+                                            errors: [
+                                                { message: "Token not found" }
+                                            ]
+                                        }
+                                    });
+                                }
+                            }).catch(error => {
+                                fields.removeEventListener("komoju-invalid", reject);
+                                reject(error);
+                            });
                         });
                     }
 
@@ -71,15 +87,19 @@ const KomojuPaymentModule = (() => {
                             },
                         };
                     } catch (e) {
+                        const errorMessage = e.detail && e.detail.errors && e.detail.errors.length > 0
+                            ? e.detail.errors[0].message
+                            : "Unknown error occurred";
                         return {
                             type: emitResponse.responseTypes.ERROR,
-                            message: e.detail.errors[0].message,
+                            message: errorMessage
                         };
                     }
                 });
 
                 return () => {
-                    komojuField.style.display = 'none';
+                    if (komojuField) komojuField.style.display = 'none';
+                    if (descriptionElement) descriptionElement.style.display = 'none';
                     unsubscribe();
                 };
             }, [
@@ -87,6 +107,22 @@ const KomojuPaymentModule = (() => {
                 emitResponse.responseTypes.ERROR,
                 emitResponse.responseTypes.SUCCESS
             ]);
+
+            const komojuFields = 
+                settings.inlineFields
+                    ? createElement('komoju-fields', {
+                    'token': '',
+                    'name': 'komoju_payment_token',
+                    'komoju-api': settings.komojuApi,
+                    'publishable-key': settings.publishableKey,
+                    'session': settings.session,
+                    'payment-type': settings.paymentType,
+                    'locale': settings.locale,
+                    style: { display: 'none' },
+                })
+                : null;
+
+            return komojuFields;
         };
 
         const Block_Gateway = {
@@ -106,9 +142,7 @@ const KomojuPaymentModule = (() => {
     return {
         init: () => {
             const paymentMethodData = window.wc.wcSettings.getSetting('paymentMethodData', {});
-            Object.values(paymentMethodData).forEach((value) => {
-                registerPaymentMethod(value);
-            });
+            Object.values(paymentMethodData).forEach(registerPaymentMethod);
         }
     };
 })();
