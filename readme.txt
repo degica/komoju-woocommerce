@@ -171,6 +171,11 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 
 == Changelog ==
 
+= 3.1.3 =
+
+Adjust credit card icon positions
+Prevent rendering hosted fields when it should not be rendered
+
 = 3.1.2 =
 
 Fix plugin conflicts
