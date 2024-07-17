@@ -39,10 +39,10 @@ Cypress.Commands.add('installWordpress', () => {
     cy.contains('English (United States)').click();
     cy.get('#language-continue').click();
 
-    cy.get('#weblog_title').type('Degica Mart').type('{selectAll}Degica Mart');
-    cy.get('#user_login').type('degica');
-    cy.get('#pass1').type('{selectAll}deg1kaX7reme!');
-    cy.get('#admin_email').type('dev@degica.com');
+    cy.get('#weblog_title').clear().type('Degica Mart');
+    cy.get('#user_login').clear().type('degica');
+    cy.get('#pass1').clear().type('deg1kaX7reme!');
+    cy.get('#admin_email').clear().type('dev@degica.com');
     cy.get('#submit').click();
   });
 });
@@ -57,9 +57,9 @@ Cypress.Commands.add('signinToWordpress', () => {
     }
     cy.log('Logging in');
 
-    cy.get('#user_login').type('degica');
+    cy.get('#user_login').clear().type('degica');
     cy.wait(100);
-    cy.get('#user_pass').type('deg1kaX7reme!');
+    cy.get('#user_pass').clear().type('deg1kaX7reme!');
     cy.wait(100);
     cy.get('#wp-submit').click();
   });
@@ -112,13 +112,13 @@ Cypress.Commands.add('setupKomoju', (
 ) => {
   cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
-  cy.get('#komoju_woocommerce_secret_key').type('{selectAll}').type(secretKey);
-  cy.get('#komoju_woocommerce_publishable_key').type('{selectAll}').type(publishableKey);
+  cy.get('#komoju_woocommerce_secret_key').clear().type(secretKey);
+  cy.get('#komoju_woocommerce_publishable_key').clear().type(publishableKey);
   cy.get('.komoju-endpoint-komoju_woocommerce_fields_url').then($element => {
     const $edit = $element.find('.komoju-endpoint-edit');
     if ($edit.length > 0) { return cy.wrap($edit).click(); }
   });
-  cy.get('#komoju_woocommerce_fields_url').type('{selectAll}').type('https://multipay-staging.test.komoju.com/fields.js');
+  cy.get('#komoju_woocommerce_fields_url').clear().type('https://multipay-staging.test.komoju.com/fields.js');
   cy.contains('Save changes').click();
 
   cy.contains('Payment methods').click();
@@ -150,14 +150,14 @@ Cypress.Commands.add('goToStore', () => {
 });
 
 Cypress.Commands.add('fillInAddress', () => {
-  cy.get('#billing-last_name').type('{selectAll}Johnson');
-  cy.get('#billing-first_name').type('{selectAll}Test');
+  cy.get('#billing-last_name').clear().type('Johnson');
+  cy.get('#billing-first_name').clear().type('Test');
   cy.get('#billing-country').find('#components-form-token-input-0').type('Japan').first().click();
   cy.get('#billing-state').find('input').type('Tokyo').first().click();
-  cy.get('#billing-postcode').type('{selectAll}180-0004');
-  cy.get('#billing-city').type('Musashino');
-  cy.get('#billing-address_1').type('address');
-  cy.get('#billing-phone').type('{selectAll}123123213213213');
+  cy.get('#billing-postcode').clear().type('180-0004');
+  cy.get('#billing-city').clear().type('Musashino');
+  cy.get('#billing-address_1').clear().type('address');
+  cy.get('#billing-phone').clear().type('123123213213213');
 });
 
 Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {

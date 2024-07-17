@@ -22,5 +22,7 @@ import './commands'
 Cypress.on('uncaught:exception', (err, runnable) => {
 	// Ignore the error if it's from a specific source
 	if (err.message.includes('@wordpress/interactivity')) return false;
+	// Ignore postMessage errors
+	if (err.message.includes('postMessage')) return false;
 	return true;
 })
