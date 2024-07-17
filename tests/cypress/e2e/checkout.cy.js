@@ -33,6 +33,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.contains('How to make a payment at Family Mart', { matchCase: false, timeout: 20000 }).should('be.visible');
     cy.location('pathname').should('include', '/sessions/');
     cy.contains('Return to').click();
+    cy.wait(1000);
     cy.contains('Thank you. Your order has been received.').should('be.visible');
   })
 

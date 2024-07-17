@@ -57,7 +57,7 @@ Cypress.Commands.add('signinToWordpress', () => {
     }
     cy.log('Logging in');
 
-    cy.get('#user_login').type('degica').type('{selectAll}degica');
+    cy.get('#user_login').type('degica');
     cy.wait(100);
     cy.get('#user_pass').type('deg1kaX7reme!');
     cy.wait(100);
@@ -203,7 +203,7 @@ Cypress.Commands.add('addItemAndProceedToCheckout', () => {
   cy.get('.wc-block-mini-cart__button').click();
   cy.wait(100);
   cy.contains('Go to checkout').click();
-  cy.wait(100);
+  cy.wait(1000);
 });
 
 Cypress.Commands.add('clickPaymentTab', () => {
