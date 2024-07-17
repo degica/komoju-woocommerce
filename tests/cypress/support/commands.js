@@ -50,20 +50,16 @@ Cypress.Commands.add('installWordpress', () => {
 Cypress.Commands.add('signinToWordpress', () => {
   cy.visit('/wp-admin');
 
-  cy.window().then(win => {
-    if (!win.document.querySelector('#loginform')) {
+  cy.get('body').then(($body) => {
+    if (!$body.find('#loginform').length) {
       cy.log('Already logged in');
       return;
     }
     cy.log('Logging in');
-
-    cy.get('#user_login').clear().type('degica');
-    cy.wait(100);
-    cy.get('#user_pass').clear().type('deg1kaX7reme!');
-    cy.wait(100);
-    cy.get('#wp-submit').click();
+    cy.get('#user_login').should('be.visible').clear().type('degica');
+    cy.get('#user_pass').should('be.visible').clear().type('deg1kaX7reme!');
+    cy.get('#wp-submit').should('be.visible').click();
   });
-  cy.wait(1000);
 });
 
 Cypress.Commands.add('installWooCommerce', () => {
@@ -200,10 +196,8 @@ Cypress.Commands.add('addItemAndProceedToCheckout', () => {
     }
   });
 
-  cy.get('.wc-block-mini-cart__button').click();
-  cy.wait(100);
-  cy.contains('Go to checkout').click();
-  cy.wait(1000);
+  cy.get('.wc-block-mini-cart__button').should('be.visible').click();
+  cy.contains('Go to checkout').should('be.visible').click();
 });
 
 Cypress.Commands.add('clickPaymentTab', () => {

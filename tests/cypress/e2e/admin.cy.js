@@ -3,13 +3,14 @@
 describe('KOMOJU for WooCommerce: Admin', () => {
   beforeEach(() => {
     cy.installWordpress();
-    cy.signinToWordpress();
-    cy.installWooCommerce();
-    cy.installKomoju();
+    cy.signinToWordpress().then(() => {
+      cy.installWooCommerce();
+      cy.installKomoju();
 
-    cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
-    cy.get('.komoju-endpoint-field').contains('Reset').click();
-    cy.contains('Save changes').click();
+      cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
+      cy.get('.komoju-endpoint-field').contains('Reset').click();
+      cy.contains('Save changes').click();
+    });
   })
 
   it('lets me add and remove specialized payment gateways', () => {
@@ -49,8 +50,8 @@ describe('KOMOJU for WooCommerce: Admin', () => {
   it('updates secret key with one-click setup', () => {
     cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
-    cy.get('#komoju_woocommerce_secret_key').type('{selectAll}{backspace}');
-    cy.get('#komoju_woocommerce_webhook_secret').type('{selectAll}{backspace}');
+    cy.get('#komoju_woocommerce_secret_key').clear();
+    cy.get('#komoju_woocommerce_webhook_secret').clear();
     cy.contains('Save changes').click();
 
     cy.contains('Payment methods').click();
