@@ -3,9 +3,10 @@
 describe("KOMOJU for WooCommerce: Refunded webhook", () => {
   beforeEach(() => {
     cy.installWordpress();
-    cy.signinToWordpress();
-    cy.installWooCommerce();
-    cy.installKomoju();
+    cy.signinToWordpress().then(() => {
+      cy.installWooCommerce();
+      cy.installKomoju();
+    });
   });
 
   it("sets an order as a refunded based on incoming refunded webhook", () => {

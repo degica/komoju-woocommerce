@@ -3,9 +3,10 @@
 describe('KOMOJU for WooCommerce: Checkout', () => {
   beforeEach(() => {
     cy.installWordpress();
-    cy.signinToWordpress();
-    cy.installWooCommerce();
-    cy.installKomoju();
+    cy.signinToWordpress().then(() => {
+      cy.installWooCommerce();
+      cy.installKomoju();
+    });
   })
 
   it('lets me make a payment using the specialized konbini gateway', () => {
