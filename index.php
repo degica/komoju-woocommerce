@@ -1,12 +1,21 @@
 <?php
 /*
-Plugin Name: KOMOJU Payments
-Plugin URI: https://github.com/komoju/komoju-woocommerce
-Description: Extends WooCommerce with KOMOJU gateway.
-Version: 3.1.3
-Author: KOMOJU
-Author URI: https://komoju.com
-*/
+ * Plugin Name: KOMOJU Payments
+ * Plugin URI: https://github.com/komoju/komoju-woocommerce
+ * Description: Extends WooCommerce with KOMOJU gateway.
+ * Author: KOMOJU
+ * Author URI: https://komoju.com
+ * Version: 3.1.3
+ * WC requires at least: 6.0
+ * WC tested up to: 8.8.3
+ */
+
+add_action('before_woocommerce_init', function () {
+    if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, true);
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+    }
+});
 
 add_action('plugins_loaded', 'woocommerce_komoju_init', 0);
 

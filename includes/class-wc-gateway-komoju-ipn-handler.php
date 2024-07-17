@@ -221,7 +221,8 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
 
             if (!empty($webhookEvent->payment_method_fee())) {
                 // log komoju transaction fee
-                update_post_meta($order->get_id(), 'Payment Gateway Transaction Fee', wc_clean($webhookEvent->payment_method_fee()));
+                $order->update_meta_data('Payment Gateway Transaction Fee', wc_clean($webhookEvent->payment_method_fee()));
+                $order->save();
             }
         } else {
             $this->payment_on_hold($order, sprintf(__('Payment pending: %s', 'komoju-woocommerce'), $webhookEvent->additional_information()));
@@ -343,16 +344,17 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
     protected function save_komoju_meta_data($order, $webhookEvent)
     {
         if (!empty($webhookEvent->tax())) {
-            update_post_meta($order->get_id(), 'Tax', wc_clean($webhookEvent->tax()));
+            $order->update_meta_data('Tax', wc_clean($webhookEvent->tax()));
         }
         if (!empty($webhookEvent->amount())) {
-            update_post_meta($order->get_id(), 'Amount', wc_clean($webhookEvent->amount()));
+            $order->update_meta_data('Amount', wc_clean($webhookEvent->amount()));
         }
         if (!empty($webhookEvent->additional_information())) {
-            update_post_meta($order->get_id(), 'Additional info', wc_clean(print_r($webhookEvent->additional_information(), true)));
+            $order->update_meta_data('Additional info', wc_clean(print_r($webhookEvent->additional_information(), true)));
         }
         if (!empty($webhookEvent->uuid())) {
-            $order->add_meta_data('komoju_payment_id', $webhookEvent->uuid(), true);
+            $order->update_meta_data('komoju_payment_id', $webhookEvent->uuid(), true);
         }
+        $order->save();
     }
 }

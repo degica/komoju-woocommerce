@@ -49,6 +49,10 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
             return;
         }
 
+        if (is_wc_endpoint_url('order-received')) {
+            return;
+        }
+
         // We lazily fetch one session to be shared by all payment methods with dynamic fields.
         static $checkout_session;
         if (is_null($checkout_session)) {
