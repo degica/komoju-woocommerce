@@ -45,7 +45,7 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
 
     public function get_payment_method_data()
     {
-        if (!is_checkout() && !$this->is_site_editor()) {
+        if (!(is_checkout() || $this->is_site_editor())) {
             return;
         }
 
