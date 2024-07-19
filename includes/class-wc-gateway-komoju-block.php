@@ -45,11 +45,7 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
 
     public function get_payment_method_data()
     {
-        if (!is_checkout()) {
-            return;
-        }
-
-        if (is_wc_endpoint_url('order-received')) {
+        if (!is_checkout() && !$this->is_site_editor()) {
             return;
         }
 
@@ -74,5 +70,10 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
             'locale'         => $this->gateway->locale,
             'inlineFields'   => $this->gateway->has_fields,
         ];
+    }
+
+    private function is_site_editor()
+    {
+        return strpos($_SERVER['REQUEST_URI'], 'site-editor.php');
     }
 }

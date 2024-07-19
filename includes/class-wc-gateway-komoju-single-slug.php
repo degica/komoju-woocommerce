@@ -140,6 +140,10 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
             ],
         ];
 
+        if ($this->get_order_total() == 0) {
+            return null;
+        }
+
         return $komoju_api->createSession($session_params);
     }
 
