@@ -45,10 +45,6 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
 
     public function get_payment_method_data()
     {
-        if (!(is_checkout() || $this->is_site_editor())) {
-            return;
-        }
-
         // We lazily fetch one session to be shared by all payment methods with dynamic fields.
         static $checkout_session;
         if (is_null($checkout_session)) {
@@ -70,10 +66,5 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
             'locale'         => $this->gateway->locale,
             'inlineFields'   => $this->gateway->has_fields,
         ];
-    }
-
-    private function is_site_editor()
-    {
-        return strpos($_SERVER['REQUEST_URI'], 'site-editor.php');
     }
 }
