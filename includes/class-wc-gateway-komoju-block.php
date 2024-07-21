@@ -45,10 +45,6 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
 
     public function get_payment_method_data()
     {
-        if (!is_checkout()) {
-            return;
-        }
-
         // We lazily fetch one session to be shared by all payment methods with dynamic fields.
         static $checkout_session;
         if (is_null($checkout_session)) {
