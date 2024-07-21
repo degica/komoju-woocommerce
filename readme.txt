@@ -171,6 +171,11 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 
 == Changelog ==
 
+= 3.1.4 =
+
+Suppressed incompatibility error messages in the page editor
+Fix session errors with specific themes
+
 = 3.1.3 =
 
 Adjust credit card icon positions
