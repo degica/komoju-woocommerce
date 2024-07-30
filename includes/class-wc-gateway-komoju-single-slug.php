@@ -215,6 +215,9 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
             'payment_details' => $token,
         ]);
 
+        $order->set_transaction_id($session->payment_data->external_order_num);
+        $order->save();
+
         if ($result->redirect_url) {
             return [
                 'result'   => 'success',
