@@ -365,10 +365,12 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
         try {
             $all_payment_methods = $api->paymentMethods();
             $methods_by_slug     = [];
+            $wc_currency         = get_woocommerce_currency();
 
             foreach ($all_payment_methods as $payment_method) {
-                $slug = $payment_method['type_slug'];
-                if (isset($methods_by_slug[$slug])) {
+                $slug        = $payment_method['type_slug'];
+                $pm_currency = $payment_method['currency'];
+                if (isset($methods_by_slug[$slug]) && $pm_currency !== $wc_currency) {
                     continue;
                 }
                 $methods_by_slug[$slug] = $payment_method;
