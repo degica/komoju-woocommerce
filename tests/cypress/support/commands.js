@@ -49,6 +49,7 @@ Cypress.Commands.add('installWordpress', () => {
 
 Cypress.Commands.add('signinToWordpress', () => {
   cy.visit('/wp-admin');
+  cy.wait(1000);
 
   cy.get('body').then(($body) => {
     if (!$body.find('#loginform').length) {
@@ -60,6 +61,7 @@ Cypress.Commands.add('signinToWordpress', () => {
     cy.get('#user_pass').should('be.visible').clear().type('deg1kaX7reme!');
     cy.get('#wp-submit').should('be.visible').click();
   });
+  cy.wait(1000);
 });
 
 Cypress.Commands.add('installWooCommerce', () => {
