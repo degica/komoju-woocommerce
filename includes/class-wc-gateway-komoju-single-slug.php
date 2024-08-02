@@ -205,6 +205,17 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
         // Otherwise we will redirect to the KOMOJU hosted page.
         $token = sanitize_text_field($_POST['komoju_payment_token']);
 
+        // Gimmick: If there is a KOMOJU payment UUID already set for the order, try to cancel the preceding payment.
+        // Some considerations:
+        // - It will be helpful to prevent duplicated Konbini payments, which can be caused through the "order-pay" page.
+        // - If the metadata is set, the payment already exists, and it is safe to cancel the payment.
+        //   - It is also worth to note that the paths to this code guarantee that this order is payable, i.e., no payment is captured or has expired yet, and therefore it is cancellable.
+        // - If the metadata is not set, there is nothing we can do anyway.
+        $komoju_payment_id = $order->get_meta('komoju_payment_id');
+        if (!empty($komoju_payment_id)) {
+            $this->komoju_api->cancel($komoju_payment_id, []);
+        }
+
         if (!$token || $token === '') {
             return parent::process_payment($order_id, $this->payment_method['type_slug']);
         }
@@ -214,6 +225,9 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
             'customer_email'  => $order->get_billing_email(),
             'payment_details' => $token,
         ]);
+
+        $order->set_transaction_id($session->payment_data->external_order_num);
+        $order->save();
 
         if ($result->redirect_url) {
             return [

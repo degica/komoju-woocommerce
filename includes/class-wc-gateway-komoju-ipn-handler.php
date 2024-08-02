@@ -121,6 +121,7 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
 
         $order = $this->get_komoju_order($webhookEvent, $this->invoice_prefix);
         if ($order) {
+            $this->save_komoju_meta_data($order, $webhookEvent);
             switch ($webhookEvent->status()) {
                 case 'captured':
                     $this->payment_status_captured($order, $webhookEvent);
@@ -213,8 +214,6 @@ class WC_Gateway_Komoju_IPN_Handler extends WC_Gateway_Komoju_Response
         } else {
             $this->validate_amount($order, $webhookEvent->grand_total() - $webhookEvent->payment_method_fee());
         }
-
-        $this->save_komoju_meta_data($order, $webhookEvent);
 
         if ('captured' === $webhookEvent->status()) {
             $this->payment_complete($order, !empty($webhookEvent->uuid()) ? wc_clean($webhookEvent->uuid()) : '', __('IPN payment captured', 'komoju-woocommerce'));

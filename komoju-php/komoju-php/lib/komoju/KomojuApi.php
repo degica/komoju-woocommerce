@@ -59,6 +59,11 @@ class KomojuApi
         return $this->post('/api/v1/payments/' . $paymentUuid . '/refund', $payload);
     }
 
+    public function cancel($paymentUuid, $payload)
+    {
+        return $this->post('/api/v1/payments/' . $paymentUuid . '/cancel', $payload);
+    }
+
     private function get($uri, $asArray = false)
     {
         $ch = curl_init($this->endpoint . $uri);
