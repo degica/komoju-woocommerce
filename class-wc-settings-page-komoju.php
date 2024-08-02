@@ -370,9 +370,17 @@ class WC_Settings_Page_Komoju extends WC_Settings_Page
             foreach ($all_payment_methods as $payment_method) {
                 $slug        = $payment_method['type_slug'];
                 $pm_currency = $payment_method['currency'];
+
+                // If the payment method satisfies both of these two conditions, reject it:
+                // 1.  There is an alternative payment method with the same slug (possibly with a more preferable currency)
+                // 2.  The currency for the payment method defers from the default currency for the WooCommerce configuration
+                // That means, we accept payment methods if and only if
+                // 1.  there is no alternative payment method with the same slug, OR
+                // 2.  an alternative payment method with the same slug exists, but the currency for the payment method matches to the currency for the WooCommerce configuration and thus preferred
                 if (isset($methods_by_slug[$slug]) && $pm_currency !== $wc_currency) {
                     continue;
                 }
+
                 $methods_by_slug[$slug] = $payment_method;
             }
 
