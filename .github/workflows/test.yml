@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: isbang/compose-action@v1.0.0
+      - uses: hoverkraft-tech/compose-action@v2.0.2
         with:
           down-flags: '--volumes'
       - name: Run tests
@@ -60,7 +60,7 @@ jobs:
         run: ls
       - name: Set up docker-compose
         run: |-
-          docker-compose build
-          docker-compose up -d
+          docker compose build
+          docker compose up -d
       - name: Run e2e tests
-        run: docker-compose run tester rspec spec/woocommerce
+        run: docker compose run tester rspec spec/woocommerce
