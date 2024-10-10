@@ -60,7 +60,7 @@ jobs:
         run: ls
       - name: Set up docker-compose
         run: |-
-          docker-compose build
-          docker-compose up -d
+          docker compose build
+          docker compose up -d
       - name: Run e2e tests
-        run: docker-compose run tester rspec spec/woocommerce
+        run: docker compose run tester rspec spec/woocommerce
