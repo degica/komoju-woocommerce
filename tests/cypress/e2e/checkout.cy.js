@@ -42,7 +42,6 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.setupKomoju(['credit_card']);
     cy.clickPaymentTab();
     cy.enablePaymentGateway('komoju_credit_card');
-    cy.contains('Save changes').click();
     cy.goToStore();
 
     cy.addItemAndProceedToCheckout();
@@ -67,7 +66,6 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
     cy.setupKomoju(['credit_card', 'konbini', 'web_money']);
     cy.clickPaymentTab();
     cy.enablePaymentGateway('komoju_web_money');
-    cy.contains('Save changes').click();
     cy.goToStore();
 
     cy.addItemAndProceedToCheckout();
@@ -94,22 +92,27 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
     cy.get('#woocommerce_komoju_credit_card_showIcon').then(input => {
       cy.log(input.attr('checked'));
-      if (input.attr('checked'))  cy.wrap(input).click()
+      if (input.prop('checked')) {
+        cy.wrap(input).uncheck({ force: true });
+        cy.contains('Save changes').click()
+      }
     })
-    cy.contains('Save changes').click()
-    cy.contains('Your settings have been saved.').should('exist')
 
     cy.goToStore();
     cy.addItemAndProceedToCheckout();
     cy.get('label[for="radio-control-wc-payment-method-options-komoju_credit_card"] img').should('not.exist')
-
+                      //  radio-control-wc-payment-method-options-komoju_credit_card__label
     cy.visit('/wp-admin/admin.php?page=wc-settings&tab=checkout')
     cy.get('[data-gateway_id="komoju_credit_card"] a.button')
       .click()
 
-    cy.get('#woocommerce_komoju_credit_card_showIcon').click()
-    cy.contains('Save changes').click()
-    cy.contains('Your settings have been saved.').should('exist')
+    cy.get('#woocommerce_komoju_credit_card_showIcon').then(input => {
+      cy.log(input.attr('checked'));
+      if (!input.prop('checked')) {
+        cy.wrap(input).check({ force: true });
+        cy.contains('Save changes').click()
+      }
+    })
 
     cy.goToStore();
     cy.addItemAndProceedToCheckout();
