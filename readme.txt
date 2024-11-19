@@ -1,12 +1,12 @@
 === KOMOJU Payments ===
 Contributors: degica
 Tags: WooCommerce,Payment Gateway,Komoju
-Requires at least: 5.3
-Tested up to: 6.5.3
+Requires at least: 6.0
+Tested up to: 6.7.0
 Stable tag: trunk
 Requires PHP: 7.2
-WC requires at least: 3.0.0
-WC tested up to: 8.8.3
+WC requires at least: 6.0.0
+WC tested up to: 9.4.1
 License: MIT
 License URI: https://directory.fsf.org/wiki/License:X11
 
@@ -98,15 +98,13 @@ We currently accept the following payment methods:
 = What versions of WordPress and WooCommerce is this compatible with? =
 
 At the moment, this plugin has been tested and is known to work up to WordPress
-6.5.3 and WooCommerce 8.8.3 If you are using a later version, please check the
+6.7.0 and WooCommerce 9.4.1 If you are using a later version, please check the
 next section or contact us regarding this.
 
 = What should I do if I am using newer versions of WordPress and WooCommerce? =
 
-2024/05/22
-
-We recommend performing a fresh install of WordPress 6.5.3 and WooCommerce
-8.8.3 before proceeding to install this plugin. You can temporarily downgrade
+We recommend performing a fresh install of WordPress 6.7.0 and WooCommerce
+9.4.1 before proceeding to install this plugin. You can temporarily downgrade
 from a newer version of WordPress and WooCommerce before continuing installation.
 However, downgrading from newer versions of WordPress and WooCommerce may result in
 issues with installing this plugin. If you are experiencing problems, please
@@ -118,11 +116,11 @@ Please contact contact@komoju.com if you have any questions about
 the installation of the module.
 
 = どのWordPress・WooCommerceのバージョンに対応していますか？=
-現時点でこのプラグインは、WordPress 6.5.3およびWooCommerce 8.8.3まで動作することが確認されています。
+現時点でこのプラグインは、WordPress 6.7.0およびWooCommerce 9.4.1まで動作することが確認されています。
 それ以降のバージョンをお使いの場合は、以下をお試し頂くか、contact@komoju.comまでご連絡ください。
 
 = 新しいバージョンのWordPressとWooCommerceを使用している場合はどうすればよいですか？ =
-このプラグインをインストールする前に、まずWordPress 6.5.3とWooCommerce 8.8.3を新規インストールすることをお勧めします。
+このプラグインをインストールする前に、まずWordPress 6.7.0とWooCommerce 9.4.1を新規インストールすることをお勧めします。
 新しいバージョンから旧バージョンへ一時的にダウングレードし、接続頂くことも可能ですが、新しいバージョンからダウングレードすると、このプラグインのインストールに問題が生じる可能性がございます。
 問題が発生した場合は、サポートチーム（contact@komoju.com）までご連絡ください。
 
@@ -170,6 +168,11 @@ Ensure that the "Active" checkbox is also ticked and then click "Create Webhook"
 Go back to your Wordpress instance and set the "Webhook Secret Token" value on the Komoju Woocommerce plugin to be the same as the secret set for the webhook.
 
 == Changelog ==
+
+= 3.1.5 =
+
+Updated compatibility for WordPress 6.7.0.
+Upgraded support for WooCommerce 9.4.1 (previously 8.8.3).
 
 = 3.1.4 =
 

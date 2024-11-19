@@ -4,7 +4,7 @@ services:
    db:
      ports:
        - "8001:3306"
-     image: mysql:5.7
+     image: mysql:8.0
      volumes:
        - db_data:/var/lib/mysql
      restart: always
@@ -21,7 +21,7 @@ services:
        context: .
        dockerfile: Dockerfile
        args:
-         woocommerce_version: 8.8.3
+         woocommerce_version: 9.4.1
      ports:
        - "8000:80"
      restart: always

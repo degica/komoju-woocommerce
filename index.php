@@ -5,9 +5,9 @@
  * Description: Extends WooCommerce with KOMOJU gateway.
  * Author: KOMOJU
  * Author URI: https://komoju.com
- * Version: 3.1.4
+ * Version: 3.1.5
  * WC requires at least: 6.0
- * WC tested up to: 8.8.3
+ * WC tested up to: 9.4.1
  */
 
 add_action('before_woocommerce_init', function () {
