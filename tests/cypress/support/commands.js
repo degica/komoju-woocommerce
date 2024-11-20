@@ -148,14 +148,18 @@ Cypress.Commands.add('goToStore', () => {
 });
 
 Cypress.Commands.add('fillInAddress', () => {
-  cy.get('#billing-last_name').clear().type('Johnson');
-  cy.get('#billing-first_name').clear().type('Test');
-  cy.get('#billing-country').find('#components-form-token-input-0').type('Japan').first().click();
-  cy.get('#billing-state').find('input').type('Tokyo').first().click();
-  cy.get('#billing-postcode').clear().type('180-0004');
-  cy.get('#billing-city').clear().type('Musashino');
-  cy.get('#billing-address_1').clear().type('address');
-  cy.get('#billing-phone').clear().type('123123213213213');
+  cy.get('.wc-block-components-address-address-wrapper').then(($el) => {
+    if ($el.hasClass('is-editing')) {
+      cy.get('#billing-last_name').clear().type('Johnson');
+      cy.get('#billing-first_name').clear().type('Test');
+      cy.get('#billing-country').select('Japan');
+      cy.get('#billing-state').select('Tokyo');
+      cy.get('#billing-postcode').clear().type('180-0004');
+      cy.get('#billing-city').clear().type('Musashino');
+      cy.get('#billing-address_1').clear().type('address');
+      cy.get('#billing-phone').clear().type('123123213213213');
+    }
+  });
 });
 
 Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
