@@ -1,4 +1,5 @@
 <?php
+
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 
 /*
