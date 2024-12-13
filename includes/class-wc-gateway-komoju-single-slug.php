@@ -131,8 +131,14 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
     {
         $komoju_api     = $this->komoju_api;
         $currency       = get_woocommerce_currency();
+        $orderTotal = 0;
+
+        if (WC()->cart) {
+            $orderTotal = $this->get_order_total();
+        }
+
         $session_params = [
-            'amount'         => self::to_cents($this->get_order_total(), $currency),
+            'amount'         => self::to_cents($orderTotal, $currency),
             'currency'       => $currency,
             'default_locale' => self::get_locale_or_fallback(),
             'metadata'       => [
@@ -140,7 +146,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
             ],
         ];
 
-        if ($this->get_order_total() == 0) {
+        if ($orderTotal == 0) {
             return null;
         }
 
