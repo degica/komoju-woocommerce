@@ -45,7 +45,7 @@ final class WC_Gateway_Komoju_Blocks extends AbstractPaymentMethodType
 
     public function get_payment_method_data()
     {
-        if (!is_null(WC()->cart) && WC()->cart->is_empty()) {
+        if (!is_admin() && (is_null(WC()->cart) || WC()->cart->is_empty())) {
             return;
         }
 
