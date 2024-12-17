@@ -143,6 +143,7 @@ function woocommerce_komoju_init()
                         }
                     }
                 }
-            });
+            }
+        );
     }
 }

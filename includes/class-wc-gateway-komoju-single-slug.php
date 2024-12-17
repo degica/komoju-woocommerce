@@ -131,7 +131,7 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
     {
         $komoju_api     = $this->komoju_api;
         $currency       = get_woocommerce_currency();
-        $order_total = 0;
+        $order_total    = 0;
 
         if (WC()->cart) {
             $order_total = $this->get_order_total();
