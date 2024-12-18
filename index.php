@@ -1,4 +1,7 @@
 <?php
+
+use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
+
 /*
  * Plugin Name: KOMOJU Payments
  * Plugin URI: https://github.com/komoju/komoju-woocommerce
@@ -130,7 +133,7 @@ function woocommerce_komoju_init()
 
         add_action(
             'woocommerce_blocks_payment_method_type_registration',
-            function ($payment_method_registry) {
+            function (PaymentMethodRegistry $payment_method_registry) {
                 $gateways = WC()->payment_gateways()->payment_gateways();
 
                 if ($gateways) {
@@ -140,6 +143,7 @@ function woocommerce_komoju_init()
                         }
                     }
                 }
-            });
+            }
+        );
     }
 }
