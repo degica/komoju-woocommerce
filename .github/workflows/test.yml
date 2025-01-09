@@ -29,7 +29,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Subversion
+        run: sudo apt-get update && sudo apt-get install -y subversion
+
       - name: Build plugin zip file
         run: ./build.bash
 
@@ -58,6 +63,9 @@ jobs:
           name: komoju-japanese-payments
       - name: Show files
         run: ls
+      - name: Modify Docker build context
+        run: |-
+          echo "RUN apt-get update && apt-get install -y build-essential libffi-dev libssl-dev" >> Dockerfile
       - name: Set up docker-compose
         run: |-
           docker compose build
