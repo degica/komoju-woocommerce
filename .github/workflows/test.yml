@@ -65,7 +65,7 @@ jobs:
         run: ls
       - name: Modify Docker build context
         run: |-
-          echo "RUN apt-get update && apt-get install -y build-essential libffi-dev libssl-dev" >> Dockerfile
+          echo "RUN apk update && apk add build-base libffi-dev openssl-dev" >> Dockerfile
       - name: Set up docker-compose
         run: |-
           docker compose build
