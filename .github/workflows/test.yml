@@ -55,6 +55,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: 'degica/komoju-e2e-tests'
+          ref: 'refs/pull/181/head'
           submodules: recursive
           token: ${{ secrets.BUNDLER_SSH_KEY }}
       - name: Download build artifact
@@ -63,9 +64,6 @@ jobs:
           name: komoju-japanese-payments
       - name: Show files
         run: ls
-      - name: Modify Docker build context
-        run: |-
-          echo "RUN apk update && apk add build-base libffi-dev openssl-dev" >> Dockerfile
       - name: Set up docker-compose
         run: |-
           docker compose build
