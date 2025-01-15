@@ -11,7 +11,7 @@ jobs:
   cypress-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: hoverkraft-tech/compose-action@v2.0.2
         with:
           down-flags: '--volumes'
@@ -22,19 +22,24 @@ jobs:
           npx cypress run
       - name: Upload screenshots
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: screenshots
           path: tests/cypress/screenshots/
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Subversion
+        run: sudo apt-get update && sudo apt-get install -y subversion
+
       - name: Build plugin zip file
         run: ./build.bash
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: komoju-japanese-payments
           path: komoju-japanese-payments.zip
@@ -47,20 +52,38 @@ jobs:
       TARGET: staging
       WAF_STAGING_TOKEN: ${{ secrets.WAF_STAGING_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: 'degica/komoju-e2e-tests'
           submodules: recursive
           token: ${{ secrets.BUNDLER_SSH_KEY }}
       - name: Download build artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: komoju-japanese-payments
       - name: Show files
         run: ls
+      - name: Modify Docker build context
+        run: |-
+          echo "RUN apk update && apk add build-base libffi-dev openssl-dev" >> Dockerfile
       - name: Set up docker-compose
         run: |-
           docker compose build
           docker compose up -d
+      - name: Show container status
+        run: docker compose ps
+      - name: Wait for browser container
+        run: |
+          docker compose run --rm tester sh -c "
+            apk add --no-cache netcat-openbsd
+            echo 'Waiting for browser:4444 to be ready...'
+            for i in \$(seq 1 30); do
+              nc -z browser 4444 && echo 'Browser is ready!' && exit 0
+              echo 'Browser not ready yet. Sleeping...'
+              sleep 2
+            done
+            echo 'Timed out waiting for browser to be ready.'
+            exit 1
+          "
       - name: Run e2e tests
         run: docker compose run tester rspec spec/woocommerce

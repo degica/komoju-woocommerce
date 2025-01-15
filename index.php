@@ -10,7 +10,7 @@ use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
  * Author URI: https://komoju.com
  * Version: 3.1.5
  * WC requires at least: 6.0
- * WC tested up to: 9.4.1
+ * WC tested up to: 9.5.2
  */
 
 add_action('before_woocommerce_init', function () {
