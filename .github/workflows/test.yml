@@ -47,7 +47,6 @@ jobs:
 
   e2e-tests:
     needs: [build]
-    if: ${{ startsWith(github.ref, 'refs/heads/master/') }}
     timeout-minutes: 20
     runs-on: [self-hosted, on-demand, ubuntu-22.04, xlarge]
     container: mcr.microsoft.com/playwright:v1.47.2-jammy
