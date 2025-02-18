@@ -48,6 +48,14 @@ return [
         'desc_tip'    => true,
     ],
     [
+        'id'          => 'komoju_woocommerce_use_on_hold',
+        'type'        => 'checkbox',
+        'title'       => __('Use on-hold status for pending payments', 'komoju-woocommerce'),
+        'desc'        => __("Use 'on-hold' status for payments that are authorized on komoju but awaiting capture. If not selected, 'payment pending' status will be used.", 'komoju-woocommerce'),
+        'default'     => WC_Gateway_Komoju::get_legacy_setting('useOnHold', 'no'),
+        'desc_tip'    => true,
+    ],
+    [
         'id'           => 'komoju_woocommerce_ipn_async',
         'type'         => 'checkbox',
         'title'        => __('Process IPNs Asynchronously', 'komoju-woocommerce'),
