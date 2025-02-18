@@ -74,7 +74,7 @@ class WC_Gateway_Komoju extends WC_Payment_Gateway
         $this->title                = $this->get_option('title');
         $this->description          = $this->get_option('description');
         $this->instructions         = $this->get_option('instructions', $this->description);
-        $this->useOnHold            = $this->get_option('useOnHold');
+        $this->useOnHold            = $this->get_option_compat('use_on_hold', 'useOnHold');
 
         // Filters
         // Actions
