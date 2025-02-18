@@ -169,6 +169,11 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 
 == Changelog ==
 
+= 3.1.7 =
+
+Moved "Use on-hold status" option under API settings
+- The "Use on-hold status" setting for WooCommerce orders has been relocated to the API settings. Previously, this option was only available under the general KOMOJU gateway, which was not ideal for most merchants. Moving it to API settings ensures better usability and consistency.
+
 = 3.1.6 =
 
 Updated compatibility for WordPress 6.7.1.
