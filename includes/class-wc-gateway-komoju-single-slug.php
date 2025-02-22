@@ -174,6 +174,10 @@ class WC_Gateway_Komoju_Single_Slug extends WC_Gateway_Komoju
 
     public function payment_fields()
     {
+        if (!this->has_fields) {
+            return;
+        }
+
         // We lazily fetch one session to be shared by all payment methods with dynamic fields.
         static $checkout_session;
         if (is_null($checkout_session)) {
