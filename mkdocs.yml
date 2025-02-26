@@ -1,4 +1,4 @@
-site_name: Komoju-WooCommerce Docs
+site_name: Komoju-WooCommerce Plugin Docs
 site_url: ""
 theme:
   name: material
@@ -16,6 +16,14 @@ extra:
       link: https://github.com/example
       name: GitHub
 
+nav:
+  - UserGuide: user_guide/getting_started.md
+  - DeveloperGuide: developer_guide/getting_started.md
+  - Komoju: 
+    - Overview: komoju/index.md
+    - Benefits: komoju/benefits.md
+    - Features: komoju/features.md
+
 plugins:
   - i18n:
       docs_structure: folder
@@ -23,7 +31,19 @@ plugins:
         - locale: en
           name: English
           build: true
+          site_name: KOMOJU WooCommerce Plugin Docs
         - locale: ja
           default: true
-          name: Japanese
+          name: 日本語
           build: true
+          site_name: KOMOJU WooCommerce プラグイン ドキュメント
+          nav_translations:
+            Home: ホーム
+            Komoju: KOMOJU
+            Overview: 概要
+            Benefits: メリット
+            Features: 機能
+            UserGuide: ユーザーマニュアル
+            DeveloperGuide: 開発者マニュアル
+            Guide: はじめに
+
