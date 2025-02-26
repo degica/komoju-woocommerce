@@ -1,5 +1,5 @@
 site_name: Komoju-WooCommerce Plugin Docs
-site_url: ""
+site_url: "https://tech.degica.com/komoju-woocommerce/"
 theme:
   name: material
   palette:
@@ -20,7 +20,7 @@ nav:
   - UserGuide: user_guide/getting_started.md
   - DeveloperGuide: developer_guide/getting_started.md
   - Komoju: 
-    - Overview: komoju/index.md
+    - Overview: index.md
     - Benefits: komoju/benefits.md
     - Features: komoju/features.md
 
