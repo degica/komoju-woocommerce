@@ -1,0 +1,29 @@
+site_name: Komoju-WooCommerce Docs
+site_url: ""
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: indigo
+    accent: pink
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/example
+      name: GitHub
+
+plugins:
+  - i18n:
+      docs_structure: folder
+      languages:
+        - locale: en
+          name: English
+          build: true
+        - locale: ja
+          default: true
+          name: Japanese
+          build: true
