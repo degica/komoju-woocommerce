@@ -72,8 +72,6 @@ WooCommerce 上で KOMOJU プラグインをインストールする手順は以
 
 ![Step 7](../../assets/images/step7.png)
 
-![Step 8](../../assets/images/step8.png)
-
 これですべての手順が完了です。お疲れさまでした！
 
 ---
