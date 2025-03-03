@@ -1,2 +1,0 @@
-# KOMOJU - WooCommerce デベロッパガイド
-

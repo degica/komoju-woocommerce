@@ -72,8 +72,6 @@ Here’s how to install the KOMOJU plugin on WooCommerce.
 
 ![Step 7](../../assets/images/step7.png)
 
-![Step 8](../../assets/images/step8.png)
-
 That’s it—you’re done! Great work.
 
 ---

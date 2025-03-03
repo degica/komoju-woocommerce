@@ -1,12 +1,12 @@
-# プラグインの新バージョンをWordPressストアにアップロードする方法
+# Uploading new versions of the plugin to the WordPress store
 
-以下の手順で新しいバージョンをアップロードします。
+Here is how you upload a new version.
 
-1. `index.php` ファイル内の `Version: <version>` を更新します。  
-2. `readme.txt` に新バージョンのための変更履歴（changelog entry）を追加します。  
-3. （任意）各種PHPファイル（例: `class-wc-gateway-komoju.php` など）に散在しているバージョン番号を更新します。  
-4. `git tag <your new version>` を実行します。  
-5. `git push --tags` を実行します。  
-6. [GitHub Actions](https://github.com/degica/komoju-woocommerce/actions) がデプロイを自動的に行います。
+1. Update the `Version: <version>` in `index.php`.
+2. Add a changelog entry for the new version to `readme.txt`.
+3. (optional) Update version numbers strewn about various php files (like `class-wc-gateway-komoju.php`).
+4. Run `git tag <your new version>`.
+5. Run `git push --tags`.
+6. [GitHub Actions](https://github.com/degica/komoju-woocommerce/actions) should deploy for you.
 
-注意点：デプロイアクションはテストアクションの成功にチェックしません。`git push --tags` を実行する前にテストがパスしているかを確認するか、もしくはアクションを変更してデプロイがテストに依存するよう設定してください。
+One thing to note: as of writing, the deploy action does _not_ depend on the test action passing. You should make sure tests pass before running `git push --tags` - or maybe change the actions so that deployment depends on tests!
