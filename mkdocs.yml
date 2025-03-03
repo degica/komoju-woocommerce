@@ -1,0 +1,72 @@
+site_name: Komoju-WooCommerce Plugin Docs
+site_url: "https://tech.degica.com/komoju-woocommerce/"
+repo_url: https://github.com/degica/komoju-woocommerce
+repo_name: "degica/komoju-woocommerce"
+
+theme:
+  name: material
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  features:
+    - search.suggest
+    - navigation.tabs
+    - navigation.top
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/degica/komoju-woocommerce
+      name: GitHub
+
+nav:
+  - Komoju: 
+    - Overview: index.md
+    - Benefits: komoju/benefits.md
+    - Features: komoju/features.md
+  - UserGuide: user_guide/getting_started.md
+  - DeveloperGuide: 
+    - Setup: developer_guide/dev_setup.md
+    - UploadPlugin: developer_guide/uploading_to_wordpress_store.md
+
+plugins:
+  - i18n:
+      reconfigure_material: true
+      reconfigure_search: true
+      docs_structure: folder
+      languages:
+        - locale: en
+          name: English
+          build: true
+          site_name: KOMOJU WooCommerce Plugin Docs
+        - locale: ja
+          default: true
+          name: 日本語
+          build: true
+          site_name: KOMOJU WooCommerce プラグイン ドキュメント
+          nav_translations:
+            Home: ホーム
+            Komoju: KOMOJU
+            Overview: 概要
+            Benefits: メリット
+            Features: 機能
+            UserGuide: ユーザーマニュアル
+            DeveloperGuide: 開発者マニュアル
+            Guide: はじめに
+            Setup: セットアップ
+            UploadPlugin: プラグインのアップロード
+  - search
