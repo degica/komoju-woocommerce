@@ -1,85 +1,85 @@
-# KOMOJU - WooCommerce プラグインの始め方
+# KOMOJU - WooCommerce Plugin: Getting Started
 
-KOMOJU WooCommerce プラグインを導入するための手順を、**ステップ形式**でわかりやすく解説します。画像付きで順番に確認してみましょう。
-
----
-
-## 📌 ステップ 0: KOMOJU アカウントの登録
-- [WooCommerce 説明ページ](https://ja.komoju.com/integrations/woocommerce-integration/) にあるリンクから、KOMOJUのアカウント登録を行います。
-事前にアカウントを作成しておくことで、スムーズにプラグインを利用できます。
+This guide provides a **step-by-step** explanation on how to integrate the KOMOJU WooCommerce plugin. Follow along with the accompanying images to ensure a smooth setup.
 
 ---
 
-## 📌 ステップ 1: WooCommerce プラグインのインストール
-1. **WooCommerce 管理画面** に移動します。
-2. **プラグイン > 新規プラグインを追加** をクリックします。
-3. 検索ボックスに **“WooCommerce”** と入力し、該当プラグインをインストールします。
+## 📌 Step 0: Register for a KOMOJU Account
+- Go to the [WooCommerce Introduction Page](https://ja.komoju.com/integrations/woocommerce-integration/) and register for a KOMOJU account.
+  Having your account ready in advance will make the plugin setup process smoother.
 
-> **ポイント:** WooCommerce プラグインを有効化しないと、KOMOJUプラグインが正常に動作しません。
+---
+
+## 📌 Step 1: Install the WooCommerce Plugin
+1. Go to the **WooCommerce Admin Panel**.
+2. Click **Plugins > Add New**.
+3. In the search box, type **“WooCommerce”**, then install the plugin that appears.
+
+> **Note:** If you do not activate the WooCommerce plugin, the KOMOJU plugin will not function correctly.
 
 ![Step 1](../../assets/images/step1.png)
 
 ---
 
-## 📌 ステップ 2: KOMOJU プラグインのインストール
-WooCommerce 上で KOMOJU プラグインをインストールする手順は以下のとおりです。
+## 📌 Step 2: Install the KOMOJU Plugin
+Here’s how to install the KOMOJU plugin on WooCommerce.
 
-1. **WooCommerce 管理画面** に移動します。
-2. **プラグイン > 新規プラグインを追加** をクリックします。
-3. 検索ボックスに **“KOMOJU”** と入力し、該当プラグインをインストールします。
+1. Go to the **WooCommerce Admin Panel**.
+2. Click **Plugins > Add New**.
+3. In the search box, type **“KOMOJU”**, then install the plugin that appears.
 
 ![Step 2](../../assets/images/step2.png)
 
 ---
 
-## 📌 ステップ 3: プラグインの有効化
-- インストール後、**両方のプラグイン (WooCommerce / KOMOJU)** を有効化してください。
-- 有効化が完了すると、WooCommerce 管理画面のサイドバーなどから **KOMOJU 設定ページ**にアクセスできます。
+## 📌 Step 3: Plugin Activation
+- After installation, **activate both plugins (WooCommerce / KOMOJU)**.
+- Once activated, you will be able to access the **KOMOJU Settings page** from the WooCommerce Admin Panel sidebar.
 
 ---
 
-## 📌 ステップ 4: API キーの設定
+## 📌 Step 4: Configure the API Key
 
-1. WooCommerce->Komojuメニューに行きます。
-2. KOMOJU にログインし、**API キー**を取得します。
-
+1. Navigate to **WooCommerce > Komoju** in the menu.
+2. Log in to KOMOJU and retrieve your **API Key**.
 
 ![Step 3](../../assets/images/step3.png)
 
 ![Step 4](../../assets/images/step4.png)
+
 ---
 
-## 📌 ステップ 5: マーチャントの選択
-1. ログイン後、KOMOJU アカウントで管理している **マーチャント** を選択・連携します。
-2. 連携したマーチャントが WooCommerce での決済に使用されます。
- > **事前準備:** マーチャントの登録が済んでいる必要があります。
+## 📌 Step 5: Select a Merchant
+1. After logging in, select and link the **merchant** you manage in your KOMOJU account.
+2. The linked merchant will be used for payments through WooCommerce.
+> **Prerequisite:** You need to have a registered merchant ready to go.
 
 ![Step 5](../../assets/images/step5.png)
 
 ---
 
-## 📌 ステップ 6: KOMOJU の支払い方法選択
-1. KOMOJU ダッシュボードに移動し、利用したい決済手段を選択します。
-2. クレジットカード、コンビニ決済、銀行振込など、必要に応じて有効化してください。
+## 📌 Step 6: Choose Payment Methods on KOMOJU
+1. Go to the KOMOJU Dashboard and select the payment methods you want to use.
+2. Enable credit cards, convenience store payments, bank transfers, etc., according to your needs.
 
 ![Step 6](../../assets/images/step6.png)
 
 ---
 
-## 📌 ステップ 7: WooCommerce の支払い方法選択
-1. **WooCommerce 管理画面 > 決済** に移動します。
-2. 支払い方法タブから、使用したい決済手段を **有効化** します。
+## 📌 Step 7: Select Payment Methods on WooCommerce
+1. Go to **WooCommerce Admin > Payments**.
+2. In the payments tab, **enable** the payment methods you wish to use.
 
 ![Step 7](../../assets/images/step7.png)
 
 ![Step 8](../../assets/images/step8.png)
 
-これですべての手順が完了です。お疲れさまでした！
+That’s it—you’re done! Great work.
 
 ---
 
-## 関連リンク
-- [公式 KOMOJU ドキュメント](https://doc.komoju.com/)
-- [WooCommerce ドキュメント](https://woocommerce.com/documentation/)
+## Related Links
+- [KOMOJU Official Documentation](https://doc.komoju.com/)
+- [WooCommerce Documentation](https://woocommerce.com/documentation/)
 
-何か不明点がありましたら、お気軽にお問い合わせください。
+If you have any questions, feel free to reach out.
