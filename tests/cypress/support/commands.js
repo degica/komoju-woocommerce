@@ -108,6 +108,12 @@ Cypress.Commands.add('setupKomoju', (
   secretKey = 'sk_27dbcf7af57ad9088b8c95792c6f24d2398e771c',
   publishableKey = 'pk_c05e982fa446efa4ff740d1f055a45a4e0c21d5f'
 ) => {
+  cy.visit('/wp-admin/admin.php?page=wc-settings')
+  cy.get('#select2-woocommerce_currency-container').type('JPY{enter}');
+  cy.wait(100);
+
+  cy.contains('Save changes').click();
+
   cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
   cy.get('#komoju_woocommerce_secret_key').clear().type(secretKey);
