@@ -18,7 +18,9 @@ extra:
 
 nav:
   - UserGuide: user_guide/getting_started.md
-  - DeveloperGuide: developer_guide/getting_started.md
+  - DeveloperGuide: 
+    - Setup: developer_guide/dev_setup.md
+    - UploadPlugin: developer_guide/uploading_to_wordpress_store.md
   - Komoju: 
     - Overview: index.md
     - Benefits: komoju/benefits.md
@@ -46,4 +48,6 @@ plugins:
             UserGuide: ユーザーマニュアル
             DeveloperGuide: 開発者マニュアル
             Guide: はじめに
+            Setup: セットアップ
+            UploadPlugin: プラグインのアップロード
 
