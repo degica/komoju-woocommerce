@@ -110,9 +110,15 @@ Cypress.Commands.add('setupKomoju', (
 ) => {
   cy.visit('/wp-admin/admin.php?page=wc-settings')
   cy.get('#select2-woocommerce_currency-container').type('JPY{enter}');
-  cy.wait(100);
-
-  cy.contains('Save changes').click();
+  cy.get('#select2-woocommerce_currency-container').invoke('val').then((val) => {
+    if (val !== 'JPY') {
+      cy.contains('Save changes').then(($btn) => {
+        if (!$btn.is(':disabled')) {
+          cy.wrap($btn).click();
+        }
+      });
+    }
+  });
 
   cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
