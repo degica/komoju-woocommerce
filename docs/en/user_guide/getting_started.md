@@ -5,7 +5,7 @@ This guide provides a **step-by-step** explanation on how to integrate the KOMOJ
 ---
 
 ## 📌 Step 0: Register for a KOMOJU Account
-- Go to the [WooCommerce Introduction Page](https://ja.komoju.com/integrations/woocommerce-integration/) and register for a KOMOJU account.
+- Go to the [WooCommerce Introduction Page](https://en.komoju.com/integrations/woocommerce/) and register for a KOMOJU account.
   Having your account ready in advance will make the plugin setup process smoother.
 
 ---

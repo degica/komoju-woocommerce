@@ -41,54 +41,7 @@ KOMOJU は **チェックアウトにシームレスに統合** され、すべ�
 これにより、プラグインをセットアップした後に **追加設定を行う必要はありません**。
 よりスムーズな購入体験を提供し、売上の向上に貢献します。
 
----
-
-## 幅広いローカル決済オプション
-
-KOMOJU は、日本や韓国をはじめとした **アジア地域の多様なローカル決済方法** に対応しています。
-**PayPay**、**MerPay**、**携帯キャリア決済 (NTTドコモ, Softbank, au)** など、
-現地で人気の決済方法をサポートしているため、お客様に **馴染みのある方法** で支払いを提供できます。
-
-### 対応している決済方法の例
-
-#### **日本**
-- クレジット / デビットカード (Visa, Mastercard, American Express, JCB, Diners Club)
-- **PayPay**
-- **MerPay**
-- **携帯キャリア決済 (NTTドコモ, Softbank, au)**
-- コンビニ払い (ローソン, ファミリーマート, セブンイレブン など)
-- プリペイド電子マネー (WebMoney, BitCash, NET Cash)
-#### **韓国**
-- クレジット / デビットカード (Samsung, Lotte, Hyundai, Hana, BC, NH, Shinhan, KB)
-- **Payco**
-- **Toss**
-#### **中国**
-- Alipay
-- WeChat Pay
-- UnionPay
-#### **東南アジア**
-- GrabPay
-- OVO
-- Doku
-#### **ヨーロッパ**
-- Bancontact
-- Multibanco
-- EPS
-- Giropay
-- Przelewy24
-- BLIK
-- MyBank
-- Sofort
-
----
-
 ## 詳細情報
 
 詳しくは公式ウェブサイトをご覧ください:
-[**KOMOJU　公式ホームページ**](https://ja.komoju.com/)
-
----
-
-## 次のステップ
-
-- [**特徴と対応している決済方法**](./features.md)
+[**KOMOJU公式ホームページ**](https://ja.komoju.com/)
