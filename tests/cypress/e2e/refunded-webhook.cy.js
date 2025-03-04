@@ -10,6 +10,7 @@ describe("KOMOJU for WooCommerce: Refunded webhook", () => {
   });
 
   it("sets an order as a refunded based on incoming refunded webhook", () => {
+    cy.setCurrency('USD');
     cy.createOrder().then(orderId => {
       cy.request({
         method: "POST",

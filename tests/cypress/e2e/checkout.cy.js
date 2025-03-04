@@ -11,6 +11,7 @@ describe('KOMOJU for WooCommerce: Checkout', () => {
 
   it('lets me make a payment using the specialized konbini gateway', () => {
     cy.setupKomoju(['konbini', 'credit_card']);
+    cy.setCurrency('JPY');
     cy.clickPaymentTab();
     cy.enablePaymentGateway('komoju_konbini');
     cy.goToStore();
