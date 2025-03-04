@@ -108,18 +108,6 @@ Cypress.Commands.add('setupKomoju', (
   secretKey = 'sk_27dbcf7af57ad9088b8c95792c6f24d2398e771c',
   publishableKey = 'pk_c05e982fa446efa4ff740d1f055a45a4e0c21d5f'
 ) => {
-  cy.visit('/wp-admin/admin.php?page=wc-settings')
-  cy.get('#select2-woocommerce_currency-container').type('JPY{enter}');
-  cy.get('#select2-woocommerce_currency-container').invoke('val').then((val) => {
-    if (val !== 'JPY') {
-      cy.contains('Save changes').then(($btn) => {
-        if (!$btn.is(':disabled')) {
-          cy.wrap($btn).click();
-        }
-      });
-    }
-  });
-
   cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
 
   cy.get('#komoju_woocommerce_secret_key').clear().type(secretKey);
@@ -199,7 +187,7 @@ Cypress.Commands.add('createOrder', () => {
   cy.get('.button.add-line-item').click();
   cy.get('.button.add-order-item').click();
   cy.get('.wc-backbone-modal-main .select2-selection.select2-selection--single').click();
-  cy.get('.select2-search--dropdown .select2-search__field').type('komoju');
+  cy.get('.select2-search--dropdown .select2-search__field').type('sticker');
   cy.get('.select2-results__option--highlighted').click();
   cy.get('#btn-ok').click();
   cy.get('.calculate-action').click();
@@ -210,14 +198,28 @@ Cypress.Commands.add('createOrder', () => {
 Cypress.Commands.add('addItemAndProceedToCheckout', () => {
   cy.get('body').then(($body) => {
     if ($body.find('button:contains("Add to cart")').length > 0) {
-      cy.contains('button', 'Add to cart').click();
+      cy.contains('button', 'Add to cart').click({ force: true });
     }
   });
 
-  cy.get('.wc-block-mini-cart__button').should('be.visible').click();
+  cy.get('.wc-block-mini-cart__button').should('be.visible').click({ force: true });
   cy.contains('Go to checkout').should('be.visible').click();
 });
 
 Cypress.Commands.add('clickPaymentTab', () => {
   cy.visit('/wp-admin/admin.php?page=wc-settings&tab=checkout');
+});
+
+Cypress.Commands.add('setCurrency', (currency) => {
+  cy.visit('/wp-admin/admin.php?page=wc-settings')
+  cy.get('#select2-woocommerce_currency-container').type(`${currency}{enter}`);
+  cy.get('#select2-woocommerce_currency-container').invoke('val').then((val) => {
+    if (val !== currency.toUpperCase()) {
+      cy.contains('Save changes').then(($btn) => {
+        if (!$btn.is(':disabled')) {
+          cy.wrap($btn).click();
+        }
+      })
+    }
+  })
 });
