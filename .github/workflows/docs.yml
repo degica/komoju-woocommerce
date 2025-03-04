@@ -20,7 +20,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install dependencies
-        run: pip install mkdocs mkdocs-material
+        run: pip install mkdocs mkdocs-material mkdocs-static-i18n
 
       - name: Build & Deploy
         run: mkdocs gh-deploy --force
