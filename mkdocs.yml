@@ -5,6 +5,7 @@ repo_name: "degica/komoju-woocommerce"
 
 theme:
   name: material
+  # Light and dark mode color schemes
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default 
