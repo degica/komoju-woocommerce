@@ -5,7 +5,6 @@ repo_name: "degica/komoju-woocommerce"
 
 theme:
   name: material
-  # Light and dark mode color schemes
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default 
@@ -48,10 +47,6 @@ plugins:
       reconfigure_search: true
       docs_structure: folder
       languages:
-        - locale: en
-          name: English
-          build: true
-          site_name: KOMOJU WooCommerce Plugin Docs
         - locale: ja
           default: true
           name: 日本語
@@ -68,4 +63,8 @@ plugins:
             Guide: はじめに
             Setup: セットアップ
             UploadPlugin: プラグインのアップロード
+        - locale: en
+          name: English
+          build: true
+          site_name: KOMOJU WooCommerce Plugin Docs
   - search

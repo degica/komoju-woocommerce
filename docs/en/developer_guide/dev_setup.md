@@ -33,21 +33,27 @@ Log in when prompted, and you should be directed to the admin page.
 1. On the left sidebar, click Plugins.
 2. Under the "Relative URL" name, click "Activate" to turn the relative URL plugin on (this is used to get ngrok integration working properly)
 3. Under "WooCommerce" click "Activate". This will take you to a new page with the WooCommerce setup:
-![Activating Plugins](./images/Activate_plugins.png)
+   ![Activating Plugins](../assets/images/Activate_plugins.png)
+
 4. Click "Yes please" to start the setup.
 5. On the "Start setting up your WooCommerce store" page, scroll to the very bottom and click the "Proceed without Jetpack & WooCommerce Services" link (we don't need these for our dev environment):
-![Proceed without Jetpack](./images/Proceed_without_Jetpack.png)
+   ![Proceed without Jetpack](../assets/images/Proceed_without_Jetpack.png)
+
 6. When prompted with the "Build a Better WooCommerce" pop up just click continue _without_ ticking the box.
 7. Set up the address with fake data:
-![Address setup](./images/Address_setup.png)
+   ![Address setup](../assets/images/Address_setup.png)
+
 8. On the "In which industry does the store operate?" page, just select whatever you like and click "Continue"
 9. On the "What type of products will be listed?" page, select Virtual or Physical:
 and click "Continue"
-![Product types](./images/Product_types.png)
+   ![Product types](../assets/images/Product_types.png)
+
 10. On "Tell us about your business", select an amount of products, then set "Currently selling elsewhere?" to No, and disable all the options that appear below it, then click "Continue":
-![About the Business](./images/About_the_business.png)
+	![About the Business](../assets/images/About_the_business.png)
+
 11. On the "Choose a theme" page, just select "Continue with my active theme":
-![Choose a Theme](./images/Choose_a_theme.png)
+	![Choose a Theme](../assets/images/Choose_a_theme.png)
+
 12. You should be redirected back to the WordPress admin page.
 13. In the left Side panel, click on "WooCommerce", and then on the "Settings" submenu.
 14. Scroll down until you get to "Currency Options"
@@ -62,7 +68,8 @@ and click "Continue"
 3. On the side panel, click "WooCommerce", then click the "Settings" submenu
 4. On the tabs in the main content click "Payments"
 5. Next to "Komoju" click the "Enabled" toggle to turn on the Komoju integration, then click "Set up" to configure it:
-![Enable Komoju Plugin](./images/Enable_Komoju_plugin.png)
+   ![Enable Komoju Plugin](../assets/images/Enable_Komoju_plugin.png)
+
 6. Set up the API settings with the test Komoju account
 
 Make sure that the Webhook is configured as per the README.
@@ -76,7 +83,7 @@ To be able to test the checkout you will first need to have a purchasable produc
 3. Add a description
 4. Set the price of the object
 5. Click "Publish":
-![Add a Product](./images/Add_a_product.png)
+   ![Add a Product](../assets/images/Add_a_product.png)
 
 
 If you go to http://127.0.0.1:8000/?post_type=product you should be able to see the shop, with an item for purchase you can use to test the Komoju integration.
