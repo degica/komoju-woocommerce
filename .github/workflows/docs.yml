@@ -23,7 +23,17 @@ jobs:
       - name: Install dependencies
         run: pip install mkdocs mkdocs-material mkdocs-static-i18n
 
-      - name: Build & Deploy
-        run: mkdocs gh-deploy --force
-        env:
-          GITHUB_TOKEN: ${{ secrets.DOCS_DEPLOY_TOKEN }}
+      - name: Build docs
+        run: mkdocs build
+
+      - name: Deploy to gh-pages using PAT
+        run: |
+          cd site
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote add origin "https://${{ secrets.DOCS_DEPLOY_TOKEN }}@github.com/degica/komoju-woocommerce.git"
+          git checkout -b gh-pages
+          git add .
+          git commit -m "Deploy docs"
+          git push origin gh-pages --force
