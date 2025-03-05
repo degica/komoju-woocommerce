@@ -14,7 +14,7 @@ License URI: https://directory.fsf.org/wiki/License:X11
 
 ## Quick Start Guide
 
-If you’d like to set up this plugin quickly, please see our  
+If you'd like to set up this plugin quickly, please see our  
 
 - [**KOMOJU-WooCommerce Quick Start Guide**](https://tech.degica.com/komoju-woocommerce/en/user_guide/getting_started/)
 - [**KOMOJU-WooCommerce プラグインの始め方**](https://tech.degica.com/komoju-woocommerce/user_guide/getting_started/)
