@@ -178,6 +178,10 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 
 == Changelog ==
 
+= 3.1.9 =
+
+Update readme.txt
+
 = 3.1.8 =
 
 Added Quick Start Guide Link
