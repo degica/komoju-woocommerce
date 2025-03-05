@@ -19,7 +19,7 @@ services:
        context: .
        dockerfile: Dockerfile
        args:
-         woocommerce_version: 9.5.2
+         woocommerce_version: 9.7.1
      ports:
        - "8000:80"
      restart: always

@@ -183,6 +183,7 @@ Go back to your Wordpress instance and set the "Webhook Secret Token" value on t
 Added Quick Start Guide Link
 Updated compatibility for WordPress 6.7.2.
 Upgraded support for WooCommerce 9.7.1
+Fix: Hide field-related elements when inline fields are disabled
 
 = 3.1.7 =
 
