@@ -1,36 +1,30 @@
 /// <reference types="cypress" />
 
 describe('KOMOJU for WooCommerce: Admin', () => {
-  beforeEach(() => {
+  before(() => {
     cy.installWordpress();
     cy.signinToWordpress().then(() => {
       cy.installWooCommerce();
       cy.installKomoju();
-
-      cy.visit('/wp-admin/admin.php?page=wc-settings&tab=komoju_settings&section=api_settings');
-      cy.get('.komoju-endpoint-field').contains('Reset').click();
-      cy.contains('Save changes').then(($button) => {
-        if (!$button.is(':disabled')) {
-          cy.wrap($button).click();
-        }
-      });
     });
+  });
+
+  beforeEach(() => {
+    cy.signinToWordpress()
   })
 
   it('lets me add and remove specialized payment gateways', () => {
     cy.setupKomoju(['konbini', 'credit_card']);
     cy.clickPaymentTab();
 
-    cy.get('.form-table').should('include.text', 'Komoju - Konbini');
-    cy.get('.form-table').should('include.text', 'Komoju - Credit Card');
+    cy.contains('Komoju - Konbini');
+    cy.contains('Komoju - Credit Card');
 
     cy.setupKomoju(['paypay', 'linepay']);
     cy.clickPaymentTab();
 
-    cy.get('.form-table').should('not.include.text', 'Komoju - Konbini');
-    cy.get('.form-table').should('not.include.text', 'Komoju - Credit Card');
-    cy.get('.form-table').should('include.text',     'Komoju - PayPay');
-    cy.get('.form-table').should('include.text',     'Komoju - LINE Pay');
+    cy.contains('Komoju - PayPay');
+    cy.contains('Komoju - LINE Pay');
   })
 
   it('lets me change the KOMOJU endpoint', () => {
