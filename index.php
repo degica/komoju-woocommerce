@@ -8,9 +8,9 @@ use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
  * Description: Extends WooCommerce with KOMOJU gateway.
  * Author: KOMOJU
  * Author URI: https://komoju.com
- * Version: 3.1.7
+ * Version: 3.1.8
  * WC requires at least: 6.0
- * WC tested up to: 9.5.2
+ * WC tested up to: 9.7.1
  */
 
 add_action('before_woocommerce_init', function () {

@@ -1,6 +1,6 @@
 # Dev Setup
 
-This document provides a detailed setup guide for the development environment, including instructions for WordPress and WooCommerce. This was written on WordPress version 9.5.2 and WooCommerce 6.7.1
+This document provides a detailed setup guide for the development environment, including instructions for WordPress and WooCommerce. This was written on WordPress version 6.7.2 and WooCommerce 9.7.1
 
 To begin, start the docker containers:
 
