@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
  *
  * @extends     WC_Settings_Page
  *
- * @version     3.1.7
+ * @version     3.1.8
  *
  * @author      Komoju
  */

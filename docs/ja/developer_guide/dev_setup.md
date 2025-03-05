@@ -1,6 +1,6 @@
 # 開発環境セットアップ (Dev Setup)
 
-このドキュメントは、WordPressとWooCommerceを使った開発環境の詳細なセットアップ手順を提供します。記載している手順は、WordPressバージョン 9.5.2 および WooCommerceバージョン 6.7.1 で動作確認を行ったものです。
+このドキュメントは、WordPressとWooCommerceを使った開発環境の詳細なセットアップ手順を提供します。記載している手順は、WordPressバージョン 6.7.2 および WooCommerceバージョン 9.7.1 で動作確認を行ったものです。
 
 ---
 
