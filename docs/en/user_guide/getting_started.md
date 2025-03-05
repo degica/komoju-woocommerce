@@ -22,7 +22,7 @@ This guide provides a **step-by-step** explanation on how to integrate the KOMOJ
 ---
 
 ## 📌 Step 2: Install the KOMOJU Plugin
-Here’s how to install the KOMOJU plugin on WooCommerce.
+Here's how to install the KOMOJU plugin on WooCommerce.
 
 1. Go to the **WooCommerce Admin Panel**.
 2. Click **Plugins > Add New**.
@@ -72,7 +72,7 @@ Here’s how to install the KOMOJU plugin on WooCommerce.
 
 ![Step 7](../../assets/images/step7.png)
 
-That’s it—you’re done! Great work.
+That's it—you're done! Great work.
 
 ---
 
