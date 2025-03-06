@@ -36,10 +36,11 @@ nav:
     - Overview: index.md
     - Benefits: komoju/benefits.md
     - Features: komoju/features.md
-  - UserGuide: user_guide/getting_started.md
-  - DeveloperGuide: 
+  - User Guide: user_guide/getting_started.md
+  - Developer Guide: 
     - Setup: developer_guide/dev_setup.md
-    - UploadPlugin: developer_guide/uploading_to_wordpress_store.md
+    - Upload Plugin: developer_guide/uploading_to_wordpress_store.md
+    - Documenting: developer_guide/documenting.md
 
 plugins:
   - i18n:
@@ -58,11 +59,12 @@ plugins:
             Overview: 概要
             Benefits: メリット
             Features: 機能
-            UserGuide: ユーザーマニュアル
-            DeveloperGuide: 開発者マニュアル
+            User Guide: ユーザーマニュアル
+            Developer Guide: 開発者マニュアル
             Guide: はじめに
             Setup: セットアップ
-            UploadPlugin: プラグインのアップロード
+            Upload Plugin: プラグインのアップロード
+            Documenting: ドキュメントの作成方法
         - locale: en
           name: English
           build: true
